@@ -1,8 +1,8 @@
 import React from "react";
 
-const PokedexEntry = ({ showEntry, onClose, pokemonData, speciesData }) => {
+const PokedexEntry = ( { showEntry, onClose, pokemonData, speciesData, searchError, cardError } ) => {
 
-  if (!showEntry || !pokemonData || !speciesData ) return null;
+  if (!showEntry || !pokemonData || !speciesData || searchError || cardError ) return null;
 
   /* I could store these functions in their own file for use elsewhere? */
   function capitalise(string) {
@@ -17,12 +17,12 @@ const PokedexEntry = ({ showEntry, onClose, pokemonData, speciesData }) => {
   let description = flavorTextEntries.length > 0 ? flavorTextEntries[0].flavor_text : 'No description available for this Pokémon.';
 
   const stats = pokemonData.stats.map(stat => ({
-      name: stat.stat.name,
-      value: stat.base_stat,
+    name: stat.stat.name,
+    value: stat.base_stat,
   }));
 
   return (
-    <div className={`pokedex-entry-container ${showEntry ? 'show' : ''}`}>
+    <div className={`pokedex-entry-container ${ !showEntry ? 'hidden' : '' }`}>
       <div className="pokedex-entry">
         <div className="pokedex-entry-title">
           <h2>#{pokemonData.id} - {capitalise(pokemonData.name)}</h2>

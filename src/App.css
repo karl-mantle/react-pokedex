@@ -6,7 +6,7 @@
   padding: 0;
 }
 
-h1 {
+h1, h2 {
   text-align: center;
   margin-bottom: 1rem;
 }
@@ -32,14 +32,30 @@ p {
   margin-bottom: 1rem;
 }
 
+.pokedex-buttons.hidden {
+  display: none;
+}
+
+.pokedex-buttons:has(> button.hidden) {
+  justify-content: flex-end;
+}
+
 /* .page-button {
   
 } */
+
+.page-button.hidden {
+  display: none;
+}
 
 .pokedex-card-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 2rem;
+}
+
+.pokedex-card-container.hidden {
+  display: none;
 }
 
 .pokedex-card {
@@ -52,6 +68,15 @@ p {
   background-color: gainsboro;
   border-radius: .5rem;
   box-shadow: 0 .25rem .5rem rgba(0, 0, 0, 0.1);
+}
+
+.pokedex-card-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.pokedex-card-details.hidden {
+  display: none;
 }
 
 .pokedex-card-title {
@@ -68,7 +93,7 @@ p {
 /* pokedex entry classes */
 
 .pokedex-entry-container {
-  display: none;
+  display: flex;
   position: fixed;
   z-index: 1000;
   top: 0;
@@ -81,8 +106,8 @@ p {
   justify-content: center;
 }
 
-.pokedex-entry-container.show {
-  display: flex;
+.pokedex-entry-container.hidden {
+  display: none;
 }
 
 .pokedex-entry {

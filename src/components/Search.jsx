@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import PokedexEntry from './PokedexEntry';
 
 const Search = () => {
@@ -6,23 +6,32 @@ const Search = () => {
   const [pokemonData, setPokemonData] = useState(null);
   const [speciesData, setSpeciesData] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
+  const [searchError, setSearchError] = useState(false);
+  const [stateLoading, setStateLoading] = useState(false);
 
   useEffect ( () => {
-    /* I should put this in an async function or whatever and use await, then display the loading pokeball */
     if (showEntry && searchTerm) {
-        const sanitisedInput = searchTerm.toLowerCase().replace(/^0+/, '');
-        Promise.all([
-          fetch(`https://pokeapi.co/api/v2/pokemon/${sanitisedInput}`),
-          fetch(`https://pokeapi.co/api/v2/pokemon-species/${sanitisedInput}`)
-        ])
-        .then(responses => Promise.all(responses.map(response => response.json())))
-        .then(data => {
-          setPokemonData(data[0]);
-          setSpeciesData(data[1]);
-        })
-        .catch(error => console.error('Invalid Pokémon name or id', error));
+      setStateLoading(true);
+      setSearchError(false);
+      const sanitisedInput = searchTerm.toLowerCase().replace(/^0+/, '');
+      Promise.all([
+        fetch(`https://pokeapi.co/api/v2/pokemon/${sanitisedInput}`),
+        fetch(`https://pokeapi.co/api/v2/pokemon-species/${sanitisedInput}`)
+      ])
+      .then(responses => Promise.all(responses.map(response => response.json())))
+      .then(data => {
+        setPokemonData(data[0]);
+        setSpeciesData(data[1]);
+        setStateLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching Pokémon by requested name or ID.', error);
+        setSearchError(true);
+        setStateLoading(false);
         }
-  }, [showEntry && searchTerm]);
+      );
+    }
+  }, [showEntry, searchTerm]);
 
   const handleSearch = (event) => {
       event.preventDefault();
@@ -42,7 +51,10 @@ const Search = () => {
         </form>
       </div>
 
-      <PokedexEntry showEntry={showEntry} onClose={()=>setShowEntry(false)} pokemonData={pokemonData} speciesData={speciesData}/>
+      { searchError ?  (<h2>Please enter a valid Pokémon name or number.</h2>) : null }
+      { stateLoading ?  (<h2>Loading... </h2>) : null }
+
+      <PokedexEntry showEntry={showEntry} onClose={()=>setShowEntry(false)} pokemonData={pokemonData} speciesData={speciesData} searchError={searchError}/>
     </>
   );
 };

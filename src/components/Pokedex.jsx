@@ -4,18 +4,24 @@ import PokedexCard from '../components/PokedexCard';
 const Pokedex = () => {
   const [pokemonDisplayed, setPokemonDisplayed] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [stateLoading, setStateLoading] = useState(true);
+  const [stateLoading, setStateLoading] = useState(false);
+  const [pokedexError, setPokedexError] = useState(false);
+  const [offset, setOffset] = useState(0);
+
   /* Make the amount of cards configurable  */
   const limit = 15;
 
+  /* I don't think I need a user error message here. */
   function getPokemonDetails(url) {
     return fetch(url)
       .then((response) => response.json())
-      .catch(error => console.error('Error fetching Pokémon details', error));
+      .catch(error => console.error('Error fetching Pokémon details.', error));
   };
 
   useEffect ( () => {
-    let offset = currentPage * limit;
+    setOffset(currentPage * limit);
+    setPokedexError(false);
+    setStateLoading(true);
 
     fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`)
     .then(response => response.json())
@@ -25,12 +31,14 @@ const Pokedex = () => {
     })
     .then(pokemonDetails => {
       setPokemonDisplayed(pokemonDetails);
-      setStateLoading(false)
+      setStateLoading(false);
     })
     .catch(error => {
-      console.error("Error fetching Pokédex page", error);
+      console.error('Error fetching Pokédex data.', error);
+      setPokedexError(true);
+      setStateLoading(false);
     });
-  }, [currentPage])
+  }, [offset, currentPage])
     
   const handleNextPage = () => {
     setCurrentPage(currentPage => currentPage + 1)
@@ -40,16 +48,17 @@ const Pokedex = () => {
   }
 
   return (
-    <div className='pokedex-container'>
+    <div className="pokedex-container">
+      
+      { stateLoading ?  (<h2>Loading... </h2>) : null }
+      { pokedexError ?  (<h2>Error fetching Pokédex data.</h2>) : null }
 
-      <div className='pokedex-buttons'>
-        <button className='page-button' onClick={handlePreviousPage} >Prev</button>
-        <button className='page-button' onClick={handleNextPage}>Next</button>
+      <div className={`pokedex-buttons ${ stateLoading || pokedexError ? 'hidden' : '' }`}>
+        <button className={`page-button ${ offset === 0 ? 'hidden' : '' }`} onClick={handlePreviousPage} >Prev</button>
+        <button className="page-button" onClick={handleNextPage}>Next</button>
       </div>
 
-      { stateLoading ?  (<h2>Loading... </h2>) : null}
-
-      <div className='pokedex-card-container'>
+      <div className={`pokedex-card-container ${ pokedexError ? 'hidden' : '' }`}>
         {pokemonDisplayed.map((pokemon, index) => (
           <PokedexCard key={index} pokemon={pokemon}/>
         ))}
