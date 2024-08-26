@@ -11,33 +11,40 @@ const Pokedex = () => {
   /* Make the amount of cards configurable  */
   const limit = 15;
 
-  /* I don't think I need a user error message here. */
-  function getPokemonDetails(url) {
-    return fetch(url)
-      .then((response) => response.json())
-      .catch(error => console.error('Error fetching Pokémon details.', error));
+  const fetchPokemonDetails = async (url) => {
+    try {
+      const response = await fetch(url);
+      return await response.json();
+    }
+    catch (error) {
+      console.error('Error fetching Pokémon details.', error)
+    }
   };
 
   useEffect ( () => {
-    setOffset(currentPage * limit);
-    setPokedexError(false);
-    setStateLoading(true);
+    const fetchPokedexCards = async () => {
+      setOffset(currentPage * limit);
+      setPokedexError(false);
+      setStateLoading(true);
 
-    fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`)
-    .then(response => response.json())
-    .then(data => {
-      const fetchPromises = data.results.map(pokemon => getPokemonDetails(pokemon.url));
-      return Promise.all(fetchPromises);
-    })
-    .then(pokemonDetails => {
-      setPokemonDisplayed(pokemonDetails);
-      setStateLoading(false);
-    })
-    .catch(error => {
-      console.error('Error fetching Pokédex data.', error);
-      setPokedexError(true);
-      setStateLoading(false);
-    });
+      try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`);
+        const data = await response.json();
+        const fetchPromises = data.results.map(pokemon => fetchPokemonDetails(pokemon.url));
+        const pokemonDetails = await Promise.all(fetchPromises);
+        setPokemonDisplayed(pokemonDetails);
+      }
+      catch (error) {
+        console.error('Error fetching Pokédex data.', error);
+        setPokedexError(true);
+      }
+      finally {
+        setStateLoading(false);
+      }
+    }
+    
+    fetchPokedexCards();
+
   }, [offset, currentPage])
     
   const handleNextPage = () => {

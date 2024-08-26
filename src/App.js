@@ -5,6 +5,8 @@ import './App.css';
 
 function App() {
 
+  /* add language selection here in order to pass down language to components */
+
   return (
   <>
     <div className="container">

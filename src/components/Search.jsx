@@ -10,27 +10,34 @@ const Search = () => {
   const [stateLoading, setStateLoading] = useState(false);
 
   useEffect ( () => {
-    if (showEntry && searchTerm) {
+    const fetchSearchEntry = async () => {
       setStateLoading(true);
       setSearchError(false);
-      const sanitisedInput = searchTerm.toLowerCase().replace(/^0+/, '');
-      Promise.all([
-        fetch(`https://pokeapi.co/api/v2/pokemon/${sanitisedInput}`),
-        fetch(`https://pokeapi.co/api/v2/pokemon-species/${sanitisedInput}`)
-      ])
-      .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(data => {
-        setPokemonData(data[0]);
-        setSpeciesData(data[1]);
-        setStateLoading(false);
-      })
-      .catch(error => {
+
+      try {
+        const sanitisedInput = searchTerm.toLowerCase().replace(/^0+/, '');
+        const [pokemonResponse, speciesResponse] = await Promise.all([
+          fetch(`https://pokeapi.co/api/v2/pokemon/${sanitisedInput}`),
+          fetch(`https://pokeapi.co/api/v2/pokemon-species/${sanitisedInput}`)
+        ])
+        const pokemonData = await pokemonResponse.json();
+        const speciesData = await speciesResponse.json();
+        setPokemonData(pokemonData);
+        setSpeciesData(speciesData);
+      }
+      catch (error) {
         console.error('Error fetching Pokémon by requested name or ID.', error);
         setSearchError(true);
+      }
+      finally {
         setStateLoading(false);
-        }
-      );
+      }
     }
+
+    if (showEntry && searchTerm) {
+      fetchSearchEntry();
+    }
+
   }, [showEntry, searchTerm]);
 
   const handleSearch = (event) => {

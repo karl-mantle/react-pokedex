@@ -13,26 +13,33 @@ const PokedexCard = ( { pokemon } ) => {
   }
 
   useEffect ( () => {
-    if (showEntry) {
+    const fetchPokedexEntry = async () => {
       setStateLoading(true);
       setCardError(false);
-      Promise.all([
-        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}`),
-        fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}`)
-      ])
-      .then(responses => Promise.all(responses.map(response => response.json())))
-      .then(data => {
-          setPokemonData(data[0]);
-          setSpeciesData(data[1]);
-          setStateLoading(false);
-      })
-      .catch(error => {
+
+      try {
+        const [pokemonResponse, speciesResponse] = await Promise.all([
+          fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}`),
+          fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}`)
+        ])
+        const pokemonData = await pokemonResponse.json();
+        const speciesData = await speciesResponse.json();
+        setPokemonData(pokemonData);
+        setSpeciesData(speciesData);
+      }
+      catch (error) {
         console.error('Error fetching Pokédex entry.', error);
         setCardError(true);
+      }
+      finally {
         setStateLoading(false);
-        }
-      );
+      }
     }
+
+    if (showEntry) {
+      fetchPokedexEntry();
+    }
+    
   }, [showEntry, pokemon.id]);
 
   return (
