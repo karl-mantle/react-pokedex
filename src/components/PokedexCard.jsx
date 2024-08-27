@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PokedexEntry from './PokedexEntry';
 
-const PokedexCard = ( { pokemon } ) => {
+const PokedexCard = ( { pokemon, stateLoading, setStateLoading } ) => {
   const [showEntry, setShowEntry] = useState(false);
   const [pokemonData, setPokemonData] = useState(null);
   const [speciesData, setSpeciesData] = useState(null);
   const [cardError, setCardError] = useState(false);
-  const [stateLoading, setStateLoading] = useState(false);
+/*   const [stateLoading, setStateLoading] = useState(false); */
 
   function capitalise(string) {
     return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
@@ -39,8 +39,8 @@ const PokedexCard = ( { pokemon } ) => {
     if (showEntry) {
       fetchPokedexEntry();
     }
-    
-  }, [showEntry, pokemon.id]);
+
+  }, [showEntry, pokemon.id, setStateLoading]);
 
   return (
     <>

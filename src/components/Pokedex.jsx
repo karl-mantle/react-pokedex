@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PokedexCard from '../components/PokedexCard';
 
-const Pokedex = () => {
+const Pokedex = ({ stateLoading, setStateLoading }) => {
   const [pokemonDisplayed, setPokemonDisplayed] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [stateLoading, setStateLoading] = useState(false);
   const [pokedexError, setPokedexError] = useState(false);
   const [offset, setOffset] = useState(0);
 
@@ -45,7 +44,7 @@ const Pokedex = () => {
     
     fetchPokedexCards();
 
-  }, [offset, currentPage])
+  }, [offset, currentPage, setStateLoading])
     
   const handleNextPage = () => {
     setCurrentPage(currentPage => currentPage + 1)
@@ -57,17 +56,17 @@ const Pokedex = () => {
   return (
     <div className="pokedex-container">
       
-      { stateLoading ?  (<h2>Loading... </h2>) : null }
+{/*       { stateLoading ?  (<h2>Loading... </h2>) : null } */}
       { pokedexError ?  (<h2>Error fetching Pokédex data.</h2>) : null }
 
       <div className={`pokedex-buttons ${ stateLoading || pokedexError ? 'hidden' : '' }`}>
-        <button className={`page-button ${ offset === 0 ? 'hidden' : '' }`} onClick={handlePreviousPage} >Prev</button>
-        <button className="page-button" onClick={handleNextPage}>Next</button>
+        <button className={`btn page-button ${ offset === 0 ? 'hidden' : '' }`} onClick={handlePreviousPage} >Prev</button>
+        <button className="btn page-button" onClick={handleNextPage}>Next</button>
       </div>
 
       <div className={`pokedex-card-container ${ pokedexError ? 'hidden' : '' }`}>
         {pokemonDisplayed.map((pokemon, index) => (
-          <PokedexCard key={index} pokemon={pokemon}/>
+          <PokedexCard key={index} pokemon={pokemon} setStateLoading={setStateLoading} stateLoading={stateLoading}/>
         ))}
       </div>
 

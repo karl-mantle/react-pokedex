@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PokedexEntry from './PokedexEntry';
 
-const Search = () => {
+const Search = ({stateLoading, setStateLoading}) => {
   const [showEntry, setShowEntry] = useState(false);
   const [pokemonData, setPokemonData] = useState(null);
   const [speciesData, setSpeciesData] = useState(null);
   const [searchTerm, setSearchTerm] = useState(null);
   const [searchError, setSearchError] = useState(false);
-  const [stateLoading, setStateLoading] = useState(false);
 
   useEffect ( () => {
     const fetchSearchEntry = async () => {
@@ -38,7 +37,7 @@ const Search = () => {
       fetchSearchEntry();
     }
 
-  }, [showEntry, searchTerm]);
+  }, [showEntry, searchTerm, setStateLoading]);
 
   const handleSearch = (event) => {
       event.preventDefault();
@@ -53,13 +52,13 @@ const Search = () => {
     <>
       <div className="search-container">
         <form onSubmit={handleSearch} >
-          <input type="text" name="searchInput"/>
-          <button type="submit">Search</button>
+          <input type="text" name="searchInput" className="search-bar"/>
+          <button type="submit" className="btn">Search</button>
         </form>
       </div>
 
       { searchError ?  (<h2>Please enter a valid Pokémon name or number.</h2>) : null }
-      { stateLoading ?  (<h2>Loading... </h2>) : null }
+{/*       { stateLoading ?  (<h2>Loading... </h2>) : null } */}
 
       <PokedexEntry showEntry={showEntry} onClose={()=>setShowEntry(false)} pokemonData={pokemonData} speciesData={speciesData} searchError={searchError}/>
     </>
