@@ -6,7 +6,7 @@ const PokedexCard = ( { pokemon, stateLoading, setStateLoading } ) => {
   const [pokemonData, setPokemonData] = useState(null);
   const [speciesData, setSpeciesData] = useState(null);
   const [cardError, setCardError] = useState(false);
-/*   const [stateLoading, setStateLoading] = useState(false); */
+  const [cardLoading, setCardLoading] = useState(false);
 
   function capitalise(string) {
     return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
@@ -14,7 +14,7 @@ const PokedexCard = ( { pokemon, stateLoading, setStateLoading } ) => {
 
   useEffect ( () => {
     const fetchPokedexEntry = async () => {
-      setStateLoading(true);
+      setCardLoading(true);
       setCardError(false);
 
       try {
@@ -32,26 +32,34 @@ const PokedexCard = ( { pokemon, stateLoading, setStateLoading } ) => {
         setCardError(true);
       }
       finally {
-        setStateLoading(false);
+        setCardLoading(false);
       }
     }
 
     if (showEntry) {
-      fetchPokedexEntry();
+      setStateLoading(true);
+      fetchPokedexEntry().finally(() => setStateLoading(false));
     }
 
   }, [showEntry, pokemon.id, setStateLoading]);
 
   return (
     <>
-      <div className="pokedex-card" onClick={()=>{setShowEntry(true)}}>
+      <div className="card" onClick={()=>{setShowEntry(true)}}>
 
-        { stateLoading ? (<p>Loading... </p>) : null }
+        { cardLoading ? (<p>Loading... </p>) : null }
+        
         { cardError ? (<p>Error fetching Pokédex entry.</p>) : null }
 
-        <div className={`pokedex-card-details ${ stateLoading || cardError ? 'hidden' : '' }`}>
-            <span className="pokedex-card-title"><strong>#{pokemon.id}</strong> {capitalise(pokemon.name)}</span>
-            <div><img src={pokemon.sprites.front_default}  alt={pokemon.name}/></div>
+        <div className={`card-details ${ cardLoading || cardError ? 'hidden' : '' }`}>
+          
+          <div className="pkmn-id"><span>{pokemon.id}</span></div>
+          <div className="pkmn-sprite"><img src={pokemon.sprites.front_default}  alt={pokemon.name}/></div>
+          <div className="pkmn-details">
+            <div className="pkmn-name"><h3>{capitalise(pokemon.name)}</h3></div>
+            <div className="pkmn-types"><p>type placeholder</p></div>
+          </div>
+
         </div>
 
       </div>

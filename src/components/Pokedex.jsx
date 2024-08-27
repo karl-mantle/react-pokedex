@@ -54,17 +54,20 @@ const Pokedex = ({ stateLoading, setStateLoading }) => {
   }
 
   return (
-    <div className="pokedex-container">
-      
-{/*       { stateLoading ?  (<h2>Loading... </h2>) : null } */}
-      { pokedexError ?  (<h2>Error fetching Pokédex data.</h2>) : null }
+    <div>
 
-      <div className={`pokedex-buttons ${ stateLoading || pokedexError ? 'hidden' : '' }`}>
-        <button className={`btn page-button ${ offset === 0 ? 'hidden' : '' }`} onClick={handlePreviousPage} >Prev</button>
-        <button className="btn page-button" onClick={handleNextPage}>Next</button>
+      { pokedexError ?  (
+        <div className="pokedex-error">
+          <p>Sorry, there was an issue fetching the Pokédex!</p>
+        </div>
+      ) : null }
+
+      <div className={`pagination ${ stateLoading || pokedexError ? 'hidden' : '' }`}>
+        <button className={`prev ${ offset === 0 ? 'hidden' : '' }`} onClick={handlePreviousPage} >Prev</button>
+        <button className={`next ${ offset === 0 ? 'end' : '' }`} onClick={handleNextPage}>Next</button>
       </div>
 
-      <div className={`pokedex-card-container ${ pokedexError ? 'hidden' : '' }`}>
+      <div className={`pokedex ${ pokedexError ? 'hidden' : '' }`}>
         {pokemonDisplayed.map((pokemon, index) => (
           <PokedexCard key={index} pokemon={pokemon} setStateLoading={setStateLoading} stateLoading={stateLoading}/>
         ))}

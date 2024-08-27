@@ -50,15 +50,18 @@ const Search = ({stateLoading, setStateLoading}) => {
 
   return (
     <>
-      <div className="search-container">
-        <form onSubmit={handleSearch} >
-          <input type="text" name="searchInput" className="search-bar"/>
-          <button type="submit" className="btn">Search</button>
-        </form>
+      <div className="search">
+          <form onSubmit={handleSearch}>
+            <input type="text" name="searchInput"/>
+            <button type="submit">Search</button>
+          </form>
       </div>
 
-      { searchError ?  (<h2>Please enter a valid Pokémon name or number.</h2>) : null }
-{/*       { stateLoading ?  (<h2>Loading... </h2>) : null } */}
+      { searchError ?  (
+        <div className="search-error">
+          <p>Sorry, but that Pokémon name or number was not recognised.</p>
+        </div>
+      ) : null }
 
       <PokedexEntry showEntry={showEntry} onClose={()=>setShowEntry(false)} pokemonData={pokemonData} speciesData={speciesData} searchError={searchError}/>
     </>

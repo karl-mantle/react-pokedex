@@ -1,30 +1,38 @@
-import React from 'react';
-import Search from './Search';
+import React, { useEffect, useState } from 'react';
 
-const Pokedex = ( { stateLoading, setStateLoading } ) => {
+const Pokedex = ( { stateLoading } ) => {
+  const [loadingLights, setLoadingLights] = useState(stateLoading);
+
+  useEffect( () => {
+    if (stateLoading) {
+      setLoadingLights(true);
+    }
+    else {
+      const timer = setTimeout(() => setLoadingLights(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [stateLoading]);
 
   return (
     
-    <header>
-      <div className="hdr-container">
-        <div className="hdr-lights">
-          <div className="hdr-main-light">
+    <div className="header-shadow">
+      <header>
+          <div className="lights">
+            <div className="main-light"></div>
+            <div className="loading-lights">
+              <div className={`light${loadingLights ? ' red' : ''}`}></div>
+              <div className={`light${loadingLights ? ' yel' : ''}`}></div>
+              <div className={`light${loadingLights ? ' grn' : ''}`}></div>
+            </div>
           </div>
-          <div className="hdr-loading-lights">
-              <div className={`hdr-light${stateLoading ? ' red' : ''}`}></div>
-              <div className={`hdr-light${stateLoading ? ' yel' : ''}`}></div>
-              <div className={`hdr-light${stateLoading ? ' grn' : ''}`}></div>
+      
+          <div className="header-content">
+              <div className="header-title">
+                <h1>React Pokédex</h1>
+              </div>
           </div>
-        </div>
-        <div className="hdr-content">
-          <h1>React Pokédex</h1>
-          <div className="hdr-search">
-            <Search stateLoading={stateLoading} setStateLoading={setStateLoading} />
-          </div>
-        </div>
-      </div>
-
-    </header>
+      </header>
+    </div>
   )
 }
 

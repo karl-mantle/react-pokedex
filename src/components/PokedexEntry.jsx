@@ -22,16 +22,23 @@ const PokedexEntry = ( { showEntry, onClose, pokemonData, speciesData, searchErr
   }));
 
   return (
-    <div className={`pokedex-entry-container ${ !showEntry ? 'hidden' : '' }`}>
-      <div className="pokedex-entry">
-        <div className="pokedex-entry-title">
-          <h2>#{pokemonData.id} - {capitalise(pokemonData.name)}</h2>
-          <span className="close-button" onClick={onClose}>&times; Close</span>
-        </div>
-          <img src={pokemonData.sprites.front_default} alt={pokemonData.name} className="pokedex-entry-img"/>
-          <p>{cleanParagraph(description)}</p>
+    <div className={`entry-container ${ !showEntry ? 'hidden' : '' }`}>
+      <div className="entry">
 
-        <div className="table-container">
+        <div className="entry-top-row">
+          <h2>#{pokemonData.id} - {capitalise(pokemonData.name)}</h2>
+          <span className="close" onClick={onClose}>&times; Close</span>
+        </div>
+
+        <div className="entry-factfile">
+          <img src={pokemonData.sprites.front_default} alt={pokemonData.name} className="pokedex-entry-img"/>
+        </div>
+
+        <div className="entry-description">
+          <p>{cleanParagraph(description)}</p>
+        </div>
+        
+        <div className="entry-table">
           <table className="table-stats">
             <thead>
               <tr>
