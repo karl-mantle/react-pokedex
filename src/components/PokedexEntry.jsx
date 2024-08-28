@@ -36,7 +36,7 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
       fetchPokedexEntry().finally(() => setGlobalLoading(false));
     }
 
-  }, [showEntry, currentPokemon, setGlobalLoading, setPokemonData, setSpeciesData]);
+  }, [showEntry, currentPokemon, setGlobalLoading, setPokemonData, setSpeciesData, setEntryError]);
 
   if (!showEntry || !currentPokemon || !pokemonData || !speciesData || entryError ) return null;
 

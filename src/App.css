@@ -83,8 +83,10 @@ main::after {
 .container {
     max-width: var(--max-width);
     margin: 0 auto;
-
-    background: url('./svg/noise.svg'),
+ 
+    background: 
+        url('./svg/pokeball-bg.svg'),
+        url('./svg/noise.svg'),
         linear-gradient(0deg, var(--blue-1) 40%, var(--blue-2) 80%);
     background-attachment: fixed;
 
