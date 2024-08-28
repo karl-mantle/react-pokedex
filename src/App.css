@@ -66,7 +66,7 @@ main::after {
     content: '';
     max-width: var(--max-width);
 
-    background-image: linear-gradient(rgba(165, 165, 165, 0.4), transparent 4px, var(--blue-2));
+    background-image: url('./svg/noise.svg'), linear-gradient(rgba(165, 165, 165, 0.4), transparent 4px, var(--blue-2));
     background-size: 4px 4px;
     pointer-events: none;
 
@@ -84,7 +84,8 @@ main::after {
     max-width: var(--max-width);
     margin: 0 auto;
 
-    background: linear-gradient(0deg, var(--blue-1) 40%, var(--blue-2) 80%);
+    background: url('./svg/noise.svg'),
+        linear-gradient(0deg, var(--blue-1) 40%, var(--blue-2) 80%);
     background-attachment: fixed;
 
     border-right: rgba(0, 0, 0, 0.5) solid 2px;
@@ -102,7 +103,8 @@ main::after {
 }
 
 footer {
-    background: linear-gradient(var(--red-1), var(--red-2));
+    background: url('./svg/texture.svg'),
+    linear-gradient(var(--red-2), var(--red-1));
 
     display: flex;
     justify-content: start;
@@ -124,7 +126,8 @@ footer {
 }
 
 header {
-    background: linear-gradient(var(--red-1), var(--red-2));
+    background: url('./svg/texture.svg'),
+    linear-gradient(var(--red-1), var(--red-2));
 
     display: flex;
     justify-content: start;
@@ -155,7 +158,7 @@ header {
 }
 
 .main-light {
-    background: radial-gradient(rgba(105, 105, 105, 0.85) 40%, rgba(0, 0, 0, 0.6) 90%);
+    background: url('./svg/texture.svg'), radial-gradient(rgba(105, 105, 105, 0.85) 40%, rgba(0, 0, 0, 0.6) 90%);
     box-shadow:rgba(0, 0, 0, 0.2) 0 -4px 16px 6px, inset rgba(0, 0, 0, 0.6) 0 -4px 24px, rgba(255, 255, 255, 0.5) 0 4px 16px;
 
     border: 6px solid #fff;
@@ -171,8 +174,8 @@ header {
 
 .main-light.on {
     background: linear-gradient(var(--blue-1), var(--blue-2));
-    box-shadow: inset rgb(120 200 255 / 50%) -4px -8px 8px 10px, rgb(20 80 255 / 50%) 0 0 20px 4px;
-
+    box-shadow: inset rgb(0 0 255 / 50%) -4px -8px 8px 10px, rgb(0 0 255 / 50%) 0 0 20px 4px;
+    box-shadow:rgba(0, 255, 255, 0.2) 0 -2px 8px 4px, inset rgba(0, 125, 125, 1) -4px -7px 24px, rgba(0, 255, 255, 0.5) 0 6px 20px;
 }
 
 .lights {
@@ -186,7 +189,7 @@ header {
 
 .light {
     background: radial-gradient(rgba(105, 105, 105, 0.85) 40%, rgba(100, 100, 100, 0.6) 80%);
-    box-shadow:rgba(0, 0, 0, 0.2) 0 -2px 8px 3px, inset rgba(0, 0, 0, 0.6) 0 -2px 12px, rgba(255, 255, 255, 0.5) 0 4px 12px;
+    box-shadow:rgba(0, 0, 0, 0.2) 0 -2px 8px 4px, inset rgba(0, 0, 0, 0.6) 0 -2px 12px, rgba(255, 255, 255, 0.5) 0 6px 12px;
 
     border-radius: 50%;
 
@@ -209,18 +212,36 @@ header {
 }
 
 @keyframes blink-red {
-    0%, 49% { background: linear-gradient(var(--red-1), var(--red-2)); }
-    50%, 100% { background: radial-gradient(rgba(105, 105, 105, 0.85) 40%, rgba(100, 100, 100, 0.6) 80%); }
+    0%, 49% {
+        background: linear-gradient(var(--red-1), var(--red-2));
+        box-shadow:rgba(255, 0, 0, 0.2) 0 -2px 8px 4px, inset rgba(125, 0, 0, 0.6) 0 -2px 12px, rgba(255, 0, 0, 0.4) 0 6px 12px;
+    }
+    50%, 100% {
+        background: radial-gradient(rgba(105, 105, 105, 0.85) 40%, rgba(100, 100, 100, 0.6) 80%);
+        box-shadow:rgba(0, 0, 0, 0.2) 0 -2px 8px 4px, inset rgba(0, 0, 0, 0.6) 0 -2px 12px, rgba(255, 255, 255, 0.5) 0 6px 12px;
+    }
 }
 
 @keyframes blink-yel {
-    0%, 49% { background: linear-gradient(var(--yellow-1), var(--yellow-2)); }
-    50%, 100% { background: radial-gradient(rgba(105, 105, 105, 0.85) 40%, rgba(100, 100, 100, 0.6) 80%); }
+    0%, 49% { 
+        background: linear-gradient(var(--yellow-1), var(--yellow-2));
+        box-shadow:rgba(255, 255, 0, 0.2) 0 -2px 8px 4px, inset rgba(125, 125, 0, 0.6) 0 -2px 12px, rgba(255, 255, 0, 0.4) 0 6px 12px;
+    }
+    50%, 100% {
+        background: radial-gradient(rgba(105, 105, 105, 0.85) 40%, rgba(100, 100, 100, 0.6) 80%);
+        box-shadow:rgba(0, 0, 0, 0.2) 0 -2px 8px 4px, inset rgba(0, 0, 0, 0.6) 0 -2px 12px, rgba(255, 255, 255, 0.5) 0 6px 12px;
+    }
 }
 
 @keyframes blink-grn {
-    0%, 74% { background: radial-gradient(rgba(105, 105, 105, 0.85) 40%, rgba(100, 100, 100, 0.6) 80%); }
-    75%, 100% { background: linear-gradient(var(--green-1), var(--green-2)); }
+    0%, 74% {
+        background: radial-gradient(rgba(105, 105, 105, 0.85) 40%, rgba(100, 100, 100, 0.6) 80%);
+        box-shadow:rgba(0, 0, 0, 0.2) 0 -2px 8px 4px, inset rgba(0, 0, 0, 0.6) 0 -2px 12px, rgba(255, 255, 255, 0.5) 0 6px 12px;
+    }
+    75%, 100% {
+        background: linear-gradient(var(--green-1), var(--green-2));
+        box-shadow:rgba(0, 255, 0, 0.2) 0 -2px 8px 4px, inset rgba(125, 125, 125, 0.6) 0 -2px 12px, rgba(0, 255, 0, 0.2) 0 6px 12px;
+    }
 
 }
 

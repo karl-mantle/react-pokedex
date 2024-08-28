@@ -10,6 +10,7 @@ function App() {
   const [currentPokemon, setCurrentPokemon] = useState(null);
   const [globalLoading, setGlobalLoading] = useState(false);
   const [showEntry, setShowEntry] = useState(false);
+  const [entryError, setEntryError] = useState(false);
 
   return (
   <>
@@ -22,6 +23,7 @@ function App() {
         <Search
           setCurrentPokemon={setCurrentPokemon}
           setShowEntry={setShowEntry}
+          entryError={entryError}
         />
         <Pokedex
           setCurrentPokemon={setCurrentPokemon}
@@ -35,8 +37,11 @@ function App() {
           setCurrentPokemon={setCurrentPokemon}
           setGlobalLoading={setGlobalLoading}
           showEntry={showEntry}
+          entryError={entryError}
+          setEntryError={setEntryError}
           onClose={()=> {
             setShowEntry(false);
+            setEntryError(false);
             setCurrentPokemon(null);
           }}
         />

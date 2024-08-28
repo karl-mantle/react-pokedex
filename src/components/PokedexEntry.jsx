@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Pokeball from '../svg/pokeball.svg';
 
-const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, onClose }) => {
+const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError, setEntryError, onClose }) => {
   const [pokemonData, setPokemonData] = useState(null);
   const [speciesData, setSpeciesData] = useState(null);
-  const [entryError, setEntryError] = useState(false);
   const [entryLoading, setEntryLoading] = useState(false);
 
   useEffect ( () => {
@@ -39,7 +38,7 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, onClose }) 
 
   }, [showEntry, currentPokemon, setGlobalLoading, setPokemonData, setSpeciesData]);
 
-  if (!showEntry || !currentPokemon || !pokemonData || !speciesData ) return null;
+  if (!showEntry || !currentPokemon || !pokemonData || !speciesData || entryError ) return null;
 
   function capitalise(string) {
     return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
@@ -66,12 +65,6 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, onClose }) 
     <div className={`entry-container${ !showEntry ? ' hidden' : '' }`}>
       <div className="entry">
 
-        { entryError ?  (
-          <div className="error">
-            <p>There was a problem fetching the Pokémon entry.</p>
-          </div>
-        ) : null }
-
         { entryLoading ?  (
           <div className="entry-loading">
               <div>
@@ -80,7 +73,7 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, onClose }) 
           </div>
         ) : null }
 
-        <div className={`${ entryError || entryLoading ? ' hidden' : '' }`}>
+        <div className={`${ entryLoading ? ' hidden' : '' }`}>
           <div className="entry-top-row">
             <div className="pkmn-id"><span>{addZeros(pokemonData.id)}</span></div>
             <h2>{capitalise(pokemonData.name)}</h2>

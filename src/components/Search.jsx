@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Search = ({ setCurrentPokemon, setShowEntry }) => {
+const Search = ({ setCurrentPokemon, setShowEntry, entryError }) => {
 
   const handleSearch = (event) => {
       event.preventDefault();
@@ -21,11 +21,11 @@ const Search = ({ setCurrentPokemon, setShowEntry }) => {
           </form>
       </div>
 
-{/*       { searchError ?  (
-        <div className="error">
-          <p>Please enter a valid Pokémon name or ID number.</p>
-        </div>
-      ) : null } */}
+      { entryError ?  (
+          <div className="error">
+            <p>Please enter a valid Pokémon name or ID number.</p>
+          </div>
+        ) : null }
 
     </>
   );
