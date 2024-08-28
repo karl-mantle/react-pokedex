@@ -12,6 +12,10 @@ const PokedexCard = ( { pokemon, stateLoading, setStateLoading } ) => {
     return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   }
 
+  function addZeros(num) {
+    return num.toString().padStart(3, '0');
+  }
+
   useEffect ( () => {
     const fetchPokedexEntry = async () => {
       setCardLoading(true);
@@ -51,9 +55,9 @@ const PokedexCard = ( { pokemon, stateLoading, setStateLoading } ) => {
         
         { cardError ? (<p>Error fetching Pokédex entry.</p>) : null }
 
-        <div className={`card-details ${ cardLoading || cardError ? 'hidden' : '' }`}>
+        <div className={`card-details${ cardLoading || cardError ? ' hidden' : '' }`}>
           
-          <div className="pkmn-id"><span>{pokemon.id}</span></div>
+          <div className="pkmn-id"><span>{addZeros(pokemon.id)}</span></div>
           <div className="pkmn-sprite"><img src={pokemon.sprites.front_default}  alt={pokemon.name}/></div>
           <div className="pkmn-details">
             <div className="pkmn-name"><h3>{capitalise(pokemon.name)}</h3></div>

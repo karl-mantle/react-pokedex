@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import Pokedex from './components/Pokedex';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Search from './components/Search';
 import './App.css';
 
@@ -21,7 +22,7 @@ function App() {
         <Search stateLoading={stateLoading} setStateLoading={setStateLoading}/>
         <Pokedex stateLoading={stateLoading} setStateLoading={callSetStateLoading}/>
       </main>
-
+      <Footer/>
     </div>
   </>
   );

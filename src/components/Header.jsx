@@ -15,7 +15,7 @@ const Pokedex = ( { stateLoading } ) => {
 
   return (
     
-    <div className="header-shadow">
+    <div className="header-container">
       <header>
           <div className="lights">
             <div className="main-light"></div>

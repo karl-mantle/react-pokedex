@@ -8,7 +8,7 @@ const Pokedex = ({ stateLoading, setStateLoading }) => {
   const [offset, setOffset] = useState(0);
 
   /* Make the amount of cards configurable  */
-  const limit = 15;
+  const limit = 12;
 
   const fetchPokemonDetails = async (url) => {
     try {
@@ -45,12 +45,18 @@ const Pokedex = ({ stateLoading, setStateLoading }) => {
     fetchPokedexCards();
 
   }, [offset, currentPage, setStateLoading])
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
     
   const handleNextPage = () => {
-    setCurrentPage(currentPage => currentPage + 1)
+    setCurrentPage(currentPage => currentPage + 1);
+    scrollToTop();
   }
   const handlePreviousPage = () => {
-    if (currentPage > 0) {setCurrentPage(currentPage => currentPage - 1)}
+    if (currentPage > 0) {setCurrentPage(currentPage => currentPage - 1)};
+    scrollToTop();
   }
 
   return (
@@ -62,15 +68,15 @@ const Pokedex = ({ stateLoading, setStateLoading }) => {
         </div>
       ) : null }
 
-      <div className={`pagination ${ stateLoading || pokedexError ? 'hidden' : '' }`}>
-        <button className={`prev ${ offset === 0 ? 'hidden' : '' }`} onClick={handlePreviousPage} >Prev</button>
-        <button className={`next ${ offset === 0 ? 'end' : '' }`} onClick={handleNextPage}>Next</button>
-      </div>
-
       <div className={`pokedex ${ pokedexError ? 'hidden' : '' }`}>
         {pokemonDisplayed.map((pokemon, index) => (
           <PokedexCard key={index} pokemon={pokemon} setStateLoading={setStateLoading} stateLoading={stateLoading}/>
         ))}
+      </div>
+
+      <div className={`pagination ${ stateLoading || pokedexError ? 'hidden' : '' }`}>
+        <button className={`prev ${ offset === 0 ? 'hidden' : '' }`} onClick={handlePreviousPage} >Prev</button>
+        <button className={`next ${ offset === 0 ? 'end' : '' }`} onClick={handleNextPage}>Next</button>
       </div>
 
     </div>
