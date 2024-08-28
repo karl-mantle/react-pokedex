@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const Pokedex = ( { stateLoading } ) => {
+const Header = ( { stateLoading } ) => {
   const [loadingLights, setLoadingLights] = useState(stateLoading);
 
   useEffect( () => {
@@ -36,4 +36,4 @@ const Pokedex = ( { stateLoading } ) => {
   )
 }
 
-export default Pokedex;
+export default Header;

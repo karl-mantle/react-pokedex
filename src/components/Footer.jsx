@@ -1,20 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-const Pokedex = ( { stateLoading } ) => {
-  const [loadingLights, setLoadingLights] = useState(stateLoading);
-
-  useEffect( () => {
-    if (stateLoading) {
-      setLoadingLights(true);
-    }
-    else {
-      const timer = setTimeout(() => setLoadingLights(false), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [stateLoading]);
+const Footer = () => {
 
   return (
-    
     <div className="footer-container">
       <footer>
       </footer>
@@ -22,4 +10,4 @@ const Pokedex = ( { stateLoading } ) => {
   )
 }
 
-export default Pokedex;
+export default Footer;
