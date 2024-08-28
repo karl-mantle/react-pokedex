@@ -171,6 +171,8 @@ header {
 
 .main-light.on {
     background: linear-gradient(var(--blue-1), var(--blue-2));
+    box-shadow: inset rgb(120 200 255 / 50%) -4px -8px 8px 10px, rgb(20 80 255 / 50%) 0 0 20px 4px;
+
 }
 
 .lights {
@@ -236,7 +238,7 @@ header {
     padding: 1rem 0;
 }
 
-.search-error, .pokedex-error {
+.error {
     background-color: var(--border);
     border-radius: 1rem;
 
@@ -367,6 +369,7 @@ input[type=text] {
 
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .close:hover {
@@ -413,6 +416,27 @@ input[type=text] {
 
 .entry-table {
     align-self: center;
+}
+
+.entry-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+.pokeball {
+    height: 50vh;
+    animation: rotate 1s infinite;
+}
+
+@keyframes rotate {
+    0%, 24% { transform: rotate(45deg); }
+    25%, 49% { transform: rotate(90deg); }
+    50%, 74% { transform: rotate(135deg); }
+    75%, 100% { transform: rotate(180deg); }
+
 }
 
 /* keep at end, ta */

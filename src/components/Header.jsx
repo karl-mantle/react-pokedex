@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
 
-const Header = ( { stateLoading } ) => {
-  const [loadingLights, setLoadingLights] = useState(stateLoading);
+const Header = ({ globalLoading, showEntry }) => {
+  const [loadingLights, setLoadingLights] = useState(globalLoading);
 
   useEffect( () => {
-    if (stateLoading) {
+    if (globalLoading) {
       setLoadingLights(true);
     }
     else {
       const timer = setTimeout(() => setLoadingLights(false), 3000);
       return () => clearTimeout(timer);
     }
-  }, [stateLoading]);
+  }, [globalLoading]);
 
   return (
     
     <div className="header-container">
       <header>
           <div className="lights">
-            <div className="main-light"></div>
+            <div className={`main-light${ showEntry ? ' on' : '' }`}></div>
             <div className="loading-lights">
               <div className={`light${loadingLights ? ' red' : ''}`}></div>
               <div className={`light${loadingLights ? ' yel' : ''}`}></div>

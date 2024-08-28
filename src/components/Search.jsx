@@ -1,49 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import PokedexEntry from './PokedexEntry';
+import React from 'react';
 
-const Search = ({stateLoading, setStateLoading}) => {
-  const [showEntry, setShowEntry] = useState(false);
-  const [pokemonData, setPokemonData] = useState(null);
-  const [speciesData, setSpeciesData] = useState(null);
-  const [searchTerm, setSearchTerm] = useState(null);
-  const [searchError, setSearchError] = useState(false);
-
-  useEffect ( () => {
-    const fetchSearchEntry = async () => {
-      setStateLoading(true);
-      setSearchError(false);
-
-      try {
-        const sanitisedInput = searchTerm.toLowerCase().replace(/^0+/, '');
-        const [pokemonResponse, speciesResponse] = await Promise.all([
-          fetch(`https://pokeapi.co/api/v2/pokemon/${sanitisedInput}`),
-          fetch(`https://pokeapi.co/api/v2/pokemon-species/${sanitisedInput}`)
-        ])
-        const pokemonData = await pokemonResponse.json();
-        const speciesData = await speciesResponse.json();
-        setPokemonData(pokemonData);
-        setSpeciesData(speciesData);
-      }
-      catch (error) {
-        console.error('Error fetching Pokémon by requested name or ID.', error);
-        setSearchError(true);
-      }
-      finally {
-        setStateLoading(false);
-      }
-    }
-
-    if (showEntry && searchTerm) {
-      fetchSearchEntry();
-    }
-
-  }, [showEntry, searchTerm, setStateLoading]);
+const Search = ({ setCurrentPokemon, setShowEntry }) => {
 
   const handleSearch = (event) => {
       event.preventDefault();
       const searchInput = event.target.elements.searchInput.value.trim();
+      const sanitisedInput = searchInput.toLowerCase().replace(/^0+/, '');
       if (searchInput) {
-        setSearchTerm(searchInput);
+        setCurrentPokemon(sanitisedInput);
         setShowEntry(true);
       }
   };
@@ -57,13 +21,12 @@ const Search = ({stateLoading, setStateLoading}) => {
           </form>
       </div>
 
-      { searchError ?  (
-        <div className="search-error">
-          <p>Sorry, but that Pokémon name or number was not recognised.</p>
+{/*       { searchError ?  (
+        <div className="error">
+          <p>Please enter a valid Pokémon name or ID number.</p>
         </div>
-      ) : null }
+      ) : null } */}
 
-      <PokedexEntry showEntry={showEntry} onClose={()=>setShowEntry(false)} pokemonData={pokemonData} speciesData={speciesData} searchError={searchError}/>
     </>
   );
 };

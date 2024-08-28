@@ -1,14 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import PokedexCard from '../components/PokedexCard';
 
-const Pokedex = ({ stateLoading, setStateLoading }) => {
+const Pokedex = ({ setCurrentPokemon, globalLoading, setGlobalLoading, showEntry, setShowEntry }) => {
   const [pokemonDisplayed, setPokemonDisplayed] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [pokedexError, setPokedexError] = useState(false);
+  
+  /* remove this it's superfluous */
   const [offset, setOffset] = useState(0);
 
   /* Make the amount of cards configurable  */
   const limit = 12;
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  const handleNextPage = () => {
+    setCurrentPage(currentPage => currentPage + 1);
+    scrollToTop();
+  };
+  const handlePreviousPage = () => {
+    if (currentPage > 0) {setCurrentPage(currentPage => currentPage - 1)};
+    scrollToTop();
+  };
 
   const fetchPokemonDetails = async (url) => {
     try {
@@ -24,7 +38,7 @@ const Pokedex = ({ stateLoading, setStateLoading }) => {
     const fetchPokedexCards = async () => {
       setOffset(currentPage * limit);
       setPokedexError(false);
-      setStateLoading(true);
+      setGlobalLoading(true);
 
       try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`);
@@ -38,43 +52,35 @@ const Pokedex = ({ stateLoading, setStateLoading }) => {
         setPokedexError(true);
       }
       finally {
-        setStateLoading(false);
+        setGlobalLoading(false);
       }
     }
     
     fetchPokedexCards();
 
-  }, [offset, currentPage, setStateLoading])
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-    
-  const handleNextPage = () => {
-    setCurrentPage(currentPage => currentPage + 1);
-    scrollToTop();
-  }
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {setCurrentPage(currentPage => currentPage - 1)};
-    scrollToTop();
-  }
+  }, [offset, currentPage, setGlobalLoading])
 
   return (
     <div>
 
       { pokedexError ?  (
-        <div className="pokedex-error">
+        <div className="error">
           <p>Sorry, there was an issue fetching the Pokédex!</p>
         </div>
       ) : null }
 
       <div className={`pokedex ${ pokedexError ? 'hidden' : '' }`}>
         {pokemonDisplayed.map((pokemon, index) => (
-          <PokedexCard key={index} pokemon={pokemon} setStateLoading={setStateLoading} stateLoading={stateLoading}/>
+          <PokedexCard
+            key={index}
+            pokemon={pokemon}
+            setCurrentPokemon={setCurrentPokemon}
+            setShowEntry={setShowEntry}
+          />
         ))}
       </div>
 
-      <div className={`pagination ${ stateLoading || pokedexError ? 'hidden' : '' }`}>
+      <div className={`pagination ${ globalLoading || pokedexError ? 'hidden' : '' }`}>
         <button className={`prev ${ offset === 0 ? 'hidden' : '' }`} onClick={handlePreviousPage} >Prev</button>
         <button className={`next ${ offset === 0 ? 'end' : '' }`} onClick={handleNextPage}>Next</button>
       </div>
