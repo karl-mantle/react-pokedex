@@ -1,0 +1,20 @@
+.container {
+  position: sticky;
+  bottom: 0;
+  z-index: 25;
+  
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+}
+
+footer {
+  background: url('../svg/texture.svg'),
+  linear-gradient(var(--red-2), var(--red-1));
+
+  display: flex;
+  justify-content: start;
+
+  min-height: 100px;
+  padding-top: .5rem;
+
+  clip-path: polygon(100% 100%, 0 100%, 0 25%, 30% 25%, 35% 0, 100% 0);
+}

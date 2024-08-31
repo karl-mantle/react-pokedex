@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PokedexCard from '../components/PokedexCard';
+import '../css/pokedex.css';
 
 const Pokedex = ({ setCurrentPokemon, globalLoading, setGlobalLoading, showEntry, setShowEntry }) => {
   const [pokemonDisplayed, setPokemonDisplayed] = useState([]);

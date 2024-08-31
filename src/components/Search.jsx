@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
+import '../css/search.css';
 
 let debounceTimeout;
 
-const Search = ({ setCurrentPokemon, setShowEntry, entryError }) => {
+const Search = ({ setCurrentPokemon, setShowEntry, showEntry, entryError }) => {
   const [searchInput, setSearchInput] = useState('');
-  const [pokemonList, setPokemonList ] = useState([]);
+  const [pokemonList, setPokemonList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
 
   useEffect(() => {
@@ -25,13 +26,12 @@ const Search = ({ setCurrentPokemon, setShowEntry, entryError }) => {
         console.error('Error fetching Pokémon list', error);
       }
     };
-  
+
     fetchPokemonList();
   }, []);
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const sanitisedInput = searchInput.toLowerCase().replace(/^0+/, '');
+  const handleSearch = (query) => {
+    const sanitisedInput = query.toLowerCase().replace(/^0+/, '');
     if (sanitisedInput) {
       setCurrentPokemon(sanitisedInput);
       setShowEntry(true);
@@ -41,6 +41,7 @@ const Search = ({ setCurrentPokemon, setShowEntry, entryError }) => {
   const setSuggestion = (suggestion) => {
     setSearchInput(suggestion);
     setFilteredList([]);
+    handleSearch(suggestion);
   };
 
   const debounceSearch = (searchTerm) => {
@@ -63,7 +64,8 @@ const Search = ({ setCurrentPokemon, setShowEntry, entryError }) => {
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      handleSearch(event);
+      event.preventDefault();
+      handleSearch(searchInput);
     }
     else if (event.key === 'Tab' && filteredList.length > 0) {
       event.preventDefault();
@@ -75,7 +77,8 @@ const Search = ({ setCurrentPokemon, setShowEntry, entryError }) => {
   return (
     <>
       <div className="search">
-        <form onSubmit={handleSearch}>
+      {/* <div className={`search${ showEntry ? ' hidden' : '' }`}> */}
+        <form onSubmit={(e) => { e.preventDefault(); handleSearch(searchInput); }}>
           <input
             type="text"
             name="searchInput"
@@ -85,17 +88,17 @@ const Search = ({ setCurrentPokemon, setShowEntry, entryError }) => {
             placeholder="Enter a Pokémon name"
           />
           <button type="submit">Search</button>
-          </form>
-          
-          {filteredList.length > 0 ? (
-            <ul className="suggestions">
-              {filteredList.map((pokemon, index) => (
-                <li className="suggestion" key={index} onClick={() => setSuggestion(pokemon.name)}>
-                  {pokemon.name}
-                </li>
-              ))}
-            </ul>
-          ) : null }
+        </form>
+
+        {filteredList.length > 0 ? (
+          <ul className="suggestions">
+            {filteredList.map((pokemon, index) => (
+              <li className="suggestion" key={index} onClick={() => setSuggestion(pokemon.name)}>
+                {pokemon.name}
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
 
       { entryError ?  (

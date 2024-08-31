@@ -1,4 +1,7 @@
 import { cleanName, addZeros } from '../utils/TextUtils';
+import '../css/pokedex-card.css';
+import '../css/types.css';
+
 
 const PokedexCard = ({ pokemon, setShowEntry, setCurrentPokemon }) => {
 

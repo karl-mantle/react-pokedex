@@ -1,33 +1,39 @@
 import { useEffect } from 'react';
+import '../css/footer.css';
 
 const Footer = () => {
   useEffect(() => {
-    const footer = document.querySelector('.footer-container');
+    const footer = document.querySelector('.container:has(footer)');
 
-    const handleFocus = () => {
+    const hideFooter = () => {
       footer.classList.add('hidden-mobile');
     };
 
-    const handleBlur = () => {
+    const showFooter = () => {
       footer.classList.remove('hidden-mobile');
     };
 
-    document.querySelectorAll('input').forEach(input => {
-      input.addEventListener('focus', handleFocus);
-      input.addEventListener('blur', handleBlur);
+    const inputs = document.querySelectorAll('input');
+
+    inputs.forEach(input => {
+      input.addEventListener('focus', hideFooter);
+      input.addEventListener('blur', showFooter);
     });
 
+    window.addEventListener('scroll', showFooter);
+
     return () => {
-      document.querySelectorAll('input').forEach(input => {
-        input.removeEventListener('focus', handleFocus);
-        input.removeEventListener('blur', handleBlur);
+      inputs.forEach(input => {
+        input.removeEventListener('focus', hideFooter);
+        input.removeEventListener('blur', showFooter);
       });
+      window.removeEventListener('scroll', showFooter);
     };
     
   }, []);
 
   return (
-    <div className="footer-container">
+    <div className="container">
       <footer>
       </footer>
     </div>

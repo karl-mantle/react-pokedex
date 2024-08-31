@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { cleanName, addZeros, cleanDescription } from '../utils/TextUtils';
 import Pokeball from '../svg/pokeball.svg';
+import '../css/pokedex-entry.css';
+import '../css/types.css';
 
 const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError, setEntryError, onClose }) => {
   const [pokemonData, setPokemonData] = useState(null);

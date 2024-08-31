@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../css/header.css';
 
 const Header = ({ globalLoading, showEntry }) => {
   const [loadingLights, setLoadingLights] = useState(globalLoading);
@@ -15,7 +16,7 @@ const Header = ({ globalLoading, showEntry }) => {
 
   return (
     
-    <div className="header-container">
+    <div className="container">
       <header>
           <div className="lights">
             <div className={`main-light${ showEntry ? ' on' : '' }`}></div>
