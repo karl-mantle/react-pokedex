@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { capitalise, addZeros, cleanDescription } from '../utils/TextUtils';
 import Pokeball from '../svg/pokeball.svg';
 
 const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError, setEntryError, onClose }) => {
@@ -40,16 +41,6 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
 
   if (!showEntry || !currentPokemon || !pokemonData || !speciesData || entryError ) return null;
 
-  function capitalise(string) {
-    return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-  }
-  function cleanParagraph(string) {
-    return string.replace(/\f/g, ' ');
-  }
-  function addZeros(num) {
-    return num.toString().padStart(3, '0');
-  }
-
   const flavorTextEntries = speciesData.flavor_text_entries.filter(entry => entry.language.name === 'en');
   let description = flavorTextEntries.length > 0 ? flavorTextEntries[0].flavor_text : 'No description available for this Pokémon.';
 
@@ -60,6 +51,8 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
     name: stat.stat.name,
     value: stat.base_stat,
   }));
+
+  const types = pokemonData.types.map(type => type.type.name);
 
   return (
     <div className={`entry-container${ !showEntry ? ' hidden' : '' }`}>
@@ -73,24 +66,27 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
           </div>
         ) : null }
 
-        <div className={`${ entryLoading ? ' hidden' : '' }`}>
+        <div className={`entry-main${ entryLoading ? ' hidden' : '' }`}>
           <div className="entry-top-row">
             <div className="pkmn-id"><span>{addZeros(pokemonData.id)}</span></div>
             <h2>{capitalise(pokemonData.name)}</h2>
             <span className="close" onClick={onClose}>&times; Close</span>
           </div>
           <div className="entry-factfile">
-            <img src={pokemonData.sprites.front_default} alt={pokemonData.name} className="pokedex-entry-img"/>
+            <div className="pkmn-sprite"><img src={pokemonData.sprites.front_default} alt={pokemonData.name} className="pokedex-entry-img"/></div>
             <ul>
               <li><strong>Species:</strong></li>
               <li>{pokemonGenus}</li>
               <li><strong>HT:</strong> {pokemonData.height}' <strong>WT:</strong> {pokemonData.weight} lbs</li>
               <li><strong>Type(s):</strong></li>
-              <li>types placeholder</li>
+              <li className="types">{types.map((type, index) => (
+                  <span key={index} className={`type ${type}`}>{type.toUpperCase()} </span>
+                  ))}
+              </li>
             </ul>
           </div>
           <div className="entry-description">
-            <p>{cleanParagraph(description)}</p>
+            <p>{cleanDescription(description)}</p>
           </div>
           
           <div className="entry-table">

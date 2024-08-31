@@ -50,6 +50,10 @@ h1, h2, h3, a, p, span, button, input, th, td, li {
     color: var(--text);
 }
 
+h1, h2, h3 {
+    font-size: 1.5rem;
+}
+
 ul {
     list-style-type: none;
 }
@@ -250,15 +254,59 @@ header {
 /* search styles */
 
 .search {
+	background: transparent;
+	border: .25rem solid var(--border);
+	border-radius: 1rem;
+
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
+
+    padding: 1rem .5rem;
+    margin: 1rem 0;
 }
 
 .search form {
     display: flex;
-    justify-content: space-evenly;
+}
+
+button, input[type=text], .suggestion {
+    border: none;
+	padding: .5rem 0;
+}
+
+button {
+    background-color: var(--border);
+	border-radius: 1rem;
+    box-shadow:rgba(0, 0, 0, 0.2) 0 0 2px 2px;
+
+    min-width: 25%;
     
-    padding: 1rem 0;
+    color: var(--text-dark);
+    font-weight: bold;
+}
+
+input[type=text] {
+	background: transparent;
+    width: 100%;
+    margin: 0 1rem;
+}
+
+input[type=text]:focus {
+    border: none;
+    outline: none;
+    border-bottom: 1px solid var(--border);
+}
+
+input[type=text]::placeholder {
+    color: var(--text);
+}
+
+.suggestions {
+    padding: 0 1rem;
+}
+
+.suggestions .suggestion:not(:last-child) {
+    border-bottom: 1px solid var(--border);
 }
 
 .error {
@@ -270,31 +318,9 @@ header {
 
     p {
         color: var(--text-dark);
-        font-size: .75rem;
+        font-size: 1rem;
         text-align: center;
     }
-}
-
-button, input[type=text] {
-	background: transparent;
-	border: .25rem solid var(--border);
-	border-radius: 1rem;
-
-    box-shadow:rgba(0, 0, 0, 0.2) 0 0 2px 2px;
-
-	padding: .5rem;
-    margin: 0 1rem;
-
-	color: var(--text);
-    font-weight: bold;
-}
-
-button {
-    min-width: 25%;
-}
-
-input[type=text] {
-    width: 100%;
 }
 
 /* pokedex styles */
@@ -329,8 +355,7 @@ input[type=text] {
 
 .card-details {
     display: grid;
-    grid-template-columns: 2rem repeat(2, 1fr);
-    justify-items: center;
+    grid-template-columns: 25% repeat(2, 1fr);
     align-items: center;
     gap: .5rem;
 
@@ -355,6 +380,16 @@ input[type=text] {
     
     color: var(--text);
     font-weight: bold;
+}
+
+.pkmn-name {
+    margin-bottom: .5rem;
+    font-size: 1.5rem;
+    text-shadow: 1px 1px var(--text-dark);
+}
+
+.pkmn-sprite {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 /* pokedex entry styles */
@@ -391,8 +426,6 @@ input[type=text] {
     overflow-y: auto;
 
     display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .close:hover {
@@ -416,6 +449,10 @@ input[type=text] {
     justify-content: space-around;
 
     margin-bottom: 1.5rem;
+}
+
+.entry-factfile ul li:nth-child(4) {
+    margin-bottom: .5rem;
 }
 
 .entry-facts {
@@ -460,6 +497,77 @@ input[type=text] {
     50%, 74% { transform: rotate(135deg); }
     75%, 100% { transform: rotate(180deg); }
 
+}
+
+/* types styles */
+
+.types {
+    display: flex;
+    align-items: center;
+}
+
+.type {
+    background-color: grey;
+    border-radius: .5rem;
+
+    padding: .25rem;
+    margin-right: .5rem;
+
+    color: var(--text-dark);
+    font-size: 1rem;
+    text-shadow: 1px 1px black;
+}
+
+.water {
+    background-color: cornflowerblue;
+}
+.fire {
+    background-color: firebrick;
+}
+.grass {
+    background-color: green;
+}
+.electric {
+    background-color: gold;
+}
+.poison {
+    background-color: purple;
+}
+.flying {
+    background-color: skyblue;
+}
+.bug {
+    background-color: olive;
+}
+.ground {
+    background-color: peru;
+}
+.fairy {
+    background-color: palevioletred;
+}
+.fighting {
+    background-color: maroon;
+}
+.psychic {
+    background-color: mediumorchid;
+}
+.rock {
+    background-color: rosybrown;
+}
+.steel {
+    background-color: lightsteelblue;
+}
+.ice {
+    background-color: cyan;
+}
+.dark {
+    background-color: midnightblue;
+}
+.ghost {
+    background-color: blueviolet;
+}
+.dragon {
+    background: linear-gradient(blue, firebrick);
 }
 
 /* keep at end, ta */

@@ -1,13 +1,8 @@
-import React from 'react';
+import { capitalise, addZeros } from '../utils/TextUtils';
 
 const PokedexCard = ({ pokemon, setShowEntry, setCurrentPokemon }) => {
 
-  function capitalise(string) {
-    return string.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-  }
-  function addZeros(num) {
-    return num.toString().padStart(3, '0');
-  }
+  const types = pokemon.types.map(type => type.type.name);
 
   return (
     <>
@@ -19,7 +14,10 @@ const PokedexCard = ({ pokemon, setShowEntry, setCurrentPokemon }) => {
           <div className="pkmn-sprite"><img src={pokemon.sprites.front_default}  alt={pokemon.name}/></div>
           <div className="pkmn-details">
             <div className="pkmn-name"><h3>{capitalise(pokemon.name)}</h3></div>
-            <div className="pkmn-types"><p>type placeholder</p></div>
+            <div className="types">{types.map((type, index) => (
+              <span key={index} className={`type ${type}`}>{type.toUpperCase()} </span>
+              ))}
+            </div>
           </div>
 
         </div>
