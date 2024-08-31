@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Search from './components/Search';
@@ -11,6 +11,19 @@ function App() {
   const [globalLoading, setGlobalLoading] = useState(false);
   const [showEntry, setShowEntry] = useState(false);
   const [entryError, setEntryError] = useState(false);
+
+  useEffect(() => {
+    const adjustViewportHeight = () => {
+      document.body.style.height = `${window.innerHeight}px`;
+    };
+    adjustViewportHeight();
+    window.addEventListener('resize', adjustViewportHeight);
+
+    return () => {
+      window.removeEventListener('resize', adjustViewportHeight);
+    };
+
+  }, []);
 
   return (
   <>
