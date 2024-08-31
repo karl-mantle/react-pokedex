@@ -1,34 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import '../css/search.css';
 
 let debounceTimeout;
 
-const Search = ({ setCurrentPokemon, setShowEntry, showEntry, entryError }) => {
+const Search = ({ setCurrentPokemon, setShowEntry, showEntry, entryError, pokemonList }) => {
   const [searchInput, setSearchInput] = useState('');
-  const [pokemonList, setPokemonList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
-
-  useEffect(() => {
-    const fetchPokemonList = async () => {
-      try {
-        const storedPokemonList = localStorage.getItem('pokemonList');
-        if (storedPokemonList) {
-          setPokemonList(JSON.parse(storedPokemonList));
-        }
-        else {
-          const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1025');
-          const data = await response.json();
-          setPokemonList(data.results);
-          localStorage.setItem('pokemonList', JSON.stringify(data.results));
-        }
-      }
-      catch (error) {
-        console.error('Error fetching Pokémon list', error);
-      }
-    };
-
-    fetchPokemonList();
-  }, []);
 
   const handleSearch = (query) => {
     const sanitisedInput = query.toLowerCase().replace(/^0+/, '');

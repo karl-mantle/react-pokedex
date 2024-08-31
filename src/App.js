@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Search from './components/Search';
@@ -10,6 +10,29 @@ function App() {
   const [globalLoading, setGlobalLoading] = useState(false);
   const [showEntry, setShowEntry] = useState(false);
   const [entryError, setEntryError] = useState(false);
+  const [pokemonList, setPokemonList] = useState([]);
+
+  useEffect(() => {
+    const fetchPokemonList = async () => {
+      try {
+        const storedPokemonList = localStorage.getItem('pokemonList');
+        if (storedPokemonList) {
+          setPokemonList(JSON.parse(storedPokemonList));
+        }
+        else {
+          const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1025');
+          const data = await response.json();
+          setPokemonList(data.results);
+          localStorage.setItem('pokemonList', JSON.stringify(data.results));
+        }
+      }
+      catch (error) {
+        console.error('Error fetching Pokémon list', error);
+      }
+    };
+
+    fetchPokemonList();
+  }, []);
 
   return (
   <>
@@ -23,6 +46,7 @@ function App() {
         setShowEntry={setShowEntry}
         showEntry={showEntry}
         entryError={entryError}
+        pokemonList={pokemonList}
       />
       <Pokedex
         setCurrentPokemon={setCurrentPokemon}
@@ -30,6 +54,7 @@ function App() {
         setGlobalLoading={setGlobalLoading}
         showEntry={showEntry}
         setShowEntry={setShowEntry}
+        pokemonList={pokemonList}
       />
       <PokedexEntry
         currentPokemon={currentPokemon}
