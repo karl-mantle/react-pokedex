@@ -575,3 +575,11 @@ input[type=text]::placeholder {
 .hidden {
     display: none;
 }
+
+@media screen and (max-width: 800px) {
+
+    .hidden-mobile {
+        display: none;
+    }
+
+}
