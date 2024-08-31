@@ -522,7 +522,7 @@ input[type=text]::placeholder {
     background-color: cornflowerblue;
 }
 .fire {
-    background-color: firebrick;
+    background-color: orangered;
 }
 .grass {
     background-color: green;
@@ -567,7 +567,7 @@ input[type=text]::placeholder {
     background-color: blueviolet;
 }
 .dragon {
-    background: linear-gradient(blue, firebrick);
+    background: linear-gradient(blue 33%, firebrick);
 }
 
 /* keep at end, ta */

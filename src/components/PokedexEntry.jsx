@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { capitalise, addZeros, cleanDescription } from '../utils/TextUtils';
+import { cleanName, addZeros, cleanDescription } from '../utils/TextUtils';
 import Pokeball from '../svg/pokeball.svg';
 
 const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError, setEntryError, onClose }) => {
@@ -69,7 +69,7 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
         <div className={`entry-main${ entryLoading ? ' hidden' : '' }`}>
           <div className="entry-top-row">
             <div className="pkmn-id"><span>{addZeros(pokemonData.id)}</span></div>
-            <h2>{capitalise(pokemonData.name)}</h2>
+            <h2>{cleanName(pokemonData.name)}</h2>
             <span className="close" onClick={onClose}>&times; Close</span>
           </div>
           <div className="entry-factfile">

@@ -15,7 +15,7 @@ const Search = ({ setCurrentPokemon, setShowEntry, entryError }) => {
           setPokemonList(JSON.parse(storedPokemonList));
         }
         else {
-          const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000');
+          const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1025');
           const data = await response.json();
           setPokemonList(data.results);
           localStorage.setItem('pokemonList', JSON.stringify(data.results));
@@ -45,10 +45,10 @@ const Search = ({ setCurrentPokemon, setShowEntry, entryError }) => {
 
   const debounceSearch = (searchTerm) => {
     clearTimeout(debounceTimeout);
-    if (!searchTerm) return setFilteredList([]);
+    if (!searchTerm || searchTerm.length < 3) return setFilteredList([]);
 
     debounceTimeout = setTimeout(() => {
-      /* console.log(searchTerm); */
+      console.log(searchTerm);
       setFilteredList(pokemonList.filter(
         pokemon => pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
       ).slice(0, 3));
