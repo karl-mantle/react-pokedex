@@ -16,29 +16,38 @@ button, input[type=text], .suggestion {
 }
 
 button {
-  background-color: var(--border);
+  background-color: var(--teal-1);
 	border-radius: 1rem;
   box-shadow:rgba(0, 0, 0, 0.2) 0 0 2px 2px;
+  transition: background-color 0.5s, text-shadow 0.5s, box-shadow 0.5s;
 
   min-width: 25%;
 
   color: var(--light-text);
   font-weight: bold;
   cursor: pointer;
+
+  &:hover {
+    background-color: var(--teal-2);
+    text-shadow: 1px 1px black;
+    box-shadow:rgba(255, 255, 255, 0.2) 0 0 2px 2px;
+  }
 }
 
 input[type=text] {
 	background: transparent;
   width: 100%;
   margin: 0 1rem;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom 0.5s ease-in-out;
 
   &:focus {
     outline: none;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--teal-1);
   }
 
   &::placeholder {
-    color: var(--dark-text);
+    color: var(--text);
   }
 }
 
@@ -46,14 +55,14 @@ ul.suggestions {
   padding: 0 1rem;
 
   & li {
-    cursor:pointer;
+    cursor: pointer;
 
     &:hover {
       font-weight: bold;
     }
 
     &:not(:last-child) {
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--teal-1);
     }
   }
 }

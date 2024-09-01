@@ -10,15 +10,17 @@ const PokedexCard = ({ pokemon, setShowEntry, setCurrentPokemon }) => {
     <>
       <div className="frame" onClick={()=>{ setShowEntry(true); setCurrentPokemon(pokemon.id);}}>
         <div className="card">
-          <div className="id"><span>{addZeros(pokemon.id)}</span></div>
-          <div className="sprite"><img src={pokemon.sprites.front_default}  alt={pokemon.name}/></div>
           <div className="details">
-            <div className="name"><h3>{cleanName(pokemon.name)}</h3></div>
-            <div className="types">{types.map((type, index) => (
-              <span key={index} className={`type ${type}`}>{type.toUpperCase()} </span>
-              ))}
+            <div className="id"><span>{addZeros(pokemon.id)}</span></div>
+            <div>
+              <div className="name"><h3>{cleanName(pokemon.name)}</h3></div>
+              <div className="types">{types.map((type, index) => (
+                <span key={index} className={`type ${type}`}>{type.toUpperCase()} </span>
+                ))}
+              </div>
             </div>
           </div>
+          <div className="sprite"><img src={pokemon.sprites.front_default}  alt={pokemon.name}/></div>
         </div>
       </div>
     </>

@@ -12,5 +12,9 @@
     padding-top: .5rem;
 
     clip-path: polygon(100% 100%, 0 100%, 0 25%, 30% 25%, 35% 0, 100% 0);
+    
+    @media screen and (min-width: 768px) {
+      min-height: 125px;
+    }
   }
 }

@@ -2,27 +2,57 @@ import React, { useEffect, useState } from 'react';
 import '../css/header.css';
 
 const Header = ({ globalLoading, showEntry }) => {
-  const [loadingLights, setLoadingLights] = useState(globalLoading);
+  const [lightRed, setLightRed] = useState(false);
+  const [lightYellow, setLightYellow] = useState(false);
+  const [lightGreen, setLightGreen] = useState(false);
+  const [lightBlue, setLightBlue] = useState(showEntry);
 
-  useEffect( () => {
+  useEffect(() => {
+    let resetTime, yellowTime, yellowTimeOff, greenTime;
+
     if (globalLoading) {
-      setLoadingLights(true);
+      setLightRed(true);
+      const yellowTime = setTimeout(() => setLightYellow(true), 100);
+      const greenTime = setTimeout(() => {
+        setLightGreen(true);
+        setLightRed(false);
+      }, 200);
+      const yellowTimeOff = setTimeout(() => setLightYellow(false), 300);
+
+      return () => {
+        clearTimeout(yellowTime);
+        clearTimeout(greenTime);
+        clearTimeout(yellowTimeOff);
+      };
     }
     else {
-      const timer = setTimeout(() => setLoadingLights(false), 3000);
-      return () => clearTimeout(timer);
+      setLightRed(false);
+      resetTime = setTimeout(() => {
+        setLightYellow(false);
+        setLightGreen(false);
+      }, 2000);
     }
-  }, [globalLoading]);
+
+    setLightBlue(showEntry);
+    
+    return () => {
+      clearTimeout(resetTime);
+      clearTimeout(yellowTime);
+      clearTimeout(greenTime);
+      clearTimeout(yellowTimeOff);
+    };
+
+  }, [globalLoading, showEntry]);
 
   return (
     <div className="sticky">
       <header>
           <div className="lights">
-            <div className={`light large${ showEntry ? ' on' : '' }`}></div>
+            <div className={`light large${ lightBlue ? ' blue' : '' }`}></div>
             <div className="lights">
-              <div className={`light${loadingLights ? ' red' : ''}`}></div>
-              <div className={`light${loadingLights ? ' yel' : ''}`}></div>
-              <div className={`light${loadingLights ? ' grn' : ''}`}></div>
+              <div className={`light${lightRed ? ' red' : ''}`}></div>
+              <div className={`light${lightYellow ? ' yellow' : ''}`}></div>
+              <div className={`light${lightGreen ? ' green' : ''}`}></div>
             </div>
           </div>
 

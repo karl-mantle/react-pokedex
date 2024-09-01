@@ -64,6 +64,7 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
 
   return (
     <div className={`modal${ !showEntry ? ' hidden' : ''}`}>
+      <div className="background"></div>
       <div className="frame entry">
 
         { entryLoading ?  (
@@ -103,7 +104,7 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
             <button className={`${active === 'third' ? 'active' : ''}`} onClick={() => selectTab('third', setActive)}>Moves</button>
           </div>
 
-          <div className="frame">
+          <div className="frame tab">
             <div id="first" className={`stats ${active === 'first' ? '' : 'hidden'}`}>
               <table>
                 <thead>

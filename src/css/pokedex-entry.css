@@ -1,7 +1,22 @@
+.background {
+  background-color: rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+
+  max-width: 768px;
+  margin: 0 auto;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
 .modal:has(.entry) {
   position: fixed;
-  max-width: calc(800px - 2rem);
-  margin: 7rem 1rem;
+  max-width: calc(768px - 2rem);
+  margin: 7rem auto;
   z-index: 15;
 
   top: 0;
@@ -12,19 +27,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  
+  @media screen and (min-width: 768px) {
+    margin: 9rem auto;
+  }
 }
 
 .entry {
   background: linear-gradient(0deg, var(--blue-1) 40%, var(--blue-2) 80%);
   display: flex;
+  margin: 0 1rem;
   padding: 1.25rem;
   height: 100%;
+  max-width: 475px;
+  z-index: 16;
 
   overflow-y: auto;
 
   & .top-row {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    justify-items: center;
     align-items: center;
   
     margin-bottom: 1rem;
@@ -73,33 +96,6 @@
   75%, 100% { transform: rotate(180deg); }
 }
 
-.tabber {
-  display: flex;
-  justify-content: space-evenly;
-  margin-bottom: 1rem;
-  
-  & button {
-    border-radius: .5rem;
-    box-shadow: none;
-    flex-grow: 1;
-
-    &:not(:first-child) {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-
-    &:not(:last-child) {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-
-    &.active {
-      background-color: var(--active);
-      text-shadow: 1px 1px black;
-    }
-  }
-}
-
 .stats table {
 
   & th {
@@ -109,8 +105,8 @@
   }
 
   & td {
-    border-bottom: 1px solid var(--border);
-    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--teal-1);
+    border-right: 1px solid var(--teal-1);
   }
 
   & tr :nth-child(2) {
