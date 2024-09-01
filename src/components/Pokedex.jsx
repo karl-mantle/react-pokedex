@@ -44,7 +44,7 @@ const Pokedex = ({ setCurrentPokemon, globalLoading, setGlobalLoading, showEntry
           const start = currentPage * limit;
           const end = start + limit;
           const currentPokemonList = pokemonList.slice(start, end);
-
+          
           const fetchPromises = currentPokemonList.map(pokemon => fetchPokemonDetails(pokemon.url));
           const pokemonDetails = await Promise.all(fetchPromises);
           setPokemonDisplayed(pokemonDetails);
@@ -61,18 +61,19 @@ const Pokedex = ({ setCurrentPokemon, globalLoading, setGlobalLoading, showEntry
       finally {
         setGlobalLoading(false);
       }
-    }
-    
-    fetchPokedexCards();
+    };
 
-  }, [limit, currentPage, pokemonList, setGlobalLoading])
+    if (pokemonList.length > 0) {
+      fetchPokedexCards();
+    }
+  }, [currentPage, pokemonList, setGlobalLoading]);
 
   return (
     <div>
 
       { pokedexError ?  (
-        <div className="error">
-          <p>Sorry, there was an issue fetching the Pokédex!</p>
+        <div className="message-box">
+          <p>An error occurred fetching Pokédex data.</p>
         </div>
       ) : null }
 
@@ -87,9 +88,9 @@ const Pokedex = ({ setCurrentPokemon, globalLoading, setGlobalLoading, showEntry
         ))}
       </div>
 
-      <div className={`pagination ${ globalLoading || pokedexError ? 'hidden' : '' }`}>
-        <button className={`prev ${ currentPage === 0 ? 'hidden' : '' }`} onClick={handlePreviousPage} >Prev</button>
-        <button className={`next ${ currentPage === 0 ? 'end' : '' }`} onClick={handleNextPage}>Next</button>
+      <div className={`pagination${ globalLoading || pokedexError ? ' hidden' : '' }`}>
+        <button className={`prev${ currentPage === 0 ? ' hidden' : '' }`} onClick={handlePreviousPage} >Prev</button>
+        <button className={`next${ currentPage === 0 ? ' end' : '' }`} onClick={handleNextPage}>Next</button>
       </div>
 
     </div>

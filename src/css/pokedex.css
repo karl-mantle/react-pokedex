@@ -1,15 +1,15 @@
+.pokedex {
+  display: flex;
+  flex-direction: column;
+}
+
 .pagination {
   display: flex;
   justify-content: space-between;
 
-  padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .end {
   margin-left: auto;
-}
-
-.pokedex {
-  display: flex;
-  flex-direction: column;
 }

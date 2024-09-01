@@ -53,7 +53,7 @@ const Search = ({ setCurrentPokemon, setShowEntry, showEntry, entryError, pokemo
 
   return (
     <>
-      <div className="search">
+      <div className="frame search">
       {/* <div className={`search${ showEntry ? ' hidden' : '' }`}> */}
         <form onSubmit={(e) => { e.preventDefault(); handleSearch(searchInput); }}>
           <input
@@ -79,7 +79,7 @@ const Search = ({ setCurrentPokemon, setShowEntry, showEntry, entryError, pokemo
       </div>
 
       { entryError ?  (
-          <div className="error">
+          <div className="message-box">
             <p>Please enter a valid Pokémon name or ID number.</p>
           </div>
         ) : null }

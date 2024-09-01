@@ -1,48 +1,13 @@
-.card {
-	background: transparent;
-	border: .25rem solid var(--border);
-	border-radius: 1rem;
-
-  box-shadow:rgba(0, 0, 0, 0.2) 0 0 2px 2px;
-
-  margin: 0 0 1rem;
+.frame:has(.card) {
+  cursor: pointer;
+  margin-bottom: 1rem;
 }
 
-.card-details {
+.card {
   display: grid;
   grid-template-columns: 25% repeat(2, 1fr);
   align-items: center;
   gap: .5rem;
 
   padding: 0 .5rem;
-}
-
-.pkmn-id {
-  background-color: var(--border);
-  border-radius: .75rem;
-
-  padding: .25rem;
-  justify-self: start;
-}
-
-.pkmn-id span {
-  background-color: var(--blue-1);
-  border-radius: 50%;
-
-  display: block;
-  padding: .25rem;
-  margin: .25rem;
-  
-  color: var(--text);
-  font-weight: bold;
-}
-
-.pkmn-name {
-  margin-bottom: .5rem;
-  font-size: 1.5rem;
-  text-shadow: 1px 1px var(--text-dark);
-}
-
-.pkmn-sprite {
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }

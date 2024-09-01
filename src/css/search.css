@@ -1,17 +1,13 @@
 .search {
-  background: transparent;
-  border: .25rem solid var(--border);
-  border-radius: 1rem;
-
   display: flex;
   flex-direction: column;
 
   padding: 1rem .5rem;
   margin: 1rem 0;
-}
 
-.search form {
-  display: flex;
+  & form {
+    display: flex;
+  }
 }
 
 button, input[type=text], .suggestion {
@@ -26,35 +22,38 @@ button {
 
   min-width: 25%;
 
-  color: var(--text-dark);
+  color: var(--light-text);
   font-weight: bold;
+  cursor: pointer;
 }
 
 input[type=text] {
 	background: transparent;
   width: 100%;
   margin: 0 1rem;
-  color: var(--text);
-  
-  font-family: 'Pixel Operator', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
+
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  &::placeholder {
+    color: var(--dark-text);
+  }
 }
 
-input[type=text]:focus {
-  border: none;
-  outline: none;
-  border-bottom: 1px solid var(--border);
-}
-
-input[type=text]::placeholder {
-  color: var(--text);
-}
-
-.suggestions {
+ul.suggestions {
   padding: 0 1rem;
-}
 
-.suggestions .suggestion:not(:last-child) {
-  border-bottom: 1px solid var(--border);
+  & li {
+    cursor:pointer;
+
+    &:hover {
+      font-weight: bold;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--border);
+    }
+  }
 }

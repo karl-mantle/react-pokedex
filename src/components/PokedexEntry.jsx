@@ -57,42 +57,40 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
   const types = pokemonData.types.map(type => type.type.name);
 
   return (
-    <div className={`entry-container${ !showEntry ? ' hidden' : '' }`}>
-      <div className="entry">
+    <div className={`modal${ !showEntry ? ' hidden' : '' }`}>
+      <div className="frame entry">
 
         { entryLoading ?  (
-          <div className="entry-loading">
-              <div>
-                <img src={Pokeball} alt="" className="pokeball"/>
-              </div>
+          <div className="loading">
+            <img src={Pokeball} alt="" className="pokeball"/>
           </div>
         ) : null }
 
-        <div className={`entry-main${ entryLoading ? ' hidden' : '' }`}>
-          <div className="entry-top-row">
-            <div className="pkmn-id"><span>{addZeros(pokemonData.id)}</span></div>
-            <h2>{cleanName(pokemonData.name)}</h2>
+        <div className={`${ entryLoading ? ' hidden' : '' }`}>
+          <div className="top-row">
+            <div className="id"><span>{addZeros(pokemonData.id)}</span></div>
+            <div className="name"><h2>{cleanName(pokemonData.name)}</h2></div>
             <span className="close" onClick={onClose}>&times; Close</span>
           </div>
-          <div className="entry-factfile">
-            <div className="pkmn-sprite"><img src={pokemonData.sprites.front_default} alt={pokemonData.name} className="pokedex-entry-img"/></div>
+          <div className="fact-file">
+            <div className="sprite"><img src={pokemonData.sprites.front_default} alt={pokemonData.name}/></div>
             <ul>
               <li><strong>Species:</strong></li>
               <li>{pokemonGenus}</li>
               <li><strong>HT:</strong> {pokemonData.height}' <strong>WT:</strong> {pokemonData.weight} lbs</li>
               <li><strong>Type(s):</strong></li>
               <li className="types">{types.map((type, index) => (
-                  <span key={index} className={`type ${type}`}>{type.toUpperCase()} </span>
+                  <span key={index} className={`type ${type}`}>{type.toUpperCase()}</span>
                   ))}
               </li>
             </ul>
           </div>
-          <div className="entry-description">
+          <div className="message-box">
             <p>{cleanDescription(description)}</p>
           </div>
-          
-          <div className="entry-table">
-            <table className="table-stats">
+
+          <div className="stats">
+            <table>
               <thead>
                 <tr>
                   <th>Stat</th>

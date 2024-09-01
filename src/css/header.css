@@ -1,99 +1,73 @@
-/* header styles */
-
-header {
-  background: url('../svg/texture.svg'),
-  linear-gradient(var(--red-1), var(--red-2));
-
-  display: flex;
-  justify-content: start;
-
-  min-height: 100px;
-  padding-top: .5rem;
-
-  clip-path: polygon(0 0, 100% 0, 100% 75%, 30% 75%, 25% 100%, 0 100%);
-}
-
-.container {
-  position: sticky;
+.sticky:has(header) {
   top: 0;
-  z-index: 25;
+
+  & header {
+    background: url('../svg/texture.svg'),
+    linear-gradient(var(--red-1), var(--red-2));
   
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
-}
-
-.header-content {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: space-between;
-}
-
-.header-title {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  h1 {
-    font-size: 1.25rem;
-    text-align: center;
-    color: var(--text-dark);
+    display: flex;
+    justify-content: start;
+  
+    min-height: 100px;
+    padding-top: .5rem;
+  
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 30% 75%, 25% 100%, 0 100%);
   }
 }
 
-/* lights styles */
+header {
+  & .content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
 
-.main-light {
-  background: url('../svg/texture.svg'), radial-gradient(rgba(105, 105, 105, 0.85) 40%, rgba(0, 0, 0, 0.6) 90%);
-  box-shadow:rgba(0, 0, 0, 0.2) 0 -4px 16px 6px, inset rgba(0, 0, 0, 0.6) 0 -4px 24px, rgba(255, 255, 255, 0.5) 0 4px 16px;
+    & h1 {
+      text-align: center;
+    }
+  }
 
-  border: 6px solid #fff;
-  border-radius: 50%;
-  
-  flex-shrink: 0;
-
-  width: 5rem;
-  height: 5rem;
-
-  margin: 0 .75rem .5rem;
-}
-
-.main-light.on {
-  background: linear-gradient(var(--blue-1), var(--blue-2));
-  box-shadow: inset rgb(0 0 255 / 50%) -4px -8px 8px 10px, rgb(0 0 255 / 50%) 0 0 20px 4px;
-  box-shadow:rgba(0, 255, 255, 0.2) 0 -2px 8px 4px, inset rgba(0, 125, 125, 1) -4px -7px 24px, rgba(0, 255, 255, 0.5) 0 6px 20px;
-}
-
-.lights {
-  display: flex;
-  justify-content: space-between;
-}
-
-.loading-lights {
-  display: flex;
+  & .lights { 
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .light {
   background: radial-gradient(rgba(105, 105, 105, 0.85) 40%, rgba(100, 100, 100, 0.6) 80%);
-  box-shadow:rgba(0, 0, 0, 0.2) 0 -2px 8px 4px, inset rgba(0, 0, 0, 0.6) 0 -2px 12px, rgba(255, 255, 255, 0.5) 0 6px 12px;
-
   border-radius: 50%;
+  box-shadow:rgba(0, 0, 0, 0.2) 0 -2px 8px 4px, inset rgba(0, 0, 0, 0.6) 0 -2px 12px, rgba(255, 255, 255, 0.5) 0 6px 12px;
 
   width: 1.5rem;
   height: 1.5rem;
-
   margin: 0 .25rem;
-}
 
-.light.red {
-  animation: blink-red 4s infinite;
-}
+  &.red {
+    animation: blink-red 3s infinite;
+  }
+  &.yel {
+    animation: blink-yel 1s infinite;
+  }
+  &.grn {
+    animation: blink-grn 2s infinite;
+  }
 
-.light.yel {
-  animation: blink-yel 2s infinite;
-}
-
-.light.grn {
-  animation: blink-grn 3s infinite;
+  &.large {
+    border: 6px solid #fff;
+    box-shadow:rgba(0, 0, 0, 0.2) 0 -4px 16px 6px, inset rgba(0, 0, 0, 0.6) 0 -4px 24px, rgba(255, 255, 255, 0.5) 0 4px 16px;
+    
+    flex-shrink: 0;
+  
+    width: 5rem;
+    height: 5rem;
+    margin: 0 .75rem .5rem;
+  
+    &.on {
+      background: linear-gradient(var(--blue-1), var(--blue-2));
+      box-shadow: inset rgb(0 0 255 / 50%) -4px -8px 8px 10px, rgb(0 0 255 / 50%) 0 0 20px 4px;
+      box-shadow:rgba(0, 255, 255, 0.2) 0 -2px 8px 4px, inset rgba(0, 125, 125, 1) -4px -7px 24px, rgba(0, 255, 255, 0.5) 0 6px 20px;
+    }
+  }
 }
 
 @keyframes blink-red {
@@ -127,5 +101,4 @@ header {
     background: linear-gradient(var(--green-1), var(--green-2));
     box-shadow:rgba(0, 255, 0, 0.2) 0 -2px 8px 4px, inset rgba(125, 125, 125, 0.6) 0 -2px 12px, rgba(0, 255, 0, 0.2) 0 6px 12px;
   }
-
 }

@@ -3,7 +3,7 @@ import '../css/footer.css';
 
 const Footer = () => {
   useEffect(() => {
-    const footer = document.querySelector('.container:has(footer)');
+    const footer = document.querySelector('.sticky:has(footer)');
 
     const hideFooter = () => {
       footer.classList.add('hidden-mobile');
@@ -33,7 +33,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="sticky">
       <footer>
       </footer>
     </div>
