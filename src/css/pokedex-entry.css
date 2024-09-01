@@ -31,11 +31,11 @@
   }
 
   & .close {
+    padding: .5rem;
     cursor: pointer;
 
     &:hover {
       font-weight: bold;
-      text-decoration: underline;
     }
   }
 }
@@ -43,8 +43,11 @@
 .fact-file {
   display: flex;
   justify-content: space-around;
+  margin-bottom: 1rem;
 
-  margin-bottom: 1.5rem;
+  & ul li {
+    margin-bottom: .25rem;
+  }
 
   & ul li:nth-child(4) {
     margin-bottom: .5rem;
@@ -70,10 +73,47 @@
   75%, 100% { transform: rotate(180deg); }
 }
 
-stats table {
-  align-self: center;
+.tabber {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 1rem;
+  
+  & button {
+    border-radius: .5rem;
+    box-shadow: none;
+    flex-grow: 1;
+
+    &:not(:first-child) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    &:not(:last-child) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &.active {
+      background-color: var(--active);
+      text-shadow: 1px 1px black;
+    }
+  }
+}
+
+.stats table {
 
   & th {
     font-weight: bold;
+    text-align: left;
+    padding-bottom: .25rem;
+  }
+
+  & td {
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+
+  & tr :nth-child(2) {
+    text-align: center;
   }
 }

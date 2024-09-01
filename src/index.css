@@ -16,6 +16,7 @@
   --dark-text: teal;
   --light-text: white;
   --background: teal;
+  --active: rgb(0, 200, 200);
   --border: teal;
 
   --blue-1: lightcyan;
@@ -103,11 +104,13 @@ main {
 	border: .25rem solid var(--border);
 	border-radius: 1rem;
   box-shadow:rgba(0, 0, 0, 0.2) 0 0 2px 2px;
+  padding: 1rem;
 }
 
 .message-box {
   background-color: var(--border);
   border-radius: 1rem;
+  box-shadow:rgba(0, 0, 0, 0.2) 0 0 2px 2px;
 
   padding: 1rem;
   margin-bottom: 1rem;
@@ -120,6 +123,7 @@ main {
 .id {
   background-color: var(--border);
   border-radius: .75rem;
+  box-shadow:rgba(0, 0, 0, 0.2) 0 0 2px 2px;
 
   padding: .25rem;
   justify-self: start;

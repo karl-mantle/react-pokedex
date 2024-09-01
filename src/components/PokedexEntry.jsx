@@ -8,6 +8,11 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
   const [pokemonData, setPokemonData] = useState(null);
   const [speciesData, setSpeciesData] = useState(null);
   const [entryLoading, setEntryLoading] = useState(false);
+  const [active, setActive] = useState('first');
+  
+  const selectTab = (tab, setActive) => {
+    setActive(tab);
+  };
 
   useEffect ( () => {
     const fetchPokedexEntry = async () => {
@@ -37,6 +42,7 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
 
     if (showEntry) {
       fetchPokedexEntry().finally(() => setGlobalLoading(false));
+      selectTab('first', setActive);
     }
 
   }, [showEntry, currentPokemon, setGlobalLoading, setPokemonData, setSpeciesData, setEntryError]);
@@ -57,7 +63,7 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
   const types = pokemonData.types.map(type => type.type.name);
 
   return (
-    <div className={`modal${ !showEntry ? ' hidden' : '' }`}>
+    <div className={`modal${ !showEntry ? ' hidden' : ''}`}>
       <div className="frame entry">
 
         { entryLoading ?  (
@@ -66,12 +72,13 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
           </div>
         ) : null }
 
-        <div className={`${ entryLoading ? ' hidden' : '' }`}>
+        <div className={`${ entryLoading ? ' hidden' : ''}`}>
           <div className="top-row">
             <div className="id"><span>{addZeros(pokemonData.id)}</span></div>
             <div className="name"><h2>{cleanName(pokemonData.name)}</h2></div>
-            <span className="close" onClick={onClose}>&times; Close</span>
+            <div className="close" onClick={onClose}>&times; Close</div>
           </div>
+          
           <div className="fact-file">
             <div className="sprite"><img src={pokemonData.sprites.front_default} alt={pokemonData.name}/></div>
             <ul>
@@ -85,30 +92,44 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
               </li>
             </ul>
           </div>
+
           <div className="message-box">
             <p>{cleanDescription(description)}</p>
           </div>
 
-          <div className="stats">
-            <table>
-              <thead>
-                <tr>
-                  <th>Stat</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stats.map((stat, index) => (
-                  <tr key={index}>
-                    <td>{stat.name}</td>
-                    <td>{stat.value}</td>
+          <div className="tabber">
+            <button className={`${active === 'first' ? 'active' : ''}`} onClick={() => selectTab('first', setActive)}>Stats</button>
+            <button className={`${active === 'second' ? 'active' : ''}`} onClick={() => selectTab('second', setActive)}>Evolution</button>
+            <button className={`${active === 'third' ? 'active' : ''}`} onClick={() => selectTab('third', setActive)}>Moves</button>
+          </div>
+
+          <div className="frame">
+            <div id="first" className={`stats ${active === 'first' ? '' : 'hidden'}`}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Stat</th>
+                    <th>Value</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {stats.map((stat, index) => (
+                    <tr key={index}>
+                      <td>{cleanName(stat.name)}</td>
+                      <td>{stat.value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div id="second" className={`${active === 'second' ? '' : 'hidden'}`}>
+              Evolution chain placeholder.
+            </div>
+            <div id="third" className={`${active === 'third' ? '' : 'hidden'}`}>
+              Moves placeholder.
+            </div>
           </div>
         </div>
-
       </div>
     </div>
   );
