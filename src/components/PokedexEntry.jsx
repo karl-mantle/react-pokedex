@@ -78,7 +78,7 @@ const PokedexEntry = ({ currentPokemon, setCurrentPokemon, setGlobalLoading, sho
           </div>
         ) : null }
 
-        <div className={`${ entryLoading ? ' hidden' : ''}`}>
+        <div className={`details${ entryLoading ? ' hidden' : ''}`}>
           <div className="top-row">
             <div className="id"><span>{addZeros(pokemonData.id)}</span></div>
             <div className="name"><h2>{cleanName(pokemonData.name)}</h2></div>

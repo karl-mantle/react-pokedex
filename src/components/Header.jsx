@@ -57,7 +57,6 @@ const Header = ({ globalLoading, showEntry }) => {
           </div>
 
           <div className="content">
-            <h1>React Pokédex</h1>
           </div>
       </header>
     </div>

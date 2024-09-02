@@ -2,8 +2,6 @@
   display: flex;
   flex-direction: column;
 
-  padding: 0 1rem;
-
   & .evolution {
     display: grid;
     grid-template-columns: 1fr 2fr;
