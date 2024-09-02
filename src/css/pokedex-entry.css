@@ -92,7 +92,7 @@
   overflow: hidden;
 
   & .pokeball {
-    height: 50vh;
+    height: 40vh;
     animation: rotate 1s infinite;
   }
 }

@@ -3,12 +3,13 @@ import { cleanName, addZeros, cleanDescription } from '../utils/TextUtils';
 import Pokeball from '../svg/pokeball.svg';
 import '../css/pokedex-entry.css';
 import '../css/types.css';
+import Evolutions from "./EvolutionChain";
 
-const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError, setEntryError, onClose }) => {
+const PokedexEntry = ({ currentPokemon, setCurrentPokemon, setGlobalLoading, showEntry, setShowEntry, entryError, setEntryError, onClose }) => {
   const [pokemonData, setPokemonData] = useState(null);
   const [speciesData, setSpeciesData] = useState(null);
   const [entryLoading, setEntryLoading] = useState(false);
-  const [active, setActive] = useState('first');
+  const [active, setActive] = useState('firstTab');
   
   const selectTab = (tab, setActive) => {
     setActive(tab);
@@ -43,7 +44,7 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
     if (showEntry) {
       fetchPokedexEntry().finally(() => setGlobalLoading(false));
       document.body.classList.add('lock');
-      selectTab('first', setActive);
+      selectTab('firstTab', setActive);
     }
     else {
       document.body.classList.remove('lock');
@@ -107,13 +108,13 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
           </div>
 
           <div className="tabber">
-            <button className={`${active === 'first' ? 'active' : ''}`} onClick={() => selectTab('first', setActive)}>Stats</button>
-            <button className={`${active === 'second' ? 'active' : ''}`} onClick={() => selectTab('second', setActive)}>Evolution</button>
-            <button className={`${active === 'third' ? 'active' : ''}`} onClick={() => selectTab('third', setActive)}>Moves</button>
+            <button className={`${active === 'firstTab' ? 'active' : ''}`} onClick={() => selectTab('firstTab', setActive)}>Stats</button>
+            <button className={`${active === 'secondTab' ? 'active' : ''}`} onClick={() => selectTab('secondTab', setActive)}>Evolution</button>
+            <button className={`${active === 'thirdTab' ? 'active' : ''}`} onClick={() => selectTab('thirdTab', setActive)}>Moves</button>
           </div>
 
           <div className="frame tab">
-            <div id="first" className={`stats ${active === 'first' ? '' : 'hidden'}`}>
+            <div id="firstTab" className={`stats ${active === 'firstTab' ? '' : 'hidden'}`}>
               <table>
                 <thead>
                   <tr>
@@ -131,10 +132,10 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
                 </tbody>
               </table>
             </div>
-            <div id="second" className={`${active === 'second' ? '' : 'hidden'}`}>
-              Evolution chain placeholder.
+            <div id="secondTab" className={`${active === 'secondTab' ? '' : 'hidden'}`}>
+              <Evolutions active={active} speciesData={speciesData} setGlobalLoading={setGlobalLoading} setCurrentPokemon={setCurrentPokemon} setShowEntry={setShowEntry}/>
             </div>
-            <div id="third" className={`${active === 'third' ? '' : 'hidden'}`}>
+            <div id="thirdTab" className={`${active === 'thirdTab' ? '' : 'hidden'}`}>
               Moves placeholder.
             </div>
           </div>

@@ -61,6 +61,7 @@ function App() {
         setCurrentPokemon={setCurrentPokemon}
         setGlobalLoading={setGlobalLoading}
         showEntry={showEntry}
+        setShowEntry={setShowEntry}
         entryError={entryError}
         setEntryError={setEntryError}
         onClose={()=> {
