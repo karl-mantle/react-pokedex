@@ -54,25 +54,27 @@ const Evolutions = ({ speciesData, setGlobalLoading, active, setShowEntry, setCu
     <>
       <div className="evolution-chain">
 
-      { chainLoading ?  (
+        { chainLoading ?  (
           <div className="loading chain">
             <img src={Pokeball} alt="" className="pokeball"/>
           </div>
         ) : null }
 
-        {evolutionChain.map((pokemon, index) => (
-          <div key={index} className="evolution" onClick={()=>{ setShowEntry(true); setCurrentPokemon(pokemon.name);}}>
-            <div className="sprite"><img src={pokemon.image}  alt={pokemon.name}/></div>
-            <div className="">
-              <div className="name"><h3>{cleanName(pokemon.name)}</h3></div>
-              <div className="types">
-                {pokemon.types.map(type => (
-                  <span key={type} className={`type ${type}`}>{type.toUpperCase()}</span>
-                ))}
+        <div className={`${chainLoading ? ' hidden' : ''}`}>
+          {evolutionChain.map((pokemon, index) => (
+            <div key={index} className="evolution" onClick={()=>{ setShowEntry(true); setCurrentPokemon(pokemon.name);}}>
+              <div className="sprite"><img src={pokemon.image}  alt={pokemon.name}/></div>
+              <div className="">
+                <div className="name"><h3>{cleanName(pokemon.name)}</h3></div>
+                <div className="types">
+                  {pokemon.types.map(type => (
+                    <span key={type} className={`type ${type}`}>{type.toUpperCase()}</span>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </>
   );
