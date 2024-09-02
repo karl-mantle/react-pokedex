@@ -60,42 +60,38 @@ code {
 
 main {
   margin: 0 1rem;
-  position: relative;
+
+  &::before, &::after {
+    content: '';
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+  }
 
   &::before {
     animation: degauss 10s infinite ease-in-out;
-    content: '';
     opacity: .5;
-    pointer-events: none;
-    
-    height: 25%;
-    max-width: 768px;
-    margin: 0 -1rem;
-
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
     z-index: 9;
   }
 
   &::after {
-    content: '';
-
     background-image: url('./svg/noise.svg'), linear-gradient(rgba(165, 165, 165, 0.4), transparent 4px, var(--blue-2));
     background-size: 4px 4px;
     pointer-events: none;
-
-    max-width: 768px;
-    margin: 0 auto;
     z-index: 20;
+  }
 
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  @media screen and (min-width: 768px) {
+    &::before, &::after {
+      max-width: 768px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
 }
 
@@ -222,6 +218,11 @@ main {
       text-shadow: 1px 1px black;
     }
   }
+}
+
+.lock {
+  height: 100vh;
+  overflow-y: hidden;
 }
 
 .hidden {

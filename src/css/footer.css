@@ -2,8 +2,7 @@
   bottom: 0;
 
   & footer {
-    background: url('../svg/texture.svg'),
-    linear-gradient(var(--red-2), var(--red-1));
+    background-image: url('../svg/footer-100.svg');
 
     display: flex;
     justify-content: start;
@@ -14,6 +13,7 @@
     clip-path: polygon(100% 100%, 0 100%, 0 25%, 30% 25%, 35% 0, 100% 0);
     
     @media screen and (min-width: 768px) {
+      background-image: url('../svg/footer-125.svg');
       min-height: 125px;
     }
   }

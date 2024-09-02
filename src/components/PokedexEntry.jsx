@@ -42,7 +42,11 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
 
     if (showEntry) {
       fetchPokedexEntry().finally(() => setGlobalLoading(false));
+      document.body.classList.add('lock');
       selectTab('first', setActive);
+    }
+    else {
+      document.body.classList.remove('lock');
     }
 
   }, [showEntry, currentPokemon, setGlobalLoading, setPokemonData, setSpeciesData, setEntryError]);
@@ -77,7 +81,11 @@ const PokedexEntry = ({ currentPokemon, setGlobalLoading, showEntry, entryError,
           <div className="top-row">
             <div className="id"><span>{addZeros(pokemonData.id)}</span></div>
             <div className="name"><h2>{cleanName(pokemonData.name)}</h2></div>
-            <div className="close" onClick={onClose}>&times; Close</div>
+            <div className="close" onClick={onClose}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </div>
           </div>
           
           <div className="fact-file">
