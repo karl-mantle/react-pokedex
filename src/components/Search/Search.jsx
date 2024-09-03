@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../css/search.css';
+import './search.css';
 
 let debounceTimeout;
 

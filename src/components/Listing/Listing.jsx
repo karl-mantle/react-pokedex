@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import PokedexCard from '../components/PokedexCard';
-import '../css/pokedex.css';
+import Card from './Card';
+import './listing.css';
 
-const Pokedex = ({ setCurrentPokemon, globalLoading, setGlobalLoading, showEntry, setShowEntry, pokemonList }) => {
+const Listing = ({ setCurrentPokemon, globalLoading, setGlobalLoading, setShowEntry, pokemonList }) => {
   const [pokemonDisplayed, setPokemonDisplayed] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [pokedexError, setPokedexError] = useState(false);
@@ -40,12 +40,21 @@ const Pokedex = ({ setCurrentPokemon, globalLoading, setGlobalLoading, showEntry
       setGlobalLoading(true);
 
       try {
-        if (pokemonList && pokemonList.length > 0) {
+        let currentPokemonList = pokemonList;
+
+        if (!currentPokemonList || currentPokemonList.length === 0) {
+          const localPokemonList = localStorage.getItem('pokemonList');
+          if (localPokemonList) {
+            currentPokemonList = JSON.parse(localPokemonList);
+          }
+        }
+
+        if (currentPokemonList && currentPokemonList.length > 0) {
           const start = currentPage * limit;
           const end = start + limit;
-          const currentPokemonList = pokemonList.slice(start, end);
-          
-          const fetchPromises = currentPokemonList.map(pokemon => fetchPokemonDetails(pokemon.url));
+          const currentListings = currentPokemonList.slice(start, end);
+
+          const fetchPromises = currentListings.map(pokemon => fetchPokemonDetails(pokemon.url));
           const pokemonDetails = await Promise.all(fetchPromises);
           setPokemonDisplayed(pokemonDetails);
         }
@@ -63,9 +72,7 @@ const Pokedex = ({ setCurrentPokemon, globalLoading, setGlobalLoading, showEntry
       }
     };
 
-    if (pokemonList.length > 0) {
-      fetchPokedexCards();
-    }
+    fetchPokedexCards();
   }, [currentPage, pokemonList, setGlobalLoading]);
 
   return (
@@ -77,9 +84,9 @@ const Pokedex = ({ setCurrentPokemon, globalLoading, setGlobalLoading, showEntry
         </div>
       ) : null }
 
-      <div className={`pokedex ${ pokedexError ? 'hidden' : '' }`}>
+      <div className={`listing ${ pokedexError ? 'hidden' : '' }`}>
         {pokemonDisplayed.map((pokemon, index) => (
-          <PokedexCard
+          <Card
             key={index}
             pokemon={pokemon}
             setCurrentPokemon={setCurrentPokemon}
@@ -97,4 +104,4 @@ const Pokedex = ({ setCurrentPokemon, globalLoading, setGlobalLoading, showEntry
   )
 }
 
-export default Pokedex;
+export default Listing;

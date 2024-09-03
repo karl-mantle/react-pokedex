@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { cleanName } from '../utils/TextUtils';
-import Pokeball from '../svg/pokeball.svg';
-import '../css/chain.css';
+import { cleanName } from '../../utils/Cleaners.js';
+import Pokeball from '../../assets/svg/pokeball.svg';
+import './evolution-chain.css';
 
 
-const Evolutions = ({ speciesData, setGlobalLoading, active, setShowEntry, setCurrentPokemon }) => {
+const EvolutionChain = ({ speciesData, setGlobalLoading, active, setShowEntry, setCurrentPokemon }) => {
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [chainLoading, setChainLoading] = useState([]);
 
@@ -80,4 +80,4 @@ const Evolutions = ({ speciesData, setGlobalLoading, active, setShowEntry, setCu
   );
 }
 
-export default Evolutions;
+export default EvolutionChain;

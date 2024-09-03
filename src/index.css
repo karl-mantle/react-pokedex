@@ -1,13 +1,13 @@
 @font-face {
   font-family: 'Pixel Operator';
-  src: url('./fonts/PixelOperatorMono.ttf') format('truetype');
+  src: url('./assets/fonts/PixelOperatorMono.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Pixel Operator';
-  src: url('./fonts/PixelOperatorMono-Bold.ttf') format('truetype');
+  src: url('./assets/fonts/PixelOperatorMono-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
@@ -80,7 +80,7 @@ main {
   }
 
   &::after {
-    background-image: url('./svg/noise.svg'), linear-gradient(rgba(165, 165, 165, 0.4), transparent 4px, var(--blue-2));
+    background-image: url('./assets/svg/noise.svg'), linear-gradient(rgba(165, 165, 165, 0.4), transparent 4px, var(--blue-2));
     background-size: 4px 4px;
     pointer-events: none;
     z-index: 20;
@@ -114,8 +114,8 @@ main {
 
 #root {
   background: 
-    url('./svg/pokeball-bg.svg'),
-    url('./svg/noise.svg'),
+    url('./assets/svg/pokeball-bg.svg'),
+    url('./assets/svg/noise.svg'),
     linear-gradient(0deg, var(--blue-1) 40%, var(--blue-2) 80%);
   background-attachment: fixed;
   border-right: rgba(0, 0, 0, 0.5) solid 2px;
@@ -226,11 +226,11 @@ main {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 @media screen and (max-width: 800px) {
   .hidden-mobile {
-      display: none;
+      display: none !important;
   }
 }

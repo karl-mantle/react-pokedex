@@ -2,7 +2,7 @@
   bottom: 0;
 
   & footer {
-    background-image: url('../svg/footer-100.svg');
+    background-image: url('../../assets/svg/footer-100.svg');
 
     display: flex;
     flex-direction: column-reverse;
@@ -13,7 +13,7 @@
     clip-path: polygon(100% 100%, 0 100%, 0 25%, 30% 25%, 35% 0, 100% 0);
     
     @media screen and (min-width: 768px) {
-      background-image: url('../svg/footer-125.svg');
+      background-image: url('../../assets/svg/footer-125.svg');
       min-height: 125px;
       clip-path: polygon(100% 100%, 0 100%, 0 25%, 65% 25%, 70% 0, 100% 0);
     }
@@ -27,7 +27,6 @@ footer {
     gap: .75rem;
     filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
 
-    font-size: 1.25rem;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     text-decoration: none;
     color: var(--light-text);

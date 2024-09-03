@@ -1,8 +1,8 @@
-import { cleanName, addZeros } from '../utils/TextUtils';
-import '../css/pokedex-card.css';
-import '../css/types.css';
+import { cleanName, cleanNumber } from '../../utils/Cleaners.js';
+import './card.css';
+import '../types.css';
 
-const PokedexCard = ({ pokemon, setShowEntry, setCurrentPokemon }) => {
+const Card = ({ pokemon, setShowEntry, setCurrentPokemon }) => {
 
   const types = pokemon.types.map(type => type.type.name);
 
@@ -11,7 +11,7 @@ const PokedexCard = ({ pokemon, setShowEntry, setCurrentPokemon }) => {
       <div className="frame" onClick={()=>{ setShowEntry(true); setCurrentPokemon(pokemon.id);}}>
         <div className="card">
           <div className="details">
-            <div className="id"><span>{addZeros(pokemon.id)}</span></div>
+            <div className="id"><span>{cleanNumber(pokemon.id)}</span></div>
             <div>
               <div className="name"><h3>{cleanName(pokemon.name)}</h3></div>
               <div className="types">{types.map((type, index) => (
@@ -27,4 +27,4 @@ const PokedexCard = ({ pokemon, setShowEntry, setCurrentPokemon }) => {
   )
 }
 
-export default PokedexCard;
+export default Card;

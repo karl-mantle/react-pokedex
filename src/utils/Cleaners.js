@@ -16,7 +16,7 @@ export const cleanDescription = (str) => {
   return str.replace(/\f/g, ' ');
 }
 
-export const addZeros = (num) => {
+export const cleanNumber = (num) => {
   return num.toString().padStart(3, '0');
 }
 

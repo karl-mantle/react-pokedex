@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import '../css/footer.css';
+import './footer.css';
 
 const Footer = () => {
   useEffect(() => {

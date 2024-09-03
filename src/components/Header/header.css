@@ -2,7 +2,7 @@
   top: 0;
 
   & header {
-    background-image: url('../svg/header-100.svg');
+    background-image: url('../../assets/svg/header-100.svg');
     display: flex;
     justify-content: start;
   
@@ -12,7 +12,7 @@
     clip-path: polygon(0 0, 100% 0, 100% 75%, 30% 75%, 25% 100%, 0 100%);
     
     @media screen and (min-width: 768px) {
-      background-image: url('../svg/header-125.svg');
+      background-image: url('../../assets/svg/header-125.svg');
       min-height: 125px;
     }
   }

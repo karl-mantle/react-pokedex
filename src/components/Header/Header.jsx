@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../css/header.css';
+import './header.css';
 
 const Header = ({ globalLoading, showEntry }) => {
   const [lightRed, setLightRed] = useState(false);
@@ -9,40 +9,33 @@ const Header = ({ globalLoading, showEntry }) => {
 
   useEffect(() => {
     let resetTime, yellowTime, yellowTimeOff, greenTime;
-
+  
     if (globalLoading) {
       setLightRed(true);
-      const yellowTime = setTimeout(() => setLightYellow(true), 100);
-      const greenTime = setTimeout(() => {
+      yellowTime = setTimeout(() => setLightYellow(true), 100);
+      greenTime = setTimeout(() => {
         setLightGreen(true);
         setLightRed(false);
       }, 200);
-      const yellowTimeOff = setTimeout(() => setLightYellow(false), 300);
-
-      return () => {
-        clearTimeout(yellowTime);
-        clearTimeout(greenTime);
-        clearTimeout(yellowTimeOff);
-      };
-    }
-    else {
+      yellowTimeOff = setTimeout(() => setLightYellow(false), 300);
+    } else {
       setLightRed(false);
       resetTime = setTimeout(() => {
         setLightYellow(false);
         setLightGreen(false);
       }, 2000);
     }
-
+  
     setLightBlue(showEntry);
-    
+  
     return () => {
       clearTimeout(resetTime);
       clearTimeout(yellowTime);
       clearTimeout(greenTime);
       clearTimeout(yellowTimeOff);
     };
-
   }, [globalLoading, showEntry]);
+  
 
   return (
     <div className="sticky">

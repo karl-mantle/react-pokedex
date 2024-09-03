@@ -74,20 +74,6 @@
   }
 }
 
-.fact-file {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 1rem;
-
-  & ul li {
-    margin-bottom: .25rem;
-  }
-
-  & ul li:nth-child(4) {
-    margin-bottom: .5rem;
-  }
-}
-
 .loading {
   display: flex;
   justify-content: center;
@@ -105,22 +91,4 @@
   25%, 49% { transform: rotate(90deg); }
   50%, 74% { transform: rotate(135deg); }
   75%, 100% { transform: rotate(180deg); }
-}
-
-.stats table {
-
-  & th {
-    font-weight: bold;
-    text-align: left;
-    padding-bottom: .25rem;
-  }
-
-  & td {
-    border-bottom: 1px solid var(--teal-1);
-    border-right: 1px solid var(--teal-1);
-  }
-
-  & tr :nth-child(2) {
-    text-align: center;
-  }
 }
