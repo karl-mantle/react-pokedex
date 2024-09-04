@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { useState } from 'react';
 import Pokemon from '../Entries/Pokemon';
 import Pokeball from '../../assets/svg/pokeball.svg';
 import './modal.css';
 
-const Modal = ({ currentPokemon, setCurrentPokemon, setGlobalLoading, showEntry, setShowEntry, entryError, setEntryError }) => {
+const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModalTarget, modalError, setModalError, currentView }) => {
   const [entryLoading, setEntryLoading] = useState(false);
-  const [currentType, setCurrentType] = useState('pokemon');
 
   return (
-    <div className={`modal${ !showEntry ? ' hidden' : ''}`}>
+    <div className={`modal${ !modalShow ? ' hidden' : ''}`}>
       <div className="background"></div>
       <div className="frame entry">
 
@@ -18,21 +17,21 @@ const Modal = ({ currentPokemon, setCurrentPokemon, setGlobalLoading, showEntry,
           </div>
         ) : null }
 
-        { currentType === 'pokemon' ?  (
+        { currentView === 'pokemon' ?  (
           <Pokemon
             setEntryLoading={setEntryLoading}
-            currentPokemon={currentPokemon}
-            setCurrentPokemon={setCurrentPokemon}
+            modalTarget={modalTarget}
+            setModalTarget={setModalTarget}
             setGlobalLoading={setGlobalLoading}
-            showEntry={showEntry}
-            setShowEntry={setShowEntry}
-            entryError={entryError}
-            setEntryError={setEntryError}
+            modalShow={modalShow}
+            setModalShow={setModalShow}
+            modalError={modalError}
+            setModalError={setModalError}
             entryLoading={entryLoading}
             onClose={()=> {
-              setShowEntry(false);
-              setEntryError(false);
-              setCurrentPokemon(null);
+              setModalShow(false);
+              setModalError(false);
+              setModalTarget(null);
             }}
           />
         ) : null }

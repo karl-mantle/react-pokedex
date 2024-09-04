@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import { cleanName, cleanNumber, cleanDescription } from '../../utils/Cleaners.js';
 import EvolutionChain from '../Tabber/EvolutionChain';
 import './pokemon.css';
 import '../types.css';
 
-const PokedexEntry = ({ setEntryLoading, currentPokemon, setCurrentPokemon, setGlobalLoading, showEntry, setShowEntry, entryError, setEntryError, entryLoading, onClose }) => {
+const Pokemon = ({ setEntryLoading, modalTarget, setModalTarget, setGlobalLoading, modalShow, setModalShow, modalError, setModalError, entryLoading, onClose }) => {
   const [pokemonData, setPokemonData] = useState(null);
   const [speciesData, setSpeciesData] = useState(null);
   const [active, setActive] = useState('firstTab');
@@ -14,24 +14,22 @@ const PokedexEntry = ({ setEntryLoading, currentPokemon, setCurrentPokemon, setG
   };
 
   useEffect ( () => {
-    const fetchPokedexEntry = async () => {
+    const fetchPokemonData = async () => {
       setGlobalLoading(true);
       setEntryLoading(true);
-      setEntryError(false);
+      setModalError(false);
 
       try {
-        const [pokemonResponse, speciesResponse] = await Promise.all([
-          fetch(`https://pokeapi.co/api/v2/pokemon/${currentPokemon}`),
-          fetch(`https://pokeapi.co/api/v2/pokemon-species/${currentPokemon}`)
-        ])
+        const pokemonResponse = await fetch(`${modalTarget}`);
         const pokemonData = await pokemonResponse.json();
+        const speciesResponse = await fetch(pokemonData.species.url);
         const speciesData = await speciesResponse.json();
         setPokemonData(pokemonData);
         setSpeciesData(speciesData);
       }
       catch (error) {
-        console.error('Error fetching Pokédex entry.', error);
-        setEntryError(true);
+        console.error('Error fetching Pokémon entry.', error);
+        setModalError(true);
       }
       finally {
         setEntryLoading(false);
@@ -39,8 +37,8 @@ const PokedexEntry = ({ setEntryLoading, currentPokemon, setCurrentPokemon, setG
       }
     }
 
-    if (showEntry) {
-      fetchPokedexEntry();
+    if (modalShow) {
+      fetchPokemonData();
       document.body.classList.add('lock');
       selectTab('firstTab', setActive);
     }
@@ -48,9 +46,9 @@ const PokedexEntry = ({ setEntryLoading, currentPokemon, setCurrentPokemon, setG
       document.body.classList.remove('lock');
     }
 
-  }, [showEntry, currentPokemon, setGlobalLoading, setEntryError, setEntryLoading]);
+  }, [modalShow, modalTarget, setGlobalLoading, setModalError, setEntryLoading]);
 
-  if (!showEntry || !currentPokemon || !pokemonData || !speciesData || entryError ) return null;
+  if (!modalShow || !modalTarget || !pokemonData || !speciesData || modalError ) return null;
 
   const flavorTextEntries = speciesData.flavor_text_entries.filter(entry => entry.language.name === 'en');
   let description = flavorTextEntries.length > 0 ? flavorTextEntries[0].flavor_text : 'No description available for this Pokémon.';
@@ -121,7 +119,7 @@ const PokedexEntry = ({ setEntryLoading, currentPokemon, setCurrentPokemon, setG
           </table>
         </div>
         <div id="secondTab" className={`${active === 'secondTab' ? '' : 'hidden'}`}>
-          <EvolutionChain active={active} speciesData={speciesData} setGlobalLoading={setGlobalLoading} setCurrentPokemon={setCurrentPokemon} setShowEntry={setShowEntry}/>
+          <EvolutionChain active={active} speciesData={speciesData} setGlobalLoading={setGlobalLoading} setModalTarget={setModalTarget} setModalShow={setModalShow}/>
         </div>
         <div id="thirdTab" className={`${active === 'thirdTab' ? '' : 'hidden'}`}>
           Moves placeholder.
@@ -131,4 +129,4 @@ const PokedexEntry = ({ setEntryLoading, currentPokemon, setCurrentPokemon, setG
   );
 };
 
-export default PokedexEntry;
+export default Pokemon;

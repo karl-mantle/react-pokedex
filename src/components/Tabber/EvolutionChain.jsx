@@ -4,7 +4,7 @@ import Pokeball from '../../assets/svg/pokeball.svg';
 import './evolution-chain.css';
 
 
-const EvolutionChain = ({ speciesData, setGlobalLoading, active, setShowEntry, setCurrentPokemon }) => {
+const EvolutionChain = ({ speciesData, setGlobalLoading, active, setModalShow, setModalTarget }) => {
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [chainLoading, setChainLoading] = useState([]);
 
@@ -25,7 +25,8 @@ const EvolutionChain = ({ speciesData, setGlobalLoading, active, setShowEntry, s
           tempChain.push({
             name: data.name,
             types: data.types.map(type => type.type.name),
-            image: data.sprites.front_default
+            image: data.sprites.front_default,
+            url: `https://pokeapi.co/api/v2/pokemon/${data.id}`
           });
           if (chain.evolves_to.length > 0) {
             await fetchEvolutionRoot(chain.evolves_to[0]);
@@ -62,7 +63,7 @@ const EvolutionChain = ({ speciesData, setGlobalLoading, active, setShowEntry, s
 
         <div className={`${chainLoading ? ' hidden' : ''}`}>
           {evolutionChain.map((pokemon, index) => (
-            <div key={index} className="evolution" onClick={()=>{ setShowEntry(true); setCurrentPokemon(pokemon.name);}}>
+            <div key={index} className="evolution" onClick={()=>{ setModalShow(true); setModalTarget(pokemon.url);}}>
               <div className="sprite"><img src={pokemon.image}  alt={pokemon.name}/></div>
               <div className="">
                 <div className="name"><h3>{cleanName(pokemon.name)}</h3></div>

@@ -3,23 +3,26 @@ import './search.css';
 
 let debounceTimeout;
 
-const Search = ({ setCurrentPokemon, setShowEntry, showEntry, entryError, pokemonList }) => {
+const Search = ({ setModalTarget, setModalShow, modalError, pokemonList }) => {
   const [searchInput, setSearchInput] = useState('');
   const [filteredList, setFilteredList] = useState([]);
 
-  const handleSearch = (query) => {
-    const sanitisedInput = query.toLowerCase().replace(/^0+/, '');
-    if (sanitisedInput) {
-      setCurrentPokemon(sanitisedInput);
-      setShowEntry(true);
+  const handleSearch = (url) => {
+    if (url) {
+      setModalTarget(url);
+      setModalShow(true);
     }
-  };
+  };  
 
   const setSuggestion = (suggestion) => {
-    setSearchInput(suggestion);
-    setFilteredList([]);
-    handleSearch(suggestion);
+    const selectedPokemon = pokemonList.find(pokemon => pokemon.name === suggestion);
+    if (selectedPokemon) {
+      setSearchInput(suggestion);
+      setFilteredList([]);
+      handleSearch(selectedPokemon.url);
+    }
   };
+  
 
   const debounceSearch = (searchTerm) => {
     clearTimeout(debounceTimeout);
@@ -42,7 +45,10 @@ const Search = ({ setCurrentPokemon, setShowEntry, showEntry, entryError, pokemo
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      handleSearch(searchInput);
+      const selectedPokemon = pokemonList.find(pokemon => pokemon.name === searchInput);
+      if (selectedPokemon) {
+        handleSearch(selectedPokemon.url);
+      }
     }
     else if (event.key === 'Tab' && filteredList.length > 0) {
       event.preventDefault();
@@ -54,7 +60,6 @@ const Search = ({ setCurrentPokemon, setShowEntry, showEntry, entryError, pokemo
   return (
     <>
       <div className="frame search">
-      {/* <div className={`search${ showEntry ? ' hidden' : '' }`}> */}
         <form onSubmit={(e) => { e.preventDefault(); handleSearch(searchInput); }}>
           <input
             type="text"
@@ -78,7 +83,7 @@ const Search = ({ setCurrentPokemon, setShowEntry, showEntry, entryError, pokemo
         ) : null}
       </div>
 
-      { entryError ?  (
+      { modalError ?  (
           <div className="message-box">
             <p>Please enter a valid Pokémon name or ID number.</p>
           </div>

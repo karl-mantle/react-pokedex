@@ -6,24 +6,29 @@ import Listing from './components/Listing/Listing';
 import Modal from './components/Modal/Modal';
 
 function App() {
-  const [currentPokemon, setCurrentPokemon] = useState(null);
   const [globalLoading, setGlobalLoading] = useState(false);
-  const [showEntry, setShowEntry] = useState(false);
-  const [entryError, setEntryError] = useState(false);
+  const [currentList, setCurrentList] = useState([]);
+  const [currentView, setCurrentView] = useState('pokemon');
 
+  const [itemList, setItemList] = useState([]);
+  const [moveList, setMoveList] = useState([]);
   const [pokemonList, setPokemonList] = useState([]);
   const [typeList, setTypeList] = useState([]);
-  const [moveList, setMoveList] = useState([]);
+  
+  const [modalShow, setModalShow] = useState(false);
+  const [modalTarget, setModalTarget] = useState(null);
+  const [modalError, setModalError] = useState(false);
   
   useEffect(() => {
-    const fetchPokeAPILists = async () => {
+    const fetchLists = async () => {
       try {
-        const storedPokemonList = localStorage.getItem('pokemonList');
-        const storedTypeList = localStorage.getItem('typeList');
-        const storedMoveList = localStorage.getItem('moveList');
+        const localPokemonList = localStorage.getItem('pokemonList');
+        const localTypeList = localStorage.getItem('typeList');
+        const localMoveList = localStorage.getItem('moveList');
   
-        if (storedPokemonList) {
-          setPokemonList(JSON.parse(storedPokemonList));
+        if (localPokemonList) {
+          setPokemonList(JSON.parse(localPokemonList));
+          setCurrentList(JSON.parse(localPokemonList));
         }
         else {
           const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1025');
@@ -32,8 +37,8 @@ function App() {
           localStorage.setItem('pokemonList', JSON.stringify(data.results));
         }
   
-        if (storedTypeList) {
-          setTypeList(JSON.parse(storedTypeList));
+        if (localTypeList) {
+          setTypeList(JSON.parse(localTypeList));
         }
         else {
           const response = await fetch('https://pokeapi.co/api/v2/type?limit=19');
@@ -42,8 +47,8 @@ function App() {
           localStorage.setItem('typeList', JSON.stringify(data.results));
         }
   
-        if (storedMoveList) {
-          setMoveList(JSON.parse(storedMoveList));
+        if (localMoveList) {
+          setMoveList(JSON.parse(localMoveList));
         }
         else {
           const response = await fetch('https://pokeapi.co/api/v2/move?limit=1000');
@@ -57,41 +62,46 @@ function App() {
       }
     };
   
-    fetchPokeAPILists();
+    fetchLists();
   }, []);
 
   return (
   <>
     <Header
       globalLoading={globalLoading}
-      showEntry={showEntry}
+      modalShow={modalShow}
     />
     <main>
       <Search
-        setCurrentPokemon={setCurrentPokemon}
-        setShowEntry={setShowEntry}
-        showEntry={showEntry}
-        entryError={entryError}
+        modalShow={modalShow}
+        setModalShow={setModalShow}
+        setModalTarget={setModalTarget}
+        modalError={modalError}
+
         pokemonList={pokemonList}
       />
 
       <Listing
-        setCurrentPokemon={setCurrentPokemon}
+      
         globalLoading={globalLoading}
         setGlobalLoading={setGlobalLoading}
-        showEntry={showEntry}
-        setShowEntry={setShowEntry}
-        pokemonList={pokemonList}
+        currentView={currentView}
+        modalShow={modalShow}
+        setModalShow={setModalShow}
+        setModalTarget={setModalTarget}
+
+        currentList={currentList}
       />
       
       <Modal
-        currentPokemon={currentPokemon}
-        setCurrentPokemon={setCurrentPokemon}
         setGlobalLoading={setGlobalLoading}
-        showEntry={showEntry}
-        setShowEntry={setShowEntry}
-        entryError={entryError}
-        setEntryError={setEntryError}
+        currentView={currentView}
+        modalShow={modalShow}
+        setModalShow={setModalShow}
+        modalTarget={modalTarget}
+        setModalTarget={setModalTarget}
+        modalError={modalError}
+        setModalError={setModalError}
       />
     </main>
     <Footer/>

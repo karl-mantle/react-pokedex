@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './header.css';
 
-const Header = ({ globalLoading, showEntry }) => {
+const Header = ({ globalLoading, modalShow }) => {
   const [lightRed, setLightRed] = useState(false);
   const [lightYellow, setLightYellow] = useState(false);
   const [lightGreen, setLightGreen] = useState(false);
-  const [lightBlue, setLightBlue] = useState(showEntry);
+  const [lightBlue, setLightBlue] = useState(modalShow);
 
   useEffect(() => {
     let resetTime, yellowTime, yellowTimeOff, greenTime;
@@ -26,7 +26,7 @@ const Header = ({ globalLoading, showEntry }) => {
       }, 2000);
     }
   
-    setLightBlue(showEntry);
+    setLightBlue(modalShow);
   
     return () => {
       clearTimeout(resetTime);
@@ -34,7 +34,7 @@ const Header = ({ globalLoading, showEntry }) => {
       clearTimeout(greenTime);
       clearTimeout(yellowTimeOff);
     };
-  }, [globalLoading, showEntry]);
+  }, [globalLoading, modalShow]);
   
 
   return (
@@ -48,7 +48,6 @@ const Header = ({ globalLoading, showEntry }) => {
               <div className={`light${lightGreen ? ' green' : ''}`}></div>
             </div>
           </div>
-
           <div className="content">
           </div>
       </header>

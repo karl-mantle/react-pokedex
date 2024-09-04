@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import './listing.css';
 
-const Listing = ({ setCurrentPokemon, globalLoading, setGlobalLoading, setShowEntry, pokemonList }) => {
-  const [pokemonDisplayed, setPokemonDisplayed] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [pokedexError, setPokedexError] = useState(false);
+const Listing = ({ globalLoading, setGlobalLoading, setModalShow, setModalTarget, currentList, currentView }) => {
+  const [listingError, setListingError] = useState(false);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [cardsDisplayed, setCardsDisplayed] = useState([]);
 
   /* Make the amount of cards configurable */
   const limit = 12;
@@ -14,90 +14,90 @@ const Listing = ({ setCurrentPokemon, globalLoading, setGlobalLoading, setShowEn
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   const handleNextPage = () => {
-    setCurrentPage(currentPage => currentPage + 1);
+    setPageNumber(pageNumber => pageNumber + 1);
     scrollToTop();
   };
   const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage => currentPage - 1);
+    if (pageNumber > 0) {
+      setPageNumber(pageNumber => pageNumber - 1);
     }
     scrollToTop();
   };
 
-  const fetchPokemonDetails = async (url) => {
+  const fetchCardDetails = async (url) => {
     try {
       const response = await fetch(url);
       return await response.json();
     }
     catch (error) {
-      console.error('Error fetching Pokémon details.', error)
+      console.error('Error fetching card details.', error)
     }
   };
 
   useEffect(() => {
-    const fetchPokedexCards = async () => {
-      setPokedexError(false);
+    const fetchListings = async () => {
+      setListingError(false);
       setGlobalLoading(true);
 
       try {
-        let currentPokemonList = pokemonList;
+        let targetList = currentList;
 
-        if (!currentPokemonList || currentPokemonList.length === 0) {
-          const localPokemonList = localStorage.getItem('pokemonList');
-          if (localPokemonList) {
-            currentPokemonList = JSON.parse(localPokemonList);
-          }
-        }
-
-        if (currentPokemonList && currentPokemonList.length > 0) {
-          const start = currentPage * limit;
+        if (targetList && targetList.length > 0) {
+          const start = pageNumber * limit;
           const end = start + limit;
-          const currentListings = currentPokemonList.slice(start, end);
+          const currentPage = targetList.slice(start, end);
 
-          const fetchPromises = currentListings.map(pokemon => fetchPokemonDetails(pokemon.url));
-          const pokemonDetails = await Promise.all(fetchPromises);
-          setPokemonDisplayed(pokemonDetails);
+          const fetchPromises = currentPage.map(item => fetchCardDetails(item.url));
+          const cardDetails = await Promise.all(fetchPromises);
+          setCardsDisplayed(cardDetails.map((details, index) => ({
+            ...details,
+            url: currentPage[index].url
+          })));
         }
         else {
-          console.error('Empty Pokémon list.');
-          setPokedexError(true);
+          console.error('List returned nothing.');
+          setListingError(true);
         }
       }
       catch (error) {
-        console.error('Error fetching Pokémon list.', error);
-        setPokedexError(true);
+        console.error('Failed to fetch list', error);
+        setListingError(true);
       }
       finally {
         setGlobalLoading(false);
       }
     };
 
-    fetchPokedexCards();
-  }, [currentPage, pokemonList, setGlobalLoading]);
+    if (currentList && currentList.length > 0) {
+      fetchListings();
+    }
+  }, [setGlobalLoading, currentList, pageNumber]);
 
   return (
     <div>
 
-      { pokedexError ?  (
+      { listingError ?  (
         <div className="message-box">
-          <p>An error occurred fetching Pokédex data.</p>
+          <p>An error occurred fetching listing data.</p>
         </div>
       ) : null }
 
-      <div className={`listing ${ pokedexError ? 'hidden' : '' }`}>
-        {pokemonDisplayed.map((pokemon, index) => (
+      <div className={`listing ${ listingError ? 'hidden' : '' }`}>
+        {cardsDisplayed.map((subject, index) => (
           <Card
             key={index}
-            pokemon={pokemon}
-            setCurrentPokemon={setCurrentPokemon}
-            setShowEntry={setShowEntry}
+            subject={subject}
+            url={subject.url}
+            setModalTarget={setModalTarget}
+            setModalShow={setModalShow}
+            currentView={currentView}
           />
         ))}
       </div>
 
-      <div className={`pagination${ globalLoading || pokedexError ? ' hidden' : '' }`}>
-        <button className={`prev${ currentPage === 0 ? ' hidden' : '' }`} onClick={handlePreviousPage} >Prev</button>
-        <button className={`next${ currentPage === 0 ? ' end' : '' }`} onClick={handleNextPage}>Next</button>
+      <div className={`pagination${ globalLoading || listingError ? ' hidden' : '' }`}>
+        <button className={`prev${ pageNumber === 0 ? ' hidden' : '' }`} onClick={handlePreviousPage} >Prev</button>
+        <button className={`next${ pageNumber === 0 ? ' end' : '' }`} onClick={handleNextPage}>Next</button>
       </div>
 
     </div>
