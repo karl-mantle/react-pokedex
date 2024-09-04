@@ -11,18 +11,18 @@ const Pokemon = ({ primaryData, speciesData, setModalTarget, setGlobalLoading, s
     setActive(tab);
   };
 
-  const flavorTextEntries = speciesData.flavor_text_entries ? speciesData.flavor_text_entries.filter(entry => entry.language.name === 'en') : [];
+  const flavorTextEntries = speciesData.flavor_text_entries.filter(entry => entry.language.name === 'en');
   let description = flavorTextEntries.length > 0 ? flavorTextEntries[0].flavor_text : 'No description available for this Pokémon.';
 
-  const pokemonGenera = speciesData.genera ? speciesData.genera.filter(genus => genus.language.name === 'en') : [];
+  const pokemonGenera = speciesData.genera.filter(genus => genus.language.name === 'en');
   let pokemonGenus = pokemonGenera.length > 0 ? pokemonGenera[0].genus : 'Unknown Pokémon.';
   
-  const stats = primaryData.stats ? primaryData.stats.map(stat => ({
+  const stats = primaryData.stats.map(stat => ({
     name: stat.stat.name,
     value: stat.base_stat,
-  })) : [];
+  }));
 
-  const types = primaryData.types ? primaryData.types.map(type => type.type.name) : [];
+  const types = primaryData.types.map(type => type.type.name);
 
   return (
     <div className={`details${ entryLoading ? ' hidden' : ''}`}>

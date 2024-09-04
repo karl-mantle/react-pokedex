@@ -7,9 +7,10 @@ const Search = ({ setModalTarget, setModalShow, modalError, pokemonList }) => {
   const [searchInput, setSearchInput] = useState('');
   const [filteredList, setFilteredList] = useState([]);
 
-  const handleSearch = (url) => {
-    if (url) {
-      setModalTarget(url);
+  const handleSearch = (name) => {
+    const selectedPokemon = pokemonList.find(pokemon => pokemon.name === name);
+    if (selectedPokemon) {
+      setModalTarget(selectedPokemon.url);
       setModalShow(true);
     }
   };  
@@ -19,7 +20,7 @@ const Search = ({ setModalTarget, setModalShow, modalError, pokemonList }) => {
     if (selectedPokemon) {
       setSearchInput(suggestion);
       setFilteredList([]);
-      handleSearch(selectedPokemon.url);
+      handleSearch(suggestion);
     }
   };
   
@@ -45,10 +46,7 @@ const Search = ({ setModalTarget, setModalShow, modalError, pokemonList }) => {
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      const selectedPokemon = pokemonList.find(pokemon => pokemon.name === searchInput);
-      if (selectedPokemon) {
-        handleSearch(selectedPokemon.url);
-      }
+      handleSearch(searchInput);
     }
     else if (event.key === 'Tab' && filteredList.length > 0) {
       event.preventDefault();
