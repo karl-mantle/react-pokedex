@@ -10,6 +10,10 @@ const Pokemon = ({ primaryData, speciesData, setModalTarget, setGlobalLoading, s
   const selectTab = (tab, setActive) => {
     setActive(tab);
   };
+  
+  if (!speciesData || !primaryData) {
+    return null
+  }
 
   const flavorTextEntries = speciesData.flavor_text_entries ? speciesData.flavor_text_entries.filter(entry => entry.language.name === 'en') : [];
   let description = flavorTextEntries.length > 0 ? flavorTextEntries[0].flavor_text : 'No description available for this Pokémon.';
