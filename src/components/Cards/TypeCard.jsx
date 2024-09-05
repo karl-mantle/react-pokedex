@@ -16,7 +16,6 @@ const TypeCard = ({ subject, setModalShow, setModalTarget }) => {
               </div>
             </div>
           </div>
-          <div className="sprite"><img src={subject.sprites.front_default}  alt={subject.name}/></div>
         </div>
       </div>
     </>

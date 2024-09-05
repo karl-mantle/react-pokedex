@@ -10,15 +10,8 @@ const ItemCard = ({ subject, setModalShow, setModalTarget }) => {
   return (
     <>
       <div className="frame" onClick={()=>{ setModalShow(true); setModalTarget(subject.url);}}>
-        <div className="card">
-          <div className="details">
-            <div className="id"><span>{cleanNumber(subject.id)}</span></div>
-            <div>
-              <div className="name"><h3>{cleanName(subject.name)}</h3></div>
-              <div>
-              </div>
-            </div>
-          </div>
+        <div className="card" style={{padding: 1 + 'rem'}}>
+          <div className="name" style={{margin: 0}}><h3>{cleanName(subject.name)}</h3></div>
           <div className="sprite"><img src={subject.sprites.default}  alt={subject.name}/></div>
         </div>
       </div>
