@@ -1,14 +1,12 @@
-export const capitalise = (str) => { 
-  return str.replace(/\b\w/g, char => char.toUpperCase());
+export const cleanName = (str) => {
+  let name = str.replace(/-/g, ' ');
+  name = name.charAt(0).toUpperCase() + name.slice(1);
+  return name;
 }
 
-export const cleanName = (str) => {
-  /* will need to add fixes for Farfetch'd, Mr. Mime, Ho-oh */
-  /* nidoran name fix */
-  let name = str.replace(/-m$/, ' (m)').replace(/-f$/, ' (f)');
-  /* remove dashes and capitalise */
-  name = name.replace(/-/g, ' ');
-  name = name.replace(/(^\w|\s\w)/g, char => char.toUpperCase());
+export const cleanPokemonName = (str) => {
+  let name = str.replace(/-/g, ' ');
+  name = name.charAt(0).toUpperCase() + name.slice(1);
   return name;
 }
 
@@ -20,4 +18,4 @@ export const cleanNumber = (num) => {
   return num.toString().padStart(3, '0');
 }
 
-export default capitalise;
+export default cleanName;

@@ -1,26 +1,22 @@
 import { useEffect, useState } from 'react';
 import ItemCard from '../Cards/ItemCard';
-import MoveCard from '../Cards/MoveCard';
 import PokeCard from '../Cards/PokeCard';
-import TypeCard from '../Cards/TypeCard';
 import pokeball from '../../assets/svg/pokeball.svg';
 import './listing.css';
 
 const cardTypes = {
   item: ItemCard,
-  move: MoveCard,
-  pokemon: PokeCard,
-  type: TypeCard
+  pokemon: PokeCard
 };
 
-const ListingCards = ({ globalLoading, setGlobalLoading, currentList, currentView, setModalShow, setModalTarget }) => {
+const ListingPage = ({ globalLoading, setGlobalLoading, currentList, currentKind, setModalShow, setModalTarget }) => {
   const [listingLoading, setListingLoading] = useState(false);
   const [listingError, setListingError] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
   const [cardsDisplayed, setCardsDisplayed] = useState([]);
   
   const cardLimit = 12;
-  const CardType = cardTypes[currentView];
+  const CardType = cardTypes[currentKind];
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -54,6 +50,7 @@ const ListingCards = ({ globalLoading, setGlobalLoading, currentList, currentVie
 
       try {
         let targetList = currentList;
+        console.log(currentKind);
 
         if (targetList && targetList.length > 0) {
           const start = pageNumber * cardLimit;
@@ -85,7 +82,7 @@ const ListingCards = ({ globalLoading, setGlobalLoading, currentList, currentVie
     if (currentList && currentList.length > 0) {
       fetchListings();
     }
-  }, [setGlobalLoading, currentList, currentView, pageNumber]);
+  }, [setGlobalLoading, currentList, currentKind, pageNumber]);
 
   return (
     <div>
@@ -124,4 +121,4 @@ const ListingCards = ({ globalLoading, setGlobalLoading, currentList, currentVie
   );
 };
 
-export default ListingCards;
+export default ListingPage;

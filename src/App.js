@@ -7,13 +7,13 @@ import Modal from './components/Modal/Modal';
 
 function App() {
   const [globalLoading, setGlobalLoading] = useState(false);
+  
   const [currentList, setCurrentList] = useState([]);
-  const [currentView, setCurrentView] = useState('pokemon');
+  const [currentKind, setCurrentKind] = useState('pokemon');
 
   const [itemList, setItemList] = useState([]);
   const [moveList, setMoveList] = useState([]);
   const [pokemonList, setPokemonList] = useState([]);
-  const [typeList, setTypeList] = useState([]);
   
   const [modalShow, setModalShow] = useState(false);
   const [modalTarget, setModalTarget] = useState(null);
@@ -24,7 +24,6 @@ function App() {
       try {
         const localPokemonList = localStorage.getItem('pokemonList');
         const localItemList = localStorage.getItem('itemList');
-        const localTypeList = localStorage.getItem('typeList');
         const localMoveList = localStorage.getItem('moveList');
   
         if (localPokemonList) {
@@ -45,16 +44,6 @@ function App() {
           const data = await response.json();
           setItemList(data.results);
           localStorage.setItem('itemList', JSON.stringify(data.results));
-        }
-  
-        if (localTypeList) {
-          setTypeList(JSON.parse(localTypeList));
-        }
-        else {
-          const response = await fetch('https://pokeapi.co/api/v2/type?limit=19');
-          const data = await response.json();
-          setTypeList(data.results);
-          localStorage.setItem('typeList', JSON.stringify(data.results));
         }
   
         if (localMoveList) {
@@ -94,8 +83,8 @@ function App() {
       <Listing
         globalLoading={globalLoading}
         setGlobalLoading={setGlobalLoading}
-        currentView={currentView}
-        setCurrentView={setCurrentView}
+        currentKind={currentKind}
+        setCurrentKind={setCurrentKind}
         currentList={currentList}
         setCurrentList={setCurrentList}
         modalShow={modalShow}
@@ -105,12 +94,11 @@ function App() {
         pokemonList={pokemonList}
         itemList={itemList}
         moveList={moveList}
-        typeList={typeList}
       />
       
       <Modal
         setGlobalLoading={setGlobalLoading}
-        currentView={currentView}
+        currentKind={currentKind}
         modalShow={modalShow}
         setModalShow={setModalShow}
         modalTarget={modalTarget}

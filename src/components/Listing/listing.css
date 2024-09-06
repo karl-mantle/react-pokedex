@@ -22,6 +22,33 @@
   }
 }
 
+.filters {
+  margin-bottom: 1rem;
+
+  @media screen and (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+.filter {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  border-bottom: 1px solid var(--teal-1);
+  margin-bottom: 1rem;
+
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 1fr 3fr;
+  }
+}
+
+.title {
+  margin-bottom: .5rem;
+  text-shadow: 1px 1px var(--light-text);
+  font-weight: bold;
+}
+
 .pagination {
   display: flex;
   justify-content: space-between;
