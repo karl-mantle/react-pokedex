@@ -57,6 +57,29 @@
   }
 }
 
+.display {
+  display: flex;
+  justify-content: center;
+
+  @media screen and (min-width: 768px) {
+    & p {
+      font-size: 1.125rem;
+    }
+  }
+}
+
+.pokedex {
+  padding: .5rem;
+  font-weight: bold;
+
+  &:hover {
+    background-color: var(--teal-2);
+    border-radius: .5rem;
+    color: var(--light-text);
+    text-shadow: 1px 1px black;
+  }
+}
+
 .pagination {
   display: flex;
   justify-content: space-between;

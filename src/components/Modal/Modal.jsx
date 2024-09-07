@@ -11,13 +11,12 @@ const entries = {
   pokemon: Pokemon
 };
 
-const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModalTarget, modalError, setModalError }) => {
+const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModalTarget, modalError, setModalError, currentKind}) => {
   const [entryLoading, setEntryLoading] = useState(false);
   const [primaryData, setPrimaryData] = useState(null);
   const [speciesData, setSpeciesData] = useState(null);
-  const [currentKind, setCurrentKind] = useState('pokemon');
-  const CurrentEntry = entries[currentKind]; /* look up why does current have to be capitalised for this to work?
-  const CurrentEntry = currentKind.charAt(0).toUpperCase() + currentKind.slice(1); */  
+  const EntryType = entries[currentKind]; /* look up why does current have to be capitalised for this to work?
+  const EntryType = currentKind.charAt(0).toUpperCase() + currentKind.slice(1); */  
   
   useEffect ( () => {
     const fetchEntryData = async () => {
@@ -54,6 +53,7 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
     if (modalShow) {
       fetchEntryData();
       document.body.classList.add('lock');
+      // scroll to top?
     }
     else {
       document.body.classList.remove('lock');
@@ -74,8 +74,8 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
           </div>
         ) : null }
 
-        { CurrentEntry && (
-          <CurrentEntry
+        { EntryType && (
+          <EntryType
             primaryData={primaryData}
             speciesData={speciesData}
             setModalTarget={setModalTarget}

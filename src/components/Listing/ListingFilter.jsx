@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { cleanName } from '../../utils/Cleaners';
 import '../types.css';
 
 const ListingFilter = ({ currentFilter, setCurrentFilter, filterSource, setFilterSource, setCurrentList, setPageNumber, typesList, pokedexList }) => {
@@ -10,6 +11,11 @@ const ListingFilter = ({ currentFilter, setCurrentFilter, filterSource, setFilte
   
     if (type === 'source') {
       setFilterSource(value);
+      if (value === 'pokedex') {
+        setCurrentFilter('national')
+      } else {
+        setCurrentFilter('normal')
+      };
       setPageNumber(0);
     } else if (type === 'filter') {
       setCurrentFilter(value);
@@ -89,7 +95,7 @@ const ListingFilter = ({ currentFilter, setCurrentFilter, filterSource, setFilte
         </div>
       </div>
 
-      { filterSource === 'none' ? null : (
+      { filterSource === 'type' ? (
         <div className="filters">
           <ul>
             {filtersTargetList.map((filter, index) => (
@@ -98,7 +104,18 @@ const ListingFilter = ({ currentFilter, setCurrentFilter, filterSource, setFilte
           </ul>
             <button onClick={(e) => clearFilters(e)}>Clear filters</button>
         </div>
-        )}
+        ) : null }
+
+      { filterSource === 'pokedex' ? (
+        <div className="filters">
+          <ul>
+            {filtersTargetList.map((filter, index) => (
+                <li key={index} className={`${filterSource}`} onClick={(e) => handleFilterCards('filter', filter.name, e)}>{cleanName(filter.name)}</li>
+                ))}
+          </ul>
+            <button onClick={(e) => clearFilters(e)}>Clear filters</button>
+        </div>
+        ) : null }
     
     </div>
   );

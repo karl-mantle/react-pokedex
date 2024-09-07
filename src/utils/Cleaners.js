@@ -1,6 +1,6 @@
 export const cleanName = (str) => {
   let name = str.replace(/-/g, ' ');
-  name = name.charAt(0).toUpperCase() + name.slice(1);
+  name = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
   return name;
 }
 

@@ -18,7 +18,7 @@ function App() {
   const [modalShow, setModalShow] = useState(false);
   const [modalTarget, setModalTarget] = useState(null);
   const [modalError, setModalError] = useState(false);
-  // add future modal view like old currentKind
+  const [currentKind, setCurrentKind] = useState('pokemon');
   
   useEffect(() => {
     const fetchBaseLists = async () => {
@@ -121,6 +121,8 @@ function App() {
         setModalTarget={setModalTarget}
         modalError={modalError}
         setModalError={setModalError}
+        currentKind={currentKind}
+        setCurrentKind={setCurrentKind}
       />
     </main>
     <Footer/>

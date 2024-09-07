@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { cleanName } from '../../utils/Cleaners';
 import ListingPage from './ListingPage';
 import ListingFilter from './ListingFilter';
 import Pagination from './Pagination';
@@ -34,22 +33,11 @@ const Listing = ({setModalShow, setModalTarget, pokemonList, typesList, pokedexL
         </div>
       ) : null }
 
-      { !listingError && currentList && filterSource === 'pokedex' ?  (
-        <div className="message-box">
-          <p>Now displaying {cleanName(currentFilter)} Pokédex.</p>
-        </div>
-      ) : null }
-
-      { !listingError && currentList && filterSource === 'type' ?  (
-        <div className="message-box">
-          <p>Now displaying all {currentFilter} type Pokémon.</p>
-        </div>
-      ) : null }
-
       { !listingError && currentList ? (
         <ListingPage
           currentList={currentList}
           filterSource={filterSource}
+          currentFilter={currentFilter}
 
           setModalShow={setModalShow}
           setModalTarget={setModalTarget}
