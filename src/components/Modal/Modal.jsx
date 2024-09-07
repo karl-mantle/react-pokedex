@@ -11,10 +11,11 @@ const entries = {
   pokemon: Pokemon
 };
 
-const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModalTarget, modalError, setModalError, currentKind }) => {
+const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModalTarget, modalError, setModalError }) => {
   const [entryLoading, setEntryLoading] = useState(false);
   const [primaryData, setPrimaryData] = useState(null);
   const [speciesData, setSpeciesData] = useState(null);
+  const [currentKind, setCurrentKind] = useState('pokemon');
   const CurrentEntry = entries[currentKind]; /* look up why does current have to be capitalised for this to work?
   const CurrentEntry = currentKind.charAt(0).toUpperCase() + currentKind.slice(1); */  
   
@@ -26,7 +27,7 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
 
       try {
         if (currentKind === 'pokemon') {
-          const primaryResponse = await fetch(`${modalTarget}`);
+          const primaryResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${modalTarget}`);
           const primaryData = await primaryResponse.json();
           const speciesResponse = await fetch(primaryData.species.url);
           const speciesData = await speciesResponse.json();
@@ -34,7 +35,7 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
           setSpeciesData(speciesData);
         }
         else {
-          const primaryResponse = await fetch(`${modalTarget}`);
+          const primaryResponse = await fetch(`https://pokeapi.co/api/v2/${currentKind}/${modalTarget}`);
           const pokemonData = await primaryResponse.json();
           setPrimaryData(pokemonData);
           setSpeciesData(null);

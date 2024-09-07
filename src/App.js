@@ -7,30 +7,33 @@ import Modal from './components/Modal/Modal';
 
 function App() {
   const [globalLoading, setGlobalLoading] = useState(false);
-  
-  const [currentList, setCurrentList] = useState([]);
-  const [currentKind, setCurrentKind] = useState('pokemon');
 
-  const [itemList, setItemList] = useState([]);
-  const [moveList, setMoveList] = useState([]);
   const [pokemonList, setPokemonList] = useState([]);
+  const [moveList, setMoveList] = useState([]);
+  const [itemList, setItemList] = useState([]);
+
+  const [typesList, setTypesList] = useState([]);
+  const [pokedexList, setPokedexList] = useState([]);
   
   const [modalShow, setModalShow] = useState(false);
   const [modalTarget, setModalTarget] = useState(null);
   const [modalError, setModalError] = useState(false);
+  // add future modal view like old currentKind
   
   useEffect(() => {
-    const fetchLists = async () => {
+    const fetchBaseLists = async () => {
       try {
         const localPokemonList = localStorage.getItem('pokemonList');
         const localItemList = localStorage.getItem('itemList');
         const localMoveList = localStorage.getItem('moveList');
+        const localTypesList = localStorage.getItem('typesList');
+        const localPokedexList = localStorage.getItem('pokedexList');
   
         if (localPokemonList) {
           setPokemonList(JSON.parse(localPokemonList));
         }
         else {
-          const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1025');
+          const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100025');
           const data = await response.json();
           setPokemonList(data.results);
           localStorage.setItem('pokemonList', JSON.stringify(data.results));
@@ -55,13 +58,33 @@ function App() {
           setMoveList(data.results);
           localStorage.setItem('moveList', JSON.stringify(data.results));
         }
+
+        if (localTypesList) {
+          setTypesList(JSON.parse(localTypesList));
+        }
+        else {
+          const response = await fetch('https://pokeapi.co/api/v2/type?limit=18');
+          const data = await response.json();
+          setTypesList(data.results);
+          localStorage.setItem('typesList', JSON.stringify(data.results));
+        }
+
+        if (localPokedexList) {
+          setPokedexList(JSON.parse(localPokedexList));
+        }
+        else {
+          const response = await fetch('https://pokeapi.co/api/v2/pokedex');
+          const data = await response.json();
+          setPokedexList(data.results);
+          localStorage.setItem('pokedexList', JSON.stringify(data.results));
+        }
       }
       catch (error) {
-        console.error('Error fetching lists from PokeAPI', error);
+        console.error('Error fetching base lists:', error);
       }
     };
   
-    fetchLists();
+    fetchBaseLists();
   }, []);
 
   return (
@@ -81,24 +104,17 @@ function App() {
       />
 
       <Listing
-        globalLoading={globalLoading}
-        setGlobalLoading={setGlobalLoading}
-        currentKind={currentKind}
-        setCurrentKind={setCurrentKind}
-        currentList={currentList}
-        setCurrentList={setCurrentList}
         modalShow={modalShow}
         setModalShow={setModalShow}
         setModalTarget={setModalTarget}
         
         pokemonList={pokemonList}
-        itemList={itemList}
-        moveList={moveList}
+        typesList={typesList}
+        pokedexList={pokedexList}
       />
       
       <Modal
         setGlobalLoading={setGlobalLoading}
-        currentKind={currentKind}
         modalShow={modalShow}
         setModalShow={setModalShow}
         modalTarget={modalTarget}

@@ -63,7 +63,7 @@ const EvolutionChain = ({ speciesData, setGlobalLoading, active, setModalShow, s
 
         <div className={`${chainLoading ? ' hidden' : ''}`}>
           {evolutionChain.map((pokemon, index) => (
-            <div key={index} className="evolution" onClick={()=>{ setModalShow(true); setModalTarget(pokemon.url);}}>
+            <div key={index} className="evolution" onClick={()=>{ setModalShow(true); setModalTarget(pokemon.name);}}>
               <div className="sprite"><img src={pokemon.image}  alt={pokemon.name}/></div>
               <div className="">
                 <div className="name"><h3>{cleanName(pokemon.name)}</h3></div>

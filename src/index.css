@@ -140,6 +140,7 @@ main {
 	border: .25rem solid var(--teal-1);
 	border-radius: 1rem;
   box-shadow:rgba(0, 0, 0, 0.2) 0 0 2px 2px;
+  margin-bottom: 1rem;
   padding: 1rem;
   transition: background-color 0.5s, box-shadow 0.5s;
   
@@ -195,7 +196,6 @@ main {
 .tabber {
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: 1rem;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
   
   & button {
@@ -217,6 +217,10 @@ main {
       background-color: var(--teal-2);
       text-shadow: 1px 1px black;
     }
+  }
+
+  &:has(+ .frame) {
+    margin-bottom: 1rem;
   }
 }
 

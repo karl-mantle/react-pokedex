@@ -2,7 +2,7 @@ import { cleanName, cleanNumber } from '../../utils/Cleaners.js';
 import './card.css';
 import '../types.css';
 
-const PokeCard = ({ subject, setModalShow, setModalTarget }) => {
+const Card = ({ subject, number, filterSource, setModalShow, setModalTarget }) => {
 
   if (!subject) {
     return null;
@@ -12,10 +12,14 @@ const PokeCard = ({ subject, setModalShow, setModalTarget }) => {
 
   return (
     <>
-      <div className="frame" onClick={()=>{ setModalShow(true); setModalTarget(subject.url);}}>
+      <div className="frame" onClick={()=>{ setModalShow(true); setModalTarget(subject.name);}}>
         <div className="card">
           <div className="details">
-            <div className="id"><span>{cleanNumber(subject.id)}</span></div>
+            <div className="id">
+              <span>
+                { filterSource === 'pokedex' ?  cleanNumber(number) : cleanNumber(subject.id) }
+              </span>
+            </div>
             <div>
               <div className="name"><h3>{cleanName(subject.name)}</h3></div>
               <div className="types">{types.map((type, index) => (
@@ -31,4 +35,4 @@ const PokeCard = ({ subject, setModalShow, setModalTarget }) => {
   )
 }
 
-export default PokeCard;
+export default Card;
