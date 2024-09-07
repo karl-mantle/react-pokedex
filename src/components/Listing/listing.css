@@ -83,10 +83,26 @@
 .pagination {
   display: flex;
   justify-content: space-between;
-
+  align-items: center;
   margin-bottom: 1rem;
-}
 
-.end {
-  margin-left: auto;
+  & span {
+    background-color: var(--teal-1);
+    border-radius: .5rem;
+    padding: .25rem;
+    
+    transition: background-color 0.5s, text-shadow 0.5s;
+    cursor: pointer;
+
+    color: var(--light-text);
+    text-shadow: 1px 1px black;
+    font-weight: bold;
+
+    &:hover, &.active {
+      background-color: var(--teal-2);
+      font-size: 1.125rem;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+      text-shadow: 1px 1px black;
+    }
+  }
 }

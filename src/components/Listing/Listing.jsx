@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import ListingPage from './ListingPage';
 import ListingFilter from './ListingFilter';
-import Pagination from './Pagination';
 import './listing.css';
 
 const Listing = ({setModalShow, setModalTarget, pokemonList, typesList, pokedexList }) => {
@@ -45,12 +44,6 @@ const Listing = ({setModalShow, setModalTarget, pokemonList, typesList, pokedexL
           listingError={listingError}
           setListingError={setListingError}
 
-          pageNumber={pageNumber}
-        />
-      ) : null }
-
-      { !listingError && currentList ? (
-        <Pagination
           pageNumber={pageNumber}
           setPageNumber={setPageNumber}
         />

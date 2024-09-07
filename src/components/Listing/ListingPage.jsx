@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { cleanName } from '../../utils/Cleaners';
 import Card from '../Cards/Card';
+import Pagination from './Pagination';
 import pokeball from '../../assets/svg/pokeball.svg';
 
 
-const ListingPage = ({ currentList, currentFilter, filterSource, setModalShow, setModalTarget, listingError, setListingError, pageNumber }) => {
+const ListingPage = ({ currentList, currentFilter, filterSource, setModalShow, setModalTarget, listingError, setListingError, pageNumber, setPageNumber }) => {
   const [listingLoading, setListingLoading] = useState(false);
   const [cardsDisplayed, setCardsDisplayed] = useState([]);
   
   const cardLimit = 12;
+  const totalPages = Math.ceil(currentList.length / cardLimit);
 
   const fetchCardDetails = async (id) => {
     try {
@@ -85,6 +87,12 @@ const ListingPage = ({ currentList, currentFilter, filterSource, setModalShow, s
           />
         ))}
       </div>
+
+      <Pagination
+          pageNumber={pageNumber}
+          setPageNumber={setPageNumber}
+          totalPages={totalPages}
+        />
     </div>
   );
 };
