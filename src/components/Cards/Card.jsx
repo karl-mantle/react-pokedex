@@ -2,15 +2,16 @@ import { cleanName, cleanNumber } from '../../utils/Cleaners.js';
 import './card.css';
 import '../types.css';
 
-const Card = ({ subject, number, filterSource, setModalShow, setModalTarget }) => {
+const Card = ({ subject, number, filterSource, setModalShow, setModalTarget, setModalKind }) => {
 
   if (!subject.pokemonData) {
     return null;
   }
 
   const handleCardClick = () => {
-    setModalShow(true);
     setModalTarget(`https://pokeapi.co/api/v2/pokemon/${subject.pokemonData.id}`);
+    setModalKind('pokemon');
+    setModalShow(true);
   };
 
   const types = subject.pokemonData.types ? subject.pokemonData.types.map(type => type.type.name) : [];

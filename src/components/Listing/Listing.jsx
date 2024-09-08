@@ -3,7 +3,7 @@ import ListingPage from './ListingPage';
 import ListingFilter from './ListingFilter';
 import './listing.css';
 
-const Listing = ({setModalShow, setModalTarget, pokemonList, typesList, pokedexList }) => {
+const Listing = ({setModalShow, setModalTarget, setModalKind, pokemonList, typesList, pokedexList }) => {
   const [pageNumber, setPageNumber] = useState(0);
   const [listingError, setListingError] = useState(false);
   const [filterSource, setFilterSource] = useState('pokedex');
@@ -40,6 +40,7 @@ const Listing = ({setModalShow, setModalTarget, pokemonList, typesList, pokedexL
 
           setModalShow={setModalShow}
           setModalTarget={setModalTarget}
+          setModalKind={setModalKind}
 
           listingError={listingError}
           setListingError={setListingError}

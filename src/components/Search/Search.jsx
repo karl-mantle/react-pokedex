@@ -1,29 +1,55 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { cleanName } from '../../utils/Cleaners';
 import './search.css';
 
 let debounceTimeout;
 
-const Search = ({ setModalTarget, setModalShow, modalError, pokemonList }) => {
+const Search = ({ setModalTarget, setModalShow, modalError, setModalKind, pokemonList, moveList, itemList }) => {
   const [searchInput, setSearchInput] = useState('');
   const [filteredList, setFilteredList] = useState([]);
+  const [currentList, setCurrentList] = useState([]);
+  const [currentSearchFilter, setCurrentSearchFilter] = useState('pokemon');
+
+  useEffect(() => {
+    setCurrentList(pokemonList);
+  }, [pokemonList]);
 
   const handleSearch = (name) => {
-    const selectedPokemon = pokemonList.find(pokemon => pokemon.name === name);
-    if (selectedPokemon) {
-      setModalTarget(selectedPokemon.url);
+    const selectedEntry = currentList.find(entry => entry.name === name);
+    if (selectedEntry) {
+      setModalTarget(selectedEntry.url);
       setModalShow(true);
+      setModalKind(currentSearchFilter);
     }
-  };  
+  };
+
+  const handleSearchFilter = (filter) => {
+    switch (filter) {
+      case 'pokemon':
+        setCurrentList(pokemonList);
+        setCurrentSearchFilter(filter);
+        break;
+      case 'move':
+        setCurrentList(moveList);
+        setCurrentSearchFilter(filter);
+        break;
+      case 'item':
+        setCurrentList(itemList);
+        setCurrentSearchFilter(filter);
+        break;
+      default:
+        setCurrentList([]);
+    }
+  }  
 
   const setSuggestion = (suggestion) => {
-    const selectedPokemon = pokemonList.find(pokemon => pokemon.name === suggestion);
-    if (selectedPokemon) {
+    const selectedEntry = currentList.find(entry => entry.name === suggestion);
+    if (selectedEntry) {
       setSearchInput(suggestion);
       setFilteredList([]);
       handleSearch(suggestion);
     }
   };
-  
 
   const debounceSearch = (searchTerm) => {
     clearTimeout(debounceTimeout);
@@ -31,8 +57,8 @@ const Search = ({ setModalTarget, setModalShow, modalError, pokemonList }) => {
 
     debounceTimeout = setTimeout(() => {
       console.log(searchTerm);
-      setFilteredList(pokemonList.filter(
-        pokemon => pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+      setFilteredList(currentList.filter(
+        entry => entry.name.toLowerCase().includes(searchTerm.toLowerCase())
       ).slice(0, 3));
     }, 500);
   };
@@ -59,22 +85,29 @@ const Search = ({ setModalTarget, setModalShow, modalError, pokemonList }) => {
     <>
       <div className="frame search">
         <form onSubmit={(e) => { e.preventDefault(); handleSearch(searchInput); }}>
-          <input
-            type="text"
-            name="searchInput"
-            value={searchInput}
-            onChange={changeSearchInput}
-            onKeyDown={handleKeyDown}
-            placeholder="Enter a Pokémon name"
-          />
+          <div>
+            <select onChange={(e) => handleSearchFilter(e.target.value)}>
+              <option value="pokemon">Pokémon</option>
+              <option value="move">Move</option>
+              <option value="item">Item</option>
+            </select>
+            <input
+              type="text"
+              name="searchInput"
+              value={searchInput}
+              onChange={changeSearchInput}
+              onKeyDown={handleKeyDown}
+              placeholder="Enter a name..."
+            />
+          </div>
           <button type="submit">Search</button>
         </form>
 
         {filteredList.length > 0 ? (
           <ul className="suggestions">
-            {filteredList.map((pokemon, index) => (
-              <li className="suggestion" key={index} onClick={() => setSuggestion(pokemon.name)}>
-                {pokemon.name}
+            {filteredList.map((entry, index) => (
+              <li className="suggestion" key={index} onClick={() => setSuggestion(entry.name)}>
+                {cleanName(entry.name)}
               </li>
             ))}
           </ul>

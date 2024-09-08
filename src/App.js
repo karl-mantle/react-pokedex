@@ -18,7 +18,7 @@ function App() {
   const [modalShow, setModalShow] = useState(false);
   const [modalTarget, setModalTarget] = useState(null);
   const [modalError, setModalError] = useState(false);
-  const [currentKind, setCurrentKind] = useState('pokemon');
+  const [modalKind, setModalKind] = useState('pokemon');
   
   useEffect(() => {
     const fetchBaseLists = async () => {
@@ -99,14 +99,18 @@ function App() {
         setModalShow={setModalShow}
         setModalTarget={setModalTarget}
         modalError={modalError}
+        setModalKind={setModalKind}
 
         pokemonList={pokemonList}
+        itemList={itemList}
+        moveList={moveList}
       />
 
       <Listing
         modalShow={modalShow}
         setModalShow={setModalShow}
         setModalTarget={setModalTarget}
+        setModalKind={setModalKind}
         
         pokemonList={pokemonList}
         typesList={typesList}
@@ -121,8 +125,8 @@ function App() {
         setModalTarget={setModalTarget}
         modalError={modalError}
         setModalError={setModalError}
-        currentKind={currentKind}
-        setCurrentKind={setCurrentKind}
+        modalKind={modalKind}
+        setModalKind={setModalKind}
       />
     </main>
     <Footer/>

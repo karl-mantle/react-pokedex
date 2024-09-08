@@ -7,10 +7,10 @@ const Item = ({ primaryData, entryLoading, onClose }) => {
     return null;
   }
 
-  const effect = primaryData.effect_entries && primaryData.effect_entries.length > 0 ? primaryData.effect_entries[0].effect : 'No effect available';
+  const effect = primaryData.effect_entries?.length > 0 ? primaryData.effect_entries[0].effect : 'No effect available';
 
   return (
-    <div className={`details${ entryLoading ? ' hidden' : ''}`}>
+    <div className={`details${entryLoading ? ' hidden' : ''}`}>
       <div className="top-row">
         <div className="id"></div>
         <div className="name"><h2>{cleanName(primaryData.name)}</h2></div>
@@ -22,7 +22,9 @@ const Item = ({ primaryData, entryLoading, onClose }) => {
       </div>
       
       <div className="fact-file">
-        <div className="sprite"><img src={primaryData.sprites.default} alt={primaryData.name}/></div>
+        <div className="sprite">
+          <img src={primaryData.sprites?.default} alt={primaryData.name} />
+        </div>
         <ul>
           <li><strong>Placeholder content.</strong></li>
         </ul>
@@ -31,7 +33,6 @@ const Item = ({ primaryData, entryLoading, onClose }) => {
       <div className="message-box">
         <p>{effect}</p>
       </div>
-
     </div>
   );
 };

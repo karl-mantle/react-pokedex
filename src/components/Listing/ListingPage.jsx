@@ -5,7 +5,7 @@ import Pagination from './Pagination';
 import pokeball from '../../assets/svg/pokeball.svg';
 
 
-const ListingPage = ({ currentList, currentFilter, filterSource, setModalShow, setModalTarget, listingError, setListingError, pageNumber, setPageNumber }) => {
+const ListingPage = ({ currentList, currentFilter, filterSource, setModalShow, setModalTarget, setModalKind, listingError, setListingError, pageNumber, setPageNumber }) => {
   const [listingLoading, setListingLoading] = useState(false);
   const [cardsDisplayed, setCardsDisplayed] = useState([]);
   
@@ -98,13 +98,13 @@ const ListingPage = ({ currentList, currentFilter, filterSource, setModalShow, s
   return (
     <div>
 
-      { filterSource === 'pokedex' ?  (
+      { !listingLoading && filterSource === 'pokedex' ?  (
         <div className="message-box display">
           <p>Now displaying {cleanName(currentFilter)} Pokédex entries {pageNumber * cardLimit + 1} to {Math.min((pageNumber + 1) * cardLimit, currentList.length)} of a total {currentList.length} entries.</p>
         </div>
       ) : null }
 
-      { filterSource === 'type' ?  (
+      { !listingLoading && filterSource === 'type' ?  (
         <div className="message-box display">
           <p>Now displaying {pageNumber * cardLimit + 1} to {Math.min((pageNumber + 1) * cardLimit, currentList.length)} of {currentList.length} {cleanName(currentFilter)}-type Pokémon.</p>
         </div>
@@ -126,6 +126,7 @@ const ListingPage = ({ currentList, currentFilter, filterSource, setModalShow, s
               filterSource={filterSource}
               setModalTarget={setModalTarget}
               setModalShow={setModalShow}
+              setModalKind={setModalKind}
             />
           ))}
         </div>

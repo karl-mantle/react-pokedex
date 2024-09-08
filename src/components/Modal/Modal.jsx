@@ -11,11 +11,11 @@ const entries = {
   pokemon: Pokemon
 };
 
-const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModalTarget, modalError, setModalError, currentKind}) => {
+const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModalTarget, modalError, setModalError, modalKind}) => {
   const [entryLoading, setEntryLoading] = useState(false);
-  const [pokemonData, setPokemonData] = useState(null);
+  const [primaryData, setPrimaryData] = useState(null);
   const [speciesData, setSpeciesData] = useState(null);
-  const SelectedEntry = entries[currentKind];
+  const SelectedEntry = entries[modalKind];
   
   useEffect ( () => {
     const fetchEntryData = async () => {
@@ -24,18 +24,18 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
       setModalError(false);
 
       try {
-        if (currentKind === 'pokemon') {
+        if (modalKind === 'pokemon') {
           const primaryResponse = await fetch(`${modalTarget}`);
-          const pokemonData = await primaryResponse.json();
-          const speciesResponse = await fetch(pokemonData.species.url);
+          const primaryData = await primaryResponse.json();
+          const speciesResponse = await fetch(primaryData.species.url);
           const speciesData = await speciesResponse.json();
-          setPokemonData(pokemonData);
+          setPrimaryData(primaryData);
           setSpeciesData(speciesData);
         }
         else {
           const primaryResponse = await fetch(`${modalTarget}`);
-          const pokemonData = await primaryResponse.json();
-          setPokemonData(pokemonData);
+          const primaryData = await primaryResponse.json();
+          setPrimaryData(primaryData);
           setSpeciesData(null);
         }
       }
@@ -58,9 +58,9 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
       document.body.classList.remove('lock');
     }
 
-  }, [modalShow, modalTarget, setGlobalLoading, setModalError, setEntryLoading, currentKind]);
+  }, [modalShow, modalTarget, setGlobalLoading, setModalError, setEntryLoading, modalKind]);
 
-  if (!modalShow || !modalTarget || !pokemonData || modalError ) return null;
+  if (!modalShow || !modalTarget || !primaryData || modalError ) return null;
 
   return (
     <div className={`modal${ !modalShow ? ' hidden' : ''}`}>
@@ -75,7 +75,7 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
 
         { !entryLoading && SelectedEntry && (
           <SelectedEntry
-            pokemonData={pokemonData}
+            primaryData={primaryData}
             speciesData={speciesData}
             setModalTarget={setModalTarget}
             setGlobalLoading={setGlobalLoading}
