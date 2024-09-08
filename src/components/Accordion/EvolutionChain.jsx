@@ -3,7 +3,7 @@ import { cleanName } from '../../utils/Cleaners.js';
 import Pokeball from '../../assets/svg/pokeball.svg';
 
 
-const EvolutionChain = ({ speciesData, setGlobalLoading, drawerOpen, setModalShow, setModalTarget }) => {
+const EvolutionChain = ({ speciesData, setGlobalLoading, drawerOpen, setModalShow, setModalTarget, setModalKind }) => {
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [chainLoading, setChainLoading] = useState([]);
 
@@ -55,14 +55,14 @@ const EvolutionChain = ({ speciesData, setGlobalLoading, drawerOpen, setModalSho
       <div className="evolution-chain">
 
         { chainLoading ?  (
-          <div className="loading chain">
+          <div className="loading medium">
             <img src={Pokeball} alt="" className="pokeball"/>
           </div>
         ) : null }
 
         <div className={`${chainLoading ? ' hidden' : ''}`}>
           {evolutionChain.map((pokemon, index) => (
-            <div key={index} className="evolution" onClick={()=>{ setModalShow(true); setModalTarget(pokemon.url);}}>
+            <div key={index} className="evolution" onClick={()=>{ setModalShow(true); setModalTarget(pokemon.url); setModalKind('pokemon');}}>
               <div className="sprite"><img src={pokemon.image}  alt={pokemon.name}/></div>
               <div className="">
                 <div className="name"><h3>{cleanName(pokemon.name)}</h3></div>

@@ -11,7 +11,7 @@ const entries = {
   pokemon: Pokemon
 };
 
-const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModalTarget, modalError, setModalError, modalKind}) => {
+const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModalTarget, modalError, setModalError, modalKind, setModalKind }) => {
   const [entryLoading, setEntryLoading] = useState(false);
   const [primaryData, setPrimaryData] = useState(null);
   const [speciesData, setSpeciesData] = useState(null);
@@ -81,6 +81,7 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
             setGlobalLoading={setGlobalLoading}
             modalShow={modalShow}
             setModalShow={setModalShow}
+            setModalKind={setModalKind}
             onClose={() => {
               setModalShow(false);
               setModalError(false);
