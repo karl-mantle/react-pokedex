@@ -99,21 +99,34 @@ const ListingFilter = ({ currentFilter, setCurrentFilter, filterSource, setFilte
         <div className="filters">
           <ul>
             {filtersTargetList.map((filter, index) => (
-                <li key={index} className={`${filterSource} ${filter.name}`} onClick={(e) => handleFilterCards('filter', filter.name, e)}>{filter.name.toUpperCase()}</li>
+                <li key={index} className={`${filterSource}${currentFilter === filter.name ? ' active' : ''} ${filter.name}`} onClick={(e) => handleFilterCards('filter', filter.name, e)}>{filter.name.toUpperCase()}</li>
                 ))}
           </ul>
             <button onClick={(e) => clearFilters(e)}>Clear filters</button>
         </div>
         ) : null }
 
+        
+
       { filterSource === 'pokedex' ? (
         <div className="filters">
-          <ul>
-            {filtersTargetList.map((filter, index) => (
-                <li key={index} className={`${filterSource}`} onClick={(e) => handleFilterCards('filter', filter.name, e)}>{cleanName(filter.name)}</li>
-                ))}
-          </ul>
+          <div className="hidden-mobile">
+            <ul>
+              {filtersTargetList.map((filter, index) => (
+                  <li key={index} className={`${filterSource} ${currentFilter === filter.name ? 'active' : ''}`} onClick={(e) => handleFilterCards('filter', filter.name, e)}>{cleanName(filter.name)}</li>
+                  ))}
+            </ul>
             <button onClick={(e) => clearFilters(e)}>Clear filters</button>
+          </div>
+          <div className="hidden-desktop">
+            <select onChange={(e) => handleFilterCards('filter', e.target.value, e)}>
+              {filtersTargetList.map((filter, index) => (
+                <option key={index} value={filter.name} className={`${filterSource}`}>
+                  {cleanName(filter.name)} Pokédex
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         ) : null }
     

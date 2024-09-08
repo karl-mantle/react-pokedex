@@ -13,10 +13,9 @@ const entries = {
 
 const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModalTarget, modalError, setModalError, currentKind}) => {
   const [entryLoading, setEntryLoading] = useState(false);
-  const [primaryData, setPrimaryData] = useState(null);
+  const [pokemonData, setPokemonData] = useState(null);
   const [speciesData, setSpeciesData] = useState(null);
-  const EntryType = entries[currentKind]; /* look up why does current have to be capitalised for this to work?
-  const EntryType = currentKind.charAt(0).toUpperCase() + currentKind.slice(1); */  
+  const SelectedEntry = entries[currentKind];
   
   useEffect ( () => {
     const fetchEntryData = async () => {
@@ -27,16 +26,16 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
       try {
         if (currentKind === 'pokemon') {
           const primaryResponse = await fetch(`${modalTarget}`);
-          const primaryData = await primaryResponse.json();
-          const speciesResponse = await fetch(primaryData.species.url);
+          const pokemonData = await primaryResponse.json();
+          const speciesResponse = await fetch(pokemonData.species.url);
           const speciesData = await speciesResponse.json();
-          setPrimaryData(primaryData);
+          setPokemonData(pokemonData);
           setSpeciesData(speciesData);
         }
         else {
           const primaryResponse = await fetch(`${modalTarget}`);
           const pokemonData = await primaryResponse.json();
-          setPrimaryData(pokemonData);
+          setPokemonData(pokemonData);
           setSpeciesData(null);
         }
       }
@@ -61,7 +60,7 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
 
   }, [modalShow, modalTarget, setGlobalLoading, setModalError, setEntryLoading, currentKind]);
 
-  if (!modalShow || !modalTarget || !primaryData || modalError ) return null;
+  if (!modalShow || !modalTarget || !pokemonData || modalError ) return null;
 
   return (
     <div className={`modal${ !modalShow ? ' hidden' : ''}`}>
@@ -74,15 +73,14 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
           </div>
         ) : null }
 
-        { EntryType && (
-          <EntryType
-            primaryData={primaryData}
+        { !entryLoading && SelectedEntry && (
+          <SelectedEntry
+            pokemonData={pokemonData}
             speciesData={speciesData}
             setModalTarget={setModalTarget}
             setGlobalLoading={setGlobalLoading}
             modalShow={modalShow}
             setModalShow={setModalShow}
-            entryLoading={entryLoading}
             onClose={() => {
               setModalShow(false);
               setModalError(false);

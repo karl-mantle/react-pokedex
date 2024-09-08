@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { cleanName } from '../../utils/Cleaners.js';
 import Pokeball from '../../assets/svg/pokeball.svg';
-import './evolution-chain.css';
 
 
-const EvolutionChain = ({ speciesData, setGlobalLoading, active, setModalShow, setModalTarget }) => {
+const EvolutionChain = ({ speciesData, setGlobalLoading, drawerOpen, setModalShow, setModalTarget }) => {
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [chainLoading, setChainLoading] = useState([]);
 
@@ -45,11 +44,11 @@ const EvolutionChain = ({ speciesData, setGlobalLoading, active, setModalShow, s
       }
     };
 
-    if (active === 'secondTab' && speciesData) {
+    if (drawerOpen && speciesData) {
       fetchEvolutionChain();
     }
 
-  }, [speciesData, setGlobalLoading, active]);
+  }, [speciesData, setGlobalLoading, drawerOpen]);
 
   return (
     <>

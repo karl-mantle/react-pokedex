@@ -40,20 +40,37 @@
   gap: 1rem;
   cursor: pointer;
 
-  & ul {
+  & ul, & div {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: .5rem;
-
-    & li:hover {
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
-    }
   }
 
-  & button {
+  & button, & div button {
     align-self: center;
     width: 50%;
+  }
+
+  & div select {
+    background: transparent;
+    
+	  border: 2px solid var(--teal-1);
+    border-radius: .5rem;
+    box-shadow:rgba(255, 255, 255, 0.2) 0 0 2px 2px;
+
+    padding: .5rem 1rem;
+    width: 100%;
+
+    transition: border-bottom 0.5s ease-in-out;
+
+    &:focus {
+      text-shadow: 1px 1px white;
+    }
+
+    &::placeholder {
+      color: var(--text);
+    }
   }
 }
 
@@ -71,12 +88,14 @@
 .pokedex {
   padding: .5rem;
   font-weight: bold;
+  transition: background-color 0.3s, color 0.3s, text-shadow 0.3s, box-shadow 0.3s, border-radius 0.6s ease-in-out;
 
-  &:hover {
+  &:hover, &.active {
     background-color: var(--teal-2);
     border-radius: .5rem;
     color: var(--light-text);
     text-shadow: 1px 1px black;
+    box-shadow:rgba(0, 0, 0, 0.2) 0 0 2px 2px;
   }
 }
 
@@ -90,18 +109,21 @@
     background-color: var(--teal-1);
     border-radius: .5rem;
     padding: .25rem;
-    
-    transition: background-color 0.5s, text-shadow 0.5s;
-    cursor: pointer;
 
     color: var(--light-text);
     text-shadow: 1px 1px black;
     font-weight: bold;
+  }
+
+  & span:not(.ellipsis) {
+    cursor: pointer;
+    transition: background-color 0.5s, text-shadow 0.5s ease-in-out;
+    box-shadow:rgba(0, 0, 0, 0.2) 0 0 2px 2px;
 
     &:hover, &.active {
       background-color: var(--teal-2);
+      box-shadow:rgba(255, 255, 255, 0.2) 0 0 2px 2px;
       font-size: 1.125rem;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
       text-shadow: 1px 1px black;
     }
   }

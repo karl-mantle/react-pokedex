@@ -22,11 +22,15 @@ const Card = ({ subject, number, filterSource, setModalShow, setModalTarget }) =
           <div className="details">
             <div className="id">
               <span>
-                { filterSource === 'pokedex' ?  cleanNumber(number) : cleanNumber(subject.pokemonData.id) }
+              { filterSource === 'pokedex' ?  cleanNumber(number) : cleanNumber(subject.pokemonData.id) }
               </span>
             </div>
             <div>
-              <div className="name"><h3>{cleanName(subject.speciesData.name)}</h3></div>
+              <div className="name">
+                <h3>
+                  { filterSource === 'pokedex' ?  cleanName(subject.speciesData.name) : cleanName(subject.pokemonData.name) }
+                </h3>
+              </div>
               <div className="types">{types.map((type, index) => (
                 <span key={index} className={`type ${type}`}>{type.toUpperCase()}</span>
                 ))}

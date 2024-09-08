@@ -21,8 +21,8 @@ const Pagination = ({ pageNumber, setPageNumber, totalPages }) => {
 
   const getPageNumbers = () => {
     const pages = [];
-    const startPage = Math.max(1, pageNumber - 2);
-    const endPage = Math.min(totalPages, pageNumber + 2);
+    const startPage = Math.max(1, pageNumber - 1);
+    const endPage = Math.min(totalPages, pageNumber + 3);
 
     if (startPage > 1) {
       pages.push(1);
@@ -47,13 +47,13 @@ const Pagination = ({ pageNumber, setPageNumber, totalPages }) => {
 
   return (
     <div className="pagination">
-      <button className={`prev${ pageNumber === 0 ? ' inactive' : '' }`} onClick={handlePreviousPage}>Prev</button>
+      <button className={`hidden-mobile${ pageNumber === 0 ? ' inactive' : '' }`} onClick={handlePreviousPage}>Prev</button>
       {getPageNumbers().map((page, index) => (
-        <span key={index} className={`${ page === pageNumber + 1 ? ' active' : '' }`} onClick={() => typeof page === 'number' && handlePageClick(page - 1)}>
+        <span key={index} className={`${ page === pageNumber + 1 ? ' active' : '' } ${ page === '...' ? ' ellipsis' : '' }`} onClick={() => typeof page === 'number' && handlePageClick(page - 1)}>
           {page}
         </span>
       ))}
-      <button className={`next${ pageNumber === totalPages - 1 ? ' inactive' : '' }`} onClick={handleNextPage}>Next</button>
+      <button className={`hidden-mobile${ pageNumber === totalPages - 1 ? ' inactive' : '' }`} onClick={handleNextPage}>Next</button>
     </div>
   );
 };

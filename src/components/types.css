@@ -7,6 +7,7 @@
 .type {
   background-color: grey;
   border-radius: .5rem;
+  box-shadow:rgba(0, 0, 0, 0.1) 0 0 1px 1px;
 
   padding: .25rem;
   margin-right: .5rem;
@@ -14,6 +15,16 @@
   color: var(--light-text);
   font-size: 1rem;
   text-shadow: 1px 1px black;
+
+  transition: box-shadow 0.3s ease-in-out;
+
+  &:hover {
+    box-shadow:rgba(0, 0, 0, 0.2) 0 0 4px 2px;
+  }
+
+  &.active {
+    box-shadow:var(--teal-2) 0 0 6px;
+  }
 }
 
 .water {
