@@ -12,13 +12,55 @@ const ListingPage = ({ currentList, currentFilter, filterSource, setModalShow, s
   const cardLimit = 12;
   const totalPages = Math.ceil(currentList.length / cardLimit);
 
-  const fetchCardDetails = async (id) => {
+  const fetchSpeciesDetails = async (url) => {
     try {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-      return await response.json();
+      if (filterSource === 'pokedex') {
+        const speciesResponse = await fetch(url);
+        const speciesData = await speciesResponse.json();
+  
+        let pokemonData;
+        const alolaFilters = ['original-alola', 'original-melemele', 'original-akala', 'original-ulaula', 'original-poni', 'updated-alola', 'updated-melemele', 'updated-akala', 'updated-ulaula', 'updated-poni'];
+        const galarFilters = ['galar', 'isle-of-armor', 'crown-tundra'];
+    
+        if (alolaFilters.includes(currentFilter)) {
+          const alolaVariety = speciesData.varieties.find(variety => variety.pokemon.name.includes('alola'));
+          if (alolaVariety) {
+            const pokemonResponse = await fetch(alolaVariety.pokemon.url);
+            pokemonData = await pokemonResponse.json();
+          }
+          else {
+            const pokemonResponse = await fetch(speciesData.varieties[0].pokemon.url);
+            pokemonData = await pokemonResponse.json();
+          }
+        }
+        else if (galarFilters.includes(currentFilter)) {
+          const galarVariety = speciesData.varieties.find(variety => variety.pokemon.name.includes('galar'));
+          if (galarVariety) {
+            const pokemonResponse = await fetch(galarVariety.pokemon.url);
+            pokemonData = await pokemonResponse.json();
+          }
+          else {
+            const pokemonResponse = await fetch(speciesData.varieties[0].pokemon.url);
+            pokemonData = await pokemonResponse.json();
+          }
+        }
+        else {
+          const pokemonResponse = await fetch(speciesData.varieties[0].pokemon.url);
+          pokemonData = await pokemonResponse.json();
+        }
+        return { speciesData, pokemonData };
+      }
+      else {
+        // this is effectively filterSource === 'type'
+        const pokemonResponse = await fetch(url);
+        const pokemonData = await pokemonResponse.json();
+        const speciesResponse = await fetch(pokemonData.species.url);
+        const speciesData = await speciesResponse.json();
+        return { speciesData, pokemonData };
+      }
     }
     catch (error) {
-      console.error('Error fetching card details.', error)
+      console.error('Error fetching card details.', error);
     }
   };
 
@@ -28,12 +70,11 @@ const ListingPage = ({ currentList, currentFilter, filterSource, setModalShow, s
       setListingLoading(true);
 
       try {
-        let cardSourceList = currentList;
         const start = pageNumber * cardLimit;
         const end = start + cardLimit;
-        const currentPage = cardSourceList.slice(start, end);
+        const currentPage = currentList.slice(start, end);
 
-        const fetchPromises = currentPage.map(card => fetchCardDetails(card.name));
+        const fetchPromises = currentPage.map(card => fetchSpeciesDetails(card.url));
         const cardDetails = await Promise.all(fetchPromises);
         setCardsDisplayed(cardDetails.map((details, index) => ({
           ...details,
@@ -73,20 +114,22 @@ const ListingPage = ({ currentList, currentFilter, filterSource, setModalShow, s
           <div className="loading">
             <img src={pokeball} alt="" className="pokeball"/>
           </div>
-        ) : null }
-      
-      <div className={`listing ${ listingError ? 'hidden' : '' }`}>
-        {cardsDisplayed.map((subject, index) => (
-          <Card
-            key={index}
-            subject={subject}
-            number={subject.originalIndex}
-            filterSource={filterSource}
-            setModalTarget={setModalTarget}
-            setModalShow={setModalShow}
-          />
-        ))}
-      </div>
+      ) : null }
+
+      { !listingLoading ?  (
+          <div className={`listing ${ listingError ? 'hidden' : '' }`}>
+          {cardsDisplayed.map((subject, index) => (
+            <Card
+              key={index}
+              subject={subject}
+              number={subject.originalIndex}
+              filterSource={filterSource}
+              setModalTarget={setModalTarget}
+              setModalShow={setModalShow}
+            />
+          ))}
+        </div>
+      ) : null }
 
       <Pagination
           pageNumber={pageNumber}

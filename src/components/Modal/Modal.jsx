@@ -26,7 +26,7 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
 
       try {
         if (currentKind === 'pokemon') {
-          const primaryResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${modalTarget}`);
+          const primaryResponse = await fetch(`${modalTarget}`);
           const primaryData = await primaryResponse.json();
           const speciesResponse = await fetch(primaryData.species.url);
           const speciesData = await speciesResponse.json();
@@ -34,7 +34,7 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
           setSpeciesData(speciesData);
         }
         else {
-          const primaryResponse = await fetch(`https://pokeapi.co/api/v2/${currentKind}/${modalTarget}`);
+          const primaryResponse = await fetch(`${modalTarget}`);
           const pokemonData = await primaryResponse.json();
           setPrimaryData(pokemonData);
           setSpeciesData(null);

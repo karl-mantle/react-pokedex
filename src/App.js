@@ -33,7 +33,7 @@ function App() {
           setPokemonList(JSON.parse(localPokemonList));
         }
         else {
-          const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100025');
+          const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=11000');
           const data = await response.json();
           setPokemonList(data.results);
           localStorage.setItem('pokemonList', JSON.stringify(data.results));
@@ -73,7 +73,7 @@ function App() {
           setPokedexList(JSON.parse(localPokedexList));
         }
         else {
-          const response = await fetch('https://pokeapi.co/api/v2/pokedex');
+          const response = await fetch('https://pokeapi.co/api/v2/pokedex?limit=32');
           const data = await response.json();
           setPokedexList(data.results);
           localStorage.setItem('pokedexList', JSON.stringify(data.results));

@@ -21,8 +21,8 @@ const Pagination = ({ pageNumber, setPageNumber, totalPages }) => {
 
   const getPageNumbers = () => {
     const pages = [];
-    const startPage = Math.max(1, pageNumber - 1);
-    const endPage = Math.min(totalPages, pageNumber + 1);
+    const startPage = Math.max(1, pageNumber - 2);
+    const endPage = Math.min(totalPages, pageNumber + 2);
 
     if (startPage > 1) {
       pages.push(1);

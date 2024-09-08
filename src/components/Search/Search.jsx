@@ -10,7 +10,7 @@ const Search = ({ setModalTarget, setModalShow, modalError, pokemonList }) => {
   const handleSearch = (name) => {
     const selectedPokemon = pokemonList.find(pokemon => pokemon.name === name);
     if (selectedPokemon) {
-      setModalTarget(selectedPokemon.name);
+      setModalTarget(selectedPokemon.url);
       setModalShow(true);
     }
   };  
