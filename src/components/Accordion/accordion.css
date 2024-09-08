@@ -6,7 +6,7 @@
       display: flex;
       justify-content: space-between;
       background: linear-gradient(0deg, var(--blue-1) 40%, var(--blue-2) 80%);
-      box-shadow:rgba(0, 0, 0, 0.2) 0 0 2px 2px;
+      box-shadow:rgba(255, 255, 255, 0.2) 0 0 2px 2px;
       border: 2px solid var(--teal-2);
       border-radius: .5rem;
       padding: .5rem;
@@ -30,6 +30,7 @@
       &.active {
         background: var(--teal-2);
         border-radius: .5rem .5rem 0 0;
+        box-shadow:rgba(0, 0, 0, 0.2) 0 0 2px 2px;
 
         & h3 {
           color: var(--light-text);
@@ -49,6 +50,7 @@
       background: linear-gradient(0deg, var(--blue-1) 40%, var(--blue-2) 80%);
       border: 2px solid var(--teal-2);
       border-radius: 0 0 .5rem .5rem;
+      box-shadow:rgba(0, 0, 0, 0.2) 0 3px 2px 2px;
     }
   }
 }
@@ -61,22 +63,41 @@
   }
 }
 
-.stats table {
-  & th {
-    font-weight: bold;
-    text-align: left;
-    padding-bottom: .25rem;
-  }
+.stats {
+  display: flex;
+  justify-content: center;
 
-  & td {
-    border-bottom: 1px solid var(--teal-1);
-    border-right: 1px solid var(--teal-1);
-  }
+  & table {
+    width: 100%;
 
-  & tr :nth-child(2) {
-    text-align: center;
+    & *:not(.chart) {
+      border-radius: .25rem;
+    }
+
+    & th {
+      font-weight: bold;
+      text-align: left;
+      padding-bottom: .25rem;
+    }
+  
+    & td {
+      padding: .25rem;
+      border-bottom: 1px solid var(--teal-1);
+      border-right: 1px solid var(--teal-1);
+    }
+  
+    & tr :nth-child(2) {
+      text-align: center;
+    }
+
+    & .chart {
+      background-color: var(--teal-1);
+      height: 1rem;
+    }
   }
 }
+
+
 
 .evolution-chain {
   display: flex;

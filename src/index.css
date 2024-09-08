@@ -162,6 +162,10 @@ main {
   & p {
     color: var(--light-text);
   }
+
+  &.accordion {
+    padding: .5rem;
+  }
 }
 
 .id {

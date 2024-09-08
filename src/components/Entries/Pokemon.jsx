@@ -21,7 +21,7 @@ const Pokemon = ({ pokemonData, speciesData, setModalTarget, setGlobalLoading, s
   const types = pokemonData.types ? pokemonData.types.map(type => type.type.name) : [];
   
   const accordionDrawers = [
-    { title: 'Stats', component: <Stats pokemonData={pokemonData}/> },
+    { title: 'Base Stats', component: <Stats pokemonData={pokemonData}/> },
     { title: 'Evolution Chain', component: <EvolutionChain speciesData={speciesData} setGlobalLoading={setGlobalLoading} setModalTarget={setModalTarget} setModalShow={setModalShow}/>  },
     { title: 'Moves', component: <Moves /> }
   ];
