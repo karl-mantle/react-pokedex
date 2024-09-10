@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/react-pokedex/static/css/main.c969d7b3.css",
-    "main.js": "/react-pokedex/static/js/main.c2402c64.js",
+    "main.css": "/react-pokedex/static/css/main.decc4c8f.css",
+    "main.js": "/react-pokedex/static/js/main.c56f0010.js",
     "static/js/453.5b9a2ad0.chunk.js": "/react-pokedex/static/js/453.5b9a2ad0.chunk.js",
     "static/media/PixelOperatorMono.ttf": "/react-pokedex/static/media/PixelOperatorMono.bc76d919d170096c7138.ttf",
     "static/media/PixelOperatorMono-Bold.ttf": "/react-pokedex/static/media/PixelOperatorMono-Bold.8438f776afcc90fa51ea.ttf",
@@ -11,14 +11,15 @@
     "static/media/footer-125.svg": "/react-pokedex/static/media/footer-125.38900d6e5e4fd09bebd9.svg",
     "static/media/pokeball-bg.svg": "/react-pokedex/static/media/pokeball-bg.66a4aa6a59b5174afb7b.svg",
     "static/media/pokeball.svg": "/react-pokedex/static/media/pokeball.bc1bf89b6fb6daf0b50c08b6edfbc9e6.svg",
+    "static/media/sparkles.svg": "/react-pokedex/static/media/sparkles.12e22a31d6909c608b3995d5192889de.svg",
     "index.html": "/react-pokedex/index.html",
     "static/media/noise.svg": "/react-pokedex/static/media/noise.7e1cf3072877872406d4.svg",
-    "main.c969d7b3.css.map": "/react-pokedex/static/css/main.c969d7b3.css.map",
-    "main.c2402c64.js.map": "/react-pokedex/static/js/main.c2402c64.js.map",
+    "main.decc4c8f.css.map": "/react-pokedex/static/css/main.decc4c8f.css.map",
+    "main.c56f0010.js.map": "/react-pokedex/static/js/main.c56f0010.js.map",
     "453.5b9a2ad0.chunk.js.map": "/react-pokedex/static/js/453.5b9a2ad0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c969d7b3.css",
-    "static/js/main.c2402c64.js"
+    "static/css/main.decc4c8f.css",
+    "static/js/main.c56f0010.js"
   ]
 }
