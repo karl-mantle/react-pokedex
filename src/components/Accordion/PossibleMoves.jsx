@@ -1,20 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { cleanName } from '../../utils/Cleaners.js';
 import Pokeball from '../../assets/svg/pokeball.svg';
 
 const PossibleMoves = ({ pokemonData, setGlobalLoading, drawerOpen, setModalShow, setModalTarget, setModalKind }) => {
   const [possibleMoves, setPossibleMoves] = useState([]);
   const [movesLoading, setMovesLoading] = useState(false);
+  const [visibleMoves, setVisibleMoves] = useState(6);
 
   useEffect(() => {
-    const fetchPossibleMoves = async () => {
+    const fetchInitialMoves = async () => {
       setGlobalLoading(true);
       setMovesLoading(true);
 
       try {
         const filteredMoves = pokemonData.moves.filter(move => 
           move.version_group_details.some(detail => detail.version_group.name === 'scarlet-violet')
-        );
+        ).slice(0, 6);
 
         const tempMoves = [];
 
@@ -43,21 +44,54 @@ const PossibleMoves = ({ pokemonData, setGlobalLoading, drawerOpen, setModalShow
     };
 
     if (drawerOpen && pokemonData) {
-      fetchPossibleMoves();
+      fetchInitialMoves();
     }
   }, [pokemonData, setGlobalLoading, drawerOpen]);
+
+  const loadMoreMoves = async () => {
+    setMovesLoading(true);
+
+    try {
+      const filteredMoves = pokemonData.moves.filter(move => 
+        move.version_group_details.some(detail => detail.version_group.name === 'scarlet-violet')
+      ).slice(visibleMoves, visibleMoves + 6);
+      const tempMoves = [];
+
+      for (const move of filteredMoves) {
+        const response = await fetch(move.move.url);
+        const data = await response.json();
+        const scarletVioletDetail = move.version_group_details.find(detail => detail.version_group.name === 'scarlet-violet');
+
+        tempMoves.push({
+          name: data.name,
+          types: data.type.name,
+          url: `https://pokeapi.co/api/v2/move/${data.id}`,
+          levelLearnedAt: scarletVioletDetail.level_learned_at,
+          howLearned: scarletVioletDetail.move_learn_method.name
+        });
+      }
+      setPossibleMoves(prevMoves => [...prevMoves, ...tempMoves]);
+      setVisibleMoves(prevVisibleMoves => prevVisibleMoves + 6);
+    }
+    catch (error) {
+      console.error('Error fetching more moves', error);
+    }
+    finally {
+      setMovesLoading(false);
+    }
+  };
 
   return (
     <>
       <div className="possible-moves">
-        {movesLoading ? (
+        { movesLoading ? (
           <div className="loading medium">
             <img src={Pokeball} alt="" className="pokeball" />
           </div>
         ) : null}
 
         <div className={`${movesLoading ? 'hidden' : ''}`}>
-          {possibleMoves.map((move, index) => (
+          { possibleMoves.map((move, index) => (
             <div key={index} className="move" onClick={() => { setModalShow(true); setModalTarget(move.url); setModalKind('move'); }}>
                 <div>
                   <div className="name"><h3>{cleanName(move.name)}</h3></div>
@@ -70,6 +104,16 @@ const PossibleMoves = ({ pokemonData, setGlobalLoading, drawerOpen, setModalShow
                 </div>
             </div>
           ))}
+          { visibleMoves < pokemonData.moves.length ? (
+            <div className={`load-more${possibleMoves.length === 0 ? ' hidden' : ''}`}>
+              <button onClick={loadMoreMoves}>Load more</button>
+            </div>
+          ) : null }
+          { possibleMoves.length === 0 ? (
+            <div className="error">
+              <p>Sorry, there was a problem fetching move data from PokeAPI.</p>
+            </div>
+          ) : null }
         </div>
       </div>
     </>

@@ -176,4 +176,18 @@
       align-self: center;
     }
   }
+
+  & .error {
+    & p {
+      color: var(--teal-1);
+    }
+  }
+}
+
+.load-more {
+  display: flex;
+    & button {
+      width: 50%;
+      margin: 0 auto;
+    }
 }
