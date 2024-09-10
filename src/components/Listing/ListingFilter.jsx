@@ -116,7 +116,6 @@ const ListingFilter = ({ currentFilter, setCurrentFilter, filterSource, setFilte
                   <li key={index} className={`${filterSource} ${currentFilter === filter.name ? 'active' : ''}`} onClick={(e) => handleFilterCards('filter', filter.name, e)}>{cleanName(filter.name)}</li>
                   ))}
             </ul>
-            <button onClick={(e) => clearFilters(e)}>Clear filters</button>
           </div>
           <div className="hidden-desktop">
             <select onChange={(e) => handleFilterCards('filter', e.target.value, e)}>

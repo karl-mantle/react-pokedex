@@ -40,7 +40,7 @@ const Pokemon = ({ primaryData, speciesData, setModalTarget, setGlobalLoading, s
         </div>
       </div>
       
-      <div className="fact-file">
+      <div className="fact-file pokemon">
         <div className="sprite"><img src={primaryData.sprites.front_default} alt={primaryData.name}/></div>
         <ul>
           <li><strong>Species:</strong></li>

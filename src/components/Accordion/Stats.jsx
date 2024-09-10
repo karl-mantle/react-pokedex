@@ -8,7 +8,7 @@ const Stats = ({ pokemonData }) => {
   })) : [];
 
   return (
-    <div className="stats">
+    <div className="table">
       <table>
         <thead>
           <tr>

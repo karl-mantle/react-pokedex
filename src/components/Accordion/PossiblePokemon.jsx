@@ -3,65 +3,60 @@ import { cleanName } from '../../utils/Cleaners.js';
 import Pokeball from '../../assets/svg/pokeball.svg';
 
 
-const EvolutionChain = ({ speciesData, setGlobalLoading, drawerOpen, setModalShow, setModalTarget, setModalKind }) => {
-  const [evolutionChain, setEvolutionChain] = useState([]);
-  const [chainLoading, setChainLoading] = useState([]);
+const PossiblePokemon = ({ primaryData, setGlobalLoading, drawerOpen, setModalShow, setModalTarget, setModalKind }) => {
+  const [ablePokemon, setAblePokemon] = useState([]);
+  const [pokemonLoading, setPokemonLoading] = useState(false);
 
   useEffect(() => {
-    const fetchEvolutionChain = async () => {
+    const fetchAbleList = async () => {
       setGlobalLoading(true);
-      setChainLoading(true);
+      setPokemonLoading(true);
 
       try {
-        const speciesDataResponse = await fetch(speciesData.evolution_chain.url);
-        const evolutionChainData = await speciesDataResponse.json();
-        const chain = evolutionChainData.chain;
-        const tempChain = [];
+        const tempAble = [];
 
-        const fetchEvolutionRoot = async (chain) => {
-          const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${chain.species.name}`);
+        const fetchAblePokemon = async (url) => {
+          const response = await fetch(url);
           const data = await response.json();
-          tempChain.push({
+          tempAble.push({
             name: data.name,
             types: data.types.map(type => type.type.name),
             image: data.sprites.front_default,
             url: `https://pokeapi.co/api/v2/pokemon/${data.id}`
           });
-          if (chain.evolves_to.length > 0) {
-            await fetchEvolutionRoot(chain.evolves_to[0]);
-          }
         };
-
-        await fetchEvolutionRoot(chain);
-        setEvolutionChain(tempChain);
+        for (const pokemon of primaryData.learned_by_pokemon) {
+          await fetchAblePokemon(pokemon.url);
+        }
+        
+        setAblePokemon(tempAble);
       }
       catch (error) {
-        console.error('Error fetching evolution chain.', error);
+        console.error('Error fetching Pokémon list', error);
       }
       finally {
         setGlobalLoading(false);
-        setChainLoading(false);
+        setPokemonLoading(false);
       }
     };
 
-    if (drawerOpen && speciesData) {
-      fetchEvolutionChain();
+    if (drawerOpen && primaryData) {
+      fetchAbleList();
     }
-
-  }, [speciesData, setGlobalLoading, drawerOpen]);
+  }, [primaryData, setGlobalLoading, drawerOpen]);
 
   return (
     <>
       <div className="able-pokemon">
 
-        { chainLoading ?  (
+        { pokemonLoading ? (
           <div className="loading medium">
             <img src={Pokeball} alt="" className="pokeball"/>
           </div>
         ) : null }
 
-        <div className={`${chainLoading ? ' hidden' : ''}`}>
-          {evolutionChain.map((pokemon, index) => (
+        <div className={`${pokemonLoading ? ' hidden' : ''}`}>
+          {ablePokemon.map((pokemon, index) => (
             <div key={index} className="pokemon" onClick={()=>{ setModalShow(true); setModalTarget(pokemon.url); setModalKind('pokemon');}}>
               <div className="sprite"><img src={pokemon.image}  alt={pokemon.name}/></div>
               <div className="">
@@ -80,4 +75,4 @@ const EvolutionChain = ({ speciesData, setGlobalLoading, drawerOpen, setModalSho
   );
 }
 
-export default EvolutionChain;
+export default PossiblePokemon;
