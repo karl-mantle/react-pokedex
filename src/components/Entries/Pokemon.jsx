@@ -1,13 +1,16 @@
+import { useState } from 'react';
 import { cleanName, cleanNumber, cleanDescription } from '../../utils/Cleaners.js';
 import Accordion from '../Accordion/Accordion';
 import Stats from '../Accordion/Stats';
 import EvolutionChain from '../Accordion/EvolutionChain';
 import PossibleMoves from '../Accordion/PossibleMoves';
+import Sparkles from '../../assets/svg/sparkles.svg';
 import './entries.css';
 import '../types.css';
 
 const Pokemon = ({ primaryData, speciesData, setModalTarget, setGlobalLoading, setModalShow, setModalKind, onClose }) => {
   // primaryData = pokemonData for the purposes of this entry.
+  const [showShiny, setShowShiny] = useState(false);
   
   if (!speciesData || !primaryData) {
     return null
@@ -27,6 +30,17 @@ const Pokemon = ({ primaryData, speciesData, setModalTarget, setGlobalLoading, s
     { title: 'Possible Moves', component: <PossibleMoves pokemonData={primaryData} setGlobalLoading={setGlobalLoading} setModalTarget={setModalTarget} setModalShow={setModalShow} setModalKind={setModalKind}/> }
   ];
 
+  const handleShiny = (event) => {
+    event.preventDefault();
+    console.log('Switch to shiny sprite');
+    if (showShiny === true) {
+      setShowShiny(false);
+    }
+    else {
+      setShowShiny(true);
+    }
+  };
+
   return (
     <div className="details">
 
@@ -41,7 +55,10 @@ const Pokemon = ({ primaryData, speciesData, setModalTarget, setGlobalLoading, s
       </div>
       
       <div className="fact-file pokemon">
-        <div className="sprite"><img src={primaryData.sprites.front_default} alt={primaryData.name}/></div>
+        <div className="sprites">
+          <div className="sprite"><img src={ showShiny === true ? primaryData.sprites.front_shiny : primaryData.sprites.front_default } alt={primaryData.name}/></div>
+          <div className={`shiny${showShiny === true ? ' active' : ''}`} onClick={(e) => handleShiny(e)}><img src={Sparkles} alt=""/>View shiny</div>
+        </div>
         <ul>
           <li><strong>Species:</strong></li>
           <li>{pokemonGenus}</li>
