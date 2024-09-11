@@ -5,7 +5,8 @@ import Pokeball from '../../assets/svg/pokeball.svg';
 const PossibleMoves = ({ pokemonData, setGlobalLoading, drawerOpen, setModalShow, setModalTarget, setModalKind }) => {
   const [possibleMoves, setPossibleMoves] = useState([]);
   const [movesLoading, setMovesLoading] = useState(false);
-  const [visibleMoves, setVisibleMoves] = useState(6);
+  const [visibleMoves, setVisibleMoves] = useState(5);
+  const loadMoreRef = useRef(null);
 
   useEffect(() => {
     const fetchInitialMoves = async () => {
@@ -15,7 +16,7 @@ const PossibleMoves = ({ pokemonData, setGlobalLoading, drawerOpen, setModalShow
       try {
         const filteredMoves = pokemonData.moves.filter(move => 
           move.version_group_details.some(detail => detail.version_group.name === 'scarlet-violet')
-        ).slice(0, 6);
+        ).slice(0, 5);
 
         const tempMoves = [];
 
@@ -54,7 +55,7 @@ const PossibleMoves = ({ pokemonData, setGlobalLoading, drawerOpen, setModalShow
     try {
       const filteredMoves = pokemonData.moves.filter(move => 
         move.version_group_details.some(detail => detail.version_group.name === 'scarlet-violet')
-      ).slice(visibleMoves, visibleMoves + 6);
+      ).slice(visibleMoves, visibleMoves + 5);
       const tempMoves = [];
 
       for (const move of filteredMoves) {
@@ -71,13 +72,18 @@ const PossibleMoves = ({ pokemonData, setGlobalLoading, drawerOpen, setModalShow
         });
       }
       setPossibleMoves(prevMoves => [...prevMoves, ...tempMoves]);
-      setVisibleMoves(prevVisibleMoves => prevVisibleMoves + 6);
+      setVisibleMoves(prevVisibleMoves => prevVisibleMoves + 5);
     }
     catch (error) {
       console.error('Error fetching more moves', error);
     }
     finally {
       setMovesLoading(false);
+      if (loadMoreRef.current) {
+        setTimeout(() => {
+          loadMoreRef.current.scrollIntoView({ behavior: "smooth" });
+        }, 0);
+      }
     }
   };
 
@@ -105,7 +111,7 @@ const PossibleMoves = ({ pokemonData, setGlobalLoading, drawerOpen, setModalShow
             </div>
           ))}
           { visibleMoves < pokemonData.moves.length ? (
-            <div className={`load-more${possibleMoves.length === 0 ? ' hidden' : ''}`}>
+            <div className={`load-more${possibleMoves.length === 0 ? ' hidden' : ''}`} ref={loadMoreRef}>
               <button onClick={loadMoreMoves}>Load more</button>
             </div>
           ) : null }
