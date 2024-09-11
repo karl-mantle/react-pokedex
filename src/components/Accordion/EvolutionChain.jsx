@@ -54,24 +54,31 @@ const EvolutionChain = ({ speciesData, setGlobalLoading, drawerOpen, setModalSho
   }, [speciesData, setGlobalLoading, drawerOpen]);
   // make this a switch and add more reasons
   const getEvolutionDetails = (details) => {
-    if (details.trigger.name === 'use-item' && details.item) {
-      return `using ${cleanName(details.item.name)}`;
-    } else if (details.trigger.name === 'level-up') {
-      if (details.min_level) {
-        return `at level ${details.min_level}`;
-      } else if (details.time_of_day) {
-        return `at ${details.time_of_day}`;
-      } else if (details.min_happiness) {
-        return 'with high friendship';
-      } else if (details.min_affection) {
-        return 'with high affection';
-      } else {
-        return 'to evolve';
-      }
-    } else if (details.trigger.name === 'trade') {
-      return 'via trade';
-    } else {
-      return `via ${cleanName(details.trigger.name)}`;
+    switch (details.trigger.name) {
+      case 'use-item':
+        return `using ${cleanName(details.item.name)}`;
+      case 'level-up':
+        if (details.min_level) {
+          return `at level ${details.min_level}`;
+        } else if (details.min_happiness && details.time_of_day) { // Eeveelutions
+            return `with high friendship during the ${details.time_of_day}`;
+        } else if (details.time_of_day) {
+          return `at ${details.time_of_day}`;
+        } else if (details.min_happiness) {
+          return 'with high friendship';
+        } else if (details.min_affection) {
+          return 'with high affection';
+        } else {
+          return 'for unknown reasons!';
+        }
+      case 'trade':
+        if (details.held_item.name) {
+          return `via trade holding ${cleanName(details.held_item.name)}`;
+        } else {
+          return 'via trade';
+        }
+      default:
+        return `via ${cleanName(details.trigger.name)}`;
     }
   };
   // need to find a way to not need this without magneton having evolves from magnemite written 7 times etc...
@@ -117,7 +124,7 @@ const EvolutionChain = ({ speciesData, setGlobalLoading, drawerOpen, setModalSho
           {Object.keys(groupedEvolutionChain).map((stage, stageIndex) => (
             <div key={stageIndex} className="evolution-stage">
 
-              <div className="stage-name">{cleanName(getStageName(stage, hasBaby))}</div>
+              <div className="stage-name"><h3>{cleanName(getStageName(stage, hasBaby))}</h3></div>
 
               {groupedEvolutionChain[stage].map((pokemon, index) => (
                 <div key={index}>
@@ -139,7 +146,11 @@ const EvolutionChain = ({ speciesData, setGlobalLoading, drawerOpen, setModalSho
                   </div>
 
                   {index < groupedEvolutionChain[stage].length - 1 && (
-                    <div className="divider">or</div>
+                    <div className="divider">
+                      <div></div>
+                      <div>or</div>
+                      <div></div>
+                    </div>
                   )}
                 </div>
               ))}
