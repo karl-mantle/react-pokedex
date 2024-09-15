@@ -52,7 +52,6 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
     if (modalShow) {
       fetchEntryData();
       document.body.classList.add('lock');
-      // scroll to top?
     }
     else {
       document.body.classList.remove('lock');
@@ -77,6 +76,7 @@ const Modal = ({ setGlobalLoading, modalShow, setModalShow, modalTarget, setModa
           <SelectedEntry
             primaryData={primaryData}
             speciesData={speciesData}
+            modalTarget={modalTarget}
             setModalTarget={setModalTarget}
             setGlobalLoading={setGlobalLoading}
             modalShow={modalShow}

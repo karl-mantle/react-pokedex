@@ -3,12 +3,13 @@ import { cleanName, cleanNumber, cleanDescription } from '../../utils/Cleaners.j
 import Accordion from '../Accordion/Accordion';
 import Stats from '../Accordion/Stats';
 import EvolutionChain from '../Accordion/EvolutionChain';
+import OtherForms from '../Accordion/OtherForms';
 import PossibleMoves from '../Accordion/PossibleMoves';
 import Sparkles from '../../assets/svg/sparkles.svg';
 import './entries.css';
 import '../types.css';
 
-const Pokemon = ({ primaryData, speciesData, setModalTarget, setGlobalLoading, setModalShow, setModalKind, onClose }) => {
+const Pokemon = ({ primaryData, speciesData, modalTarget, setModalTarget, setGlobalLoading, setModalShow, setModalKind, onClose }) => {
   // primaryData = pokemonData for the purposes of this entry.
   const [showShiny, setShowShiny] = useState(false);
   
@@ -27,6 +28,7 @@ const Pokemon = ({ primaryData, speciesData, setModalTarget, setGlobalLoading, s
   const accordionDrawers = [
     { title: 'Base Stats', component: <Stats pokemonData={primaryData}/> },
     { title: 'Evolution Chain', component: <EvolutionChain speciesData={speciesData} setGlobalLoading={setGlobalLoading} setModalTarget={setModalTarget} setModalShow={setModalShow} setModalKind={setModalKind}/>  },
+    { title: 'Other Forms', component: <OtherForms speciesData={speciesData} setGlobalLoading={setGlobalLoading} modalTarget={modalTarget} setModalTarget={setModalTarget} setModalShow={setModalShow} setModalKind={setModalKind}/>  },
     { title: 'Possible Moves', component: <PossibleMoves pokemonData={primaryData} setGlobalLoading={setGlobalLoading} setModalTarget={setModalTarget} setModalShow={setModalShow} setModalKind={setModalKind}/> }
   ];
 
