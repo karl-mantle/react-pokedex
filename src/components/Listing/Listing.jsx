@@ -7,7 +7,8 @@ const Listing = ({setModalShow, setModalTarget, setModalKind, pokemonList, types
   const [pageNumber, setPageNumber] = useState(0);
   const [listingError, setListingError] = useState(false);
   const [filterSource, setFilterSource] = useState('pokedex');
-  const [currentFilter, setCurrentFilter] = useState('national');
+  const [pokedexFilter, setPokedexFilter] = useState('national');
+  const [typesFilter, setTypesFilter] = useState([]);
   const [currentList, setCurrentList] = useState([]);
 
   return (
@@ -16,8 +17,10 @@ const Listing = ({setModalShow, setModalTarget, setModalKind, pokemonList, types
       <ListingFilter
         filterSource={filterSource}
         setFilterSource={setFilterSource}
-        currentFilter={currentFilter}
-        setCurrentFilter={setCurrentFilter}
+        pokedexFilter={pokedexFilter}
+        setPokedexFilter={setPokedexFilter}
+        typesFilter={typesFilter}
+        setTypesFilter={setTypesFilter}
         setCurrentList={setCurrentList}
         setPageNumber={setPageNumber}
 
@@ -36,7 +39,8 @@ const Listing = ({setModalShow, setModalTarget, setModalKind, pokemonList, types
         <ListingPage
           currentList={currentList}
           filterSource={filterSource}
-          currentFilter={currentFilter}
+          pokedexFilter={pokedexFilter}
+          typesFilter={typesFilter}
 
           setModalShow={setModalShow}
           setModalTarget={setModalTarget}

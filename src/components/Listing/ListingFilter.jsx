@@ -2,24 +2,49 @@ import { useEffect, useState } from 'react';
 import { cleanName } from '../../utils/Cleaners';
 import '../types.css';
 
-const ListingFilter = ({ currentFilter, setCurrentFilter, filterSource, setFilterSource, setCurrentList, setPageNumber, typesList, pokedexList }) => {
+const ListingFilter = ({ filterSource, setFilterSource, setCurrentList, setPageNumber, typesList, pokedexList, pokedexFilter, setPokedexFilter, typesFilter, setTypesFilter }) => {
   const [filtersTargetList, setFiltersTargetList] = useState([]);
 
-  const handleFilterCards = (type, value, event) => {
+  const handleFilterCards = (value, event) => {
     event.preventDefault();
     console.log('Filter cards by:', value);
-  
-    if (type === 'source') {
-      setFilterSource(value);
-      if (value === 'pokedex') {
-        setCurrentFilter('national')
-      } else {
-        setCurrentFilter('normal')
-      };
-      setPageNumber(0);
-    } else if (type === 'filter') {
-      setCurrentFilter(value);
-      setPageNumber(0);
+    switch (filterSource) {
+      case 'pokedex':
+        setPokedexFilter(value);
+        setPageNumber(0);
+        break;
+      case 'type':
+        if (typesFilter.includes(value)) {
+          if (typesFilter.length === 1) {
+            setTypesFilter([]);
+          } else {
+            setTypesFilter(typesFilter.filter(t => t !== value));
+          }
+        } else if (typesFilter.length < 2) {
+          setTypesFilter([...typesFilter, value]);
+        } else {
+          console.log('You can only select up to 2 types.');
+        }
+        setPageNumber(0);
+        break;
+      default:
+        setFiltersTargetList([]);
+    }
+  };
+
+  const changeFilterSource = (value, event) => {
+    event.preventDefault();
+    console.log('Changed filter source tab.');
+    setFilterSource(value);
+    switch (value) {
+      case 'pokedex':
+        setPokedexFilter('national');
+        break;
+      case 'type':
+        setTypesFilter([]);
+        break;
+      default:
+        setFiltersTargetList([]);
     }
   };
 
@@ -28,10 +53,10 @@ const ListingFilter = ({ currentFilter, setCurrentFilter, filterSource, setFilte
     console.log('Filters cleared.');
     switch (filterSource) {
       case 'pokedex':
-        setCurrentFilter('national');
+        setPokedexFilter('national');
         break;
       case 'type':
-        setCurrentFilter('normal');
+        setTypesFilter([]);
         break;
       default:
         setFiltersTargetList([]);
@@ -42,10 +67,10 @@ const ListingFilter = ({ currentFilter, setCurrentFilter, filterSource, setFilte
     const updateFilters = () => {
       switch (filterSource) {
         case 'type':
-          setFiltersTargetList(typesList)
+          setFiltersTargetList(typesList);
           break;
         case 'pokedex':
-          setFiltersTargetList(pokedexList)
+          setFiltersTargetList(pokedexList);
           break;
         default:
           setFiltersTargetList([]);
@@ -75,23 +100,32 @@ const ListingFilter = ({ currentFilter, setCurrentFilter, filterSource, setFilte
     };
   
     const filterCurrentList = async () => {
-      if (currentFilter) {
-        const filteredList = await fetchFilteredList(currentFilter);
+      if (pokedexFilter && filterSource === 'pokedex') {
+        const filteredList = await fetchFilteredList(pokedexFilter);
         setCurrentList(filteredList);
-      }
+      } else if (typesFilter.length > 0 && filterSource === 'type') {
+        const responses = await Promise.all(
+          typesFilter.map(type => fetch(`https://pokeapi.co/api/v2/type/${type}`))
+        );
+        const data = await Promise.all(responses.map(res => res.json()));
+        const filteredPokemon = data.reduce((acc, curr) => {
+          const pokemonList = curr.pokemon.map(p => p.pokemon);
+          return acc.filter(p => pokemonList.some(p2 => p2.name === p.name));
+        }, data[0].pokemon.map(p => p.pokemon));
+        setCurrentList(filteredPokemon);
+      } 
     };
   
     filterCurrentList();
-  }, [currentFilter, filterSource, setCurrentList]);
+  }, [pokedexFilter, typesFilter, filterSource, setCurrentList]);
 
   return (
     <div className="frame">
-
       <div className="filter">
         <div className="title">Filter by:</div>
         <div className="tabber">
-          <button className={`${filterSource === 'pokedex' ? 'active' : ''}`} onClick={(e) => handleFilterCards('source', 'pokedex', e)}>Region</button>
-          <button className={`${filterSource === 'type' ? 'active' : ''}`} onClick={(e) => handleFilterCards('source', 'type', e)}>Type</button>
+          <button className={`${filterSource === 'pokedex' ? 'active' : ''}`} onClick={(e) => changeFilterSource('pokedex', e)}>Region</button>
+          <button className={`${filterSource === 'type' ? 'active' : ''}`} onClick={(e) => changeFilterSource('type', e)}>Type</button>
         </div>
       </div>
 
@@ -99,26 +133,24 @@ const ListingFilter = ({ currentFilter, setCurrentFilter, filterSource, setFilte
         <div className="filters">
           <ul>
             {filtersTargetList.map((filter, index) => (
-                <li key={index} className={`${filterSource}${currentFilter === filter.name ? ' active' : ''} ${filter.name}`} onClick={(e) => handleFilterCards('filter', filter.name, e)}>{filter.name.toUpperCase()}</li>
-                ))}
+              <li key={index} className={`${filterSource}${typesFilter.includes(filter.name) ? ' active' : ''} ${filter.name}`} onClick={(e) => handleFilterCards(filter.name, e)}>{filter.name.toUpperCase()}</li>
+            ))}
           </ul>
-            <button onClick={(e) => clearFilters(e)}>Clear filters</button>
+          <button onClick={(e) => clearFilters(e)}>Clear filters</button>
         </div>
-        ) : null }
-
-        
+      ) : null }
 
       { filterSource === 'pokedex' ? (
         <div className="filters">
           <div className="hidden-mobile">
             <ul>
               {filtersTargetList.map((filter, index) => (
-                  <li key={index} className={`${filterSource} ${currentFilter === filter.name ? 'active' : ''}`} onClick={(e) => handleFilterCards('filter', filter.name, e)}>{cleanName(filter.name)}</li>
-                  ))}
+                <li key={index} className={`${filterSource} ${pokedexFilter === filter.name ? 'active' : ''}`} onClick={(e) => handleFilterCards(filter.name, e)}>{cleanName(filter.name)}</li>
+              ))}
             </ul>
           </div>
           <div className="hidden-desktop">
-            <select onChange={(e) => handleFilterCards('filter', e.target.value, e)}>
+            <select onChange={(e) => handleFilterCards(e.target.value, e)}>
               {filtersTargetList.map((filter, index) => (
                 <option key={index} value={filter.name} className={`${filterSource}`}>
                   {cleanName(filter.name)} Pokédex
@@ -127,8 +159,7 @@ const ListingFilter = ({ currentFilter, setCurrentFilter, filterSource, setFilte
             </select>
           </div>
         </div>
-        ) : null }
-    
+      ) : null }
     </div>
   );
 };
