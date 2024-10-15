@@ -4,6 +4,7 @@ import Footer from './components/Footer/Footer';
 import Search from './components/Search/Search';
 import Listing from './components/Listing/Listing';
 import Modal from './components/Modal/Modal';
+import './App.css';
 
 function App() {
   const [globalLoading, setGlobalLoading] = useState(false);
