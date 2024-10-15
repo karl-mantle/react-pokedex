@@ -7,7 +7,6 @@ import OtherForms from '../Accordion/OtherForms';
 import PossibleMoves from '../Accordion/PossibleMoves';
 import Sparkles from '../../assets/svg/sparkles.svg';
 import './entries.css';
-import '../types.css';
 
 const Pokemon = ({ primaryData, speciesData, modalTarget, setModalTarget, setGlobalLoading, setModalShow, setModalKind, onClose }) => {
   // primaryData = pokemonData for the purposes of this entry.

@@ -1,6 +1,5 @@
 import { cleanName, cleanNumber } from '../../utils/Cleaners.js';
 import './card.css';
-import '../types.css';
 
 const Card = ({ subject, number, filterSource, setModalShow, setModalTarget, setModalKind }) => {
 

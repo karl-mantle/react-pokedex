@@ -4,7 +4,9 @@ import Footer from './components/Footer/Footer';
 import Search from './components/Search/Search';
 import Listing from './components/Listing/Listing';
 import Modal from './components/Modal/Modal';
-import './App.css';
+import './assets/css/fonts.css';
+import './assets/css/global.css';
+import './assets/css/types.css';
 
 function App() {
   const [globalLoading, setGlobalLoading] = useState(false);
@@ -94,7 +96,7 @@ function App() {
       globalLoading={globalLoading}
       modalShow={modalShow}
     />
-    <main>
+    <main className="degauss-fx">
       <Search
         modalShow={modalShow}
         setModalShow={setModalShow}

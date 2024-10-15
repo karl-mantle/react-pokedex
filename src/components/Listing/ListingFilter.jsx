@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { cleanName } from '../../utils/Cleaners';
-import '../types.css';
 
 const ListingFilter = ({ filterSource, setFilterSource, setCurrentList, setPageNumber, typesList, pokedexList, pokedexFilter, setPokedexFilter, typesFilter, setTypesFilter }) => {
   const [filtersTargetList, setFiltersTargetList] = useState([]);
