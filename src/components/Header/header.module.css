@@ -1,0 +1,26 @@
+header {
+  position: sticky;
+  top: 0;
+  z-index: 25;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+
+  & .wrapper {
+    display: flex;
+    justify-content: start;
+    padding-top: .5rem;
+  }
+
+  & .background {
+    background-image: url('../../assets/svg/header-100.svg');
+    min-height: 100px;
+    
+    @media screen and (min-width: 768px) {
+      background-image: url('../../assets/svg/header-125.svg');
+      min-height: 125px;
+    }
+  }
+
+  & .clip-path {
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 30% 75%, 25% 100%, 0 100%);
+  }
+}
