@@ -150,13 +150,7 @@ select {
   }
 }
 
-/* unsorted */
-
-.sticky {
-  position: sticky;
-  z-index: 25;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
-}
+/* unsorted - phase out */
 
 .frame {
 	background-color: transparent;
@@ -251,6 +245,8 @@ select {
     margin-bottom: 1rem;
   }
 }
+
+/* keep at the end */
 
 .lock {
   height: 100vh;
