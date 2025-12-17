@@ -1,13 +1,49 @@
-# react-pokedex
+# React Pokédex
 
-I will write a proper README when I have completed more of this app, or more accurately, when I have something worth writing about!
+An interactive mobile-first Pokédex built with React and the [PokéAPI](https://pokeapi.co/). Explore all Pokémon, moves and items featured in the Pokémon games through a retro-inspired modern take on the original Kanto Pokédex.
 
-In short, it fetches data about a Pokémon from the PokéAPI and displays it. You can learn more about that here: https://pokeapi.co/
+## Features
 
-You can scroll through pages of Pokémon and click on one or search for a Pokémon by number or name.
+- **Search Pokémon** by name or number with live suggestions  
+- **Filter Pokémon** by type and region — supports multi-select (e.g., Fire + Flying)  
+- **View detailed Pokémon info**: moves, stats, evolution chains, other forms (e.g. Alolan), lore
+- **Explore moves**: see their stats and which Pokémon can learn a move and at what level  
+- **Browse items**: access basic item information  
+- **Pokédex theme** inspired by the original Kanto Pokédex and GBA games
 
-For example, you can find Pikachu either by searching for his name or "25".
+## Demo
 
-Then you get a pop-up listing various details about the Pokémon you've selected.
+[View the live demo on GitHub Pages](https://karl-mantle.github.io/react-pokedex/)
 
-I got the idea from this project: https://github.com/axelfrache/PokemonFinder
+## Technologies Used
+
+- **React** - for a fast, interactive frontend  
+- **PokéAPI** - provides Pokémon, moves, and item data  
+- **Vite** - build tool
+
+## Usage
+
+1. Clone the repository:
+
+```
+git clone https://github.com/karl-mantle/react-pokedex.git
+```
+
+2. Install dependencies:
+
+```
+cd react-pokedex
+npm install
+```
+
+3. Start the development server:
+
+```
+npm run dev
+```
+
+4. Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+## Future Plans
+
+- ???
