@@ -24,6 +24,7 @@
   padding: 0;
 }
 
+
 body {
   margin: 0;
 
@@ -32,6 +33,9 @@ body {
     sans-serif;
   font-size: 1rem;
   color: var(--text);
+  overflow: hidden;
+  background-image: url("/background-tile.svg");
+  background-repeat: repeat;
 }
 
 main {
@@ -144,6 +148,8 @@ select {
   background-attachment: fixed;
   border-right: rgba(0, 0, 0, 0.5) solid 2px;
   border-left: rgba(0, 0, 0, 0.5) solid 2px;
+  max-height: 100vh;
+  overflow-y: scroll;
 
   @media screen and (min-width: 768px) {
     background-position: center;
