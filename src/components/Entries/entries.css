@@ -47,6 +47,21 @@
           border: 2px solid #9A9A9A;
         }
       }
+
+      & .price {
+        color: #fff;
+        padding: 0.5rem;
+        min-width: 2rem;
+        text-align: center;
+        font-weight: 700;
+        font-size: 1.25rem;
+
+        &::before {
+          content: "₽";
+          font-size: 1rem;
+          margin-right: 0.25rem;
+        }
+      }
     }
   
     & .close {
@@ -150,5 +165,27 @@
         font-weight: bold;
       }
     }
+  }
+
+  &.item {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1.5rem 1rem;
+
+    & .sprite {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  & .item-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    grid-column: 2 / 4;
   }
 }

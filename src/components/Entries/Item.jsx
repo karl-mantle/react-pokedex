@@ -1,18 +1,19 @@
-import { cleanName } from '../../utils/Cleaners.js';
+import { cleanName, unslugifySentence } from '../../utils/Cleaners.js';
 import './entries.css';
 
-const Item = ({ primaryData, entryLoading, onClose }) => {
+const Item = ({ primaryData, onClose }) => {
 
   if (!primaryData) {
     return null;
   }
 
-  const effect = primaryData.effect_entries?.length > 0 ? primaryData.effect_entries[0].effect : 'No effect available';
+  const effect = primaryData.effect_entries?.length > 0 ? primaryData.effect_entries[0].short_effect : 'No effect available';
 
   return (
-    <div className={`details${entryLoading ? ' hidden' : ''}`}>
+    <div className="details">
+
       <div className="top-row">
-        <div className="id"></div>
+        <div className="id price">{primaryData.cost}</div>
         <div className="name"><h2>{cleanName(primaryData.name)}</h2></div>
         <div className="close" onClick={onClose}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -21,17 +22,23 @@ const Item = ({ primaryData, entryLoading, onClose }) => {
         </div>
       </div>
       
-      <div className="fact-file">
+      <div className="fact-file item">
         <div className="sprite">
-          <img src={primaryData.sprites?.default} alt={primaryData.name} />
+          <img height="48" width="48" src={primaryData.sprites?.default} alt={primaryData.name} />
         </div>
-        <ul>
-          <li><strong>Placeholder content.</strong></li>
-        </ul>
+        <div className="item-details">
+          <p><strong>{unslugifySentence(primaryData.category.name)}</strong></p>
+          <p>{effect}</p>
+        </div>
       </div>
 
       <div className="message-box">
-        <p>{effect}</p>
+        <h4>Item Attributes</h4>
+        <ul>
+          { primaryData.attributes.map((attribute, i) => (
+            <li>{unslugifySentence(attribute.name)}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );

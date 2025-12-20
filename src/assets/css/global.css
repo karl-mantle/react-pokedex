@@ -182,8 +182,11 @@ select {
   padding: 1rem;
   margin-bottom: 1rem;
 
-  & p {
-    color: var(--light-text);
+  & p, li, h4 { color: var(--light-text); }
+
+  & li {
+    list-style-type: disc;
+    margin: 0.5rem 1rem;
   }
 
   &.accordion {

@@ -39,4 +39,12 @@ export const cleanMoveValues = (str) => {
   return name;
 };
 
+export const unslugifySentence = (slug = "") => {
+  const text = slug
+    .replace(/[-_]+/g, " ")
+    .trim();
+
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 export default cleanName;
