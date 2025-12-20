@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { cleanName } from '../../utils/Cleaners';
+import slugify from 'slugify';
 import './search.css';
 
 let debounceTimeout;
@@ -56,9 +57,8 @@ const Search = ({ setModalTarget, setModalShow, modalError, setModalKind, pokemo
     if (!searchTerm || searchTerm.length < 3) return setFilteredList([]);
 
     debounceTimeout = setTimeout(() => {
-      console.log(searchTerm);
       setFilteredList(currentList.filter(
-        entry => entry.name.toLowerCase().includes(searchTerm.toLowerCase())
+        entry => entry.name.includes(slugify(searchTerm))
       ).slice(0, 3));
     }, 500);
   };
